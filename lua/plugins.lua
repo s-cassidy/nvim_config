@@ -71,6 +71,30 @@ return require('packer').startup({
 
     use { 'folke/which-key.nvim' }  -- which-key in neovim
 
+    -- language support and completion
+
+    -- LSP Support
+    use {'neovim/nvim-lspconfig'}
+    use {'williamboman/mason.nvim'}
+    use {'williamboman/mason-lspconfig.nvim'}
+    use {'mfussenegger/nvim-lint'}
+
+    -- Autocompletion
+    use {'hrsh7th/nvim-cmp'}
+    use {'hrsh7th/cmp-buffer'}
+    use {'hrsh7th/cmp-path'}
+    use {'saadparwaiz1/cmp_luasnip'}
+    use {'hrsh7th/cmp-nvim-lsp'}
+    use {'hrsh7th/cmp-nvim-lua'}
+
+    use {'VonHeikemen/lsp-zero.nvim',
+    requires = {
+    -- Snippets
+    {'L3MON4D3/LuaSnip'},
+    {'rafamadriz/friendly-snippets'},
+  }
+}
+
 
   end  
   })

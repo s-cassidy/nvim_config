@@ -2,7 +2,7 @@
 
 require("settings")
 require("plugins")
-
+require("lsp")
 require("colors")
 require("statusline")
 require("keybindings")
