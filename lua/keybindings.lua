@@ -1,10 +1,13 @@
 local map = vim.keymap.set
 
+require('leap').set_default_keymaps()
+
 -- Normal Mode Remaps
 local normal = {
-  {"<C-d>", ":bd<cr>", {silent}}, -- delete current buffer
-  {"j", "v:count ? 'j' : 'gj'",{silent, expr=true}}, -- j goes down by visual lines, unless a count is provided
-  {"k", "v:count ? 'k' : 'gk'",{silent, expr=true}}, -- k goes up by visual lines, unless a count is provided
+  {"<C-d>", ":bd<cr>", {silent=true}}, -- delete current buffer
+  {"j", "v:count ? 'j' : 'gj'",{silent=true, expr=true}}, -- j goes down by visual lines, unless a count is provided
+  {"k", "v:count ? 'k' : 'gk'",{silent=true, expr=true}}, -- k goes up by visual lines, unless a count is provided
+  {"<CR>", "<cmd>Telescope oldfiles<cr><esc>k",{silent}}, -- k goes up by visual lines, unless a count is provided
 }
 
 -- Insert mode remaps
@@ -26,14 +29,15 @@ end
 
 local wk = require("which-key") 
 
+
 wk.register({
   ["<leader>C"] = { name = "+config" },
   ["<leader>CE"] = { "<cmd>e ~/.config/nvim<CR>", "View config dir" },
   ["<leader>Ci"] = { "<cmd>e ~/.config/nvim/init.lua<CR>", "init.lua" },
   ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/colors.lua<CR>", "colours" },
   ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/settings.lua<CR>", "settings" },
-  ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/keybindings.lua<CR>", "settings" },
-  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/plugins.lua<CR>", "colours" },
+  ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/keybindings.lua<CR>", "keymaps" },
+  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/plugins.lua<CR>", "plugins" },
   ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/statusline.lua<CR>", "statusline" },
   ["<leader>CC"] = { "<cmd>so ~/.config/nvim/init.lua<CR>", "reload" },
 
@@ -44,5 +48,23 @@ wk.register({
   ["<leader>Pu"] = { "<cmd>PackerUpdate<CR>", "Update plugins"}
 
 })
+local bufopts = { noremap=true, silent=true, buffer=bufnr }
+
+wk.register({
+  ["<leader>l"] = { name = "+lsp"},
+  ["<leader>lr"] = { vim.lsp.buf.rename, "Rename" },
+  ["<leader>ld"] = { vim.lsp.buf.definition, "Goto definition" },
+  ["<leader>lD"] = { vim.lsp.buf.declaration, "Goto declaration" },
+  ["<leader>li"] = { vim.lsp.buf.implementation, "Goto implementation" },
+  ["<leader>lh"] = { vim.lsp.buf.hover, "hover" }
+}, {buffer=bufnr})
 
 
+local builtin = require('telescope.builtin')
+wk.register({
+  ["<leader>f"] = { name = "+telescope" },
+  ['<leader>ff'] =  {builtin.find_files, "Find files"},
+  ['<leader>fg'] =  {builtin.live_grep, "grep files"},
+  ['<leader>fb'] =  {builtin.buffers, "Current buffers"},
+  ['<leader>fd'] =  {builtin.diagnostics, "Diagnostics"},
+  ['<leader>fh'] =  {builtin.help_tags, "Help tags"}})
