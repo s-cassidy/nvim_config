@@ -50,6 +50,7 @@ wk.register({
 })
 local bufopts = { noremap=true, silent=true, buffer=bufnr }
 
+-- LSP binds
 wk.register({
   ["<leader>l"] = { name = "+lsp"},
   ["<leader>lr"] = { vim.lsp.buf.rename, "Rename" },
@@ -58,6 +59,15 @@ wk.register({
   ["<leader>li"] = { vim.lsp.buf.implementation, "Goto implementation" },
   ["<leader>lh"] = { vim.lsp.buf.hover, "hover" }
 }, {buffer=bufnr})
+
+
+--[[
+wk.register({
+  ["<leader>c"] = { name = "+comments"},
+  ["<leader>cc"] = { comment.api.toggle.linewise, "Toggle line comment"},
+  ["<leader>cC"] = { comment.api.toggle.blockwise, "Toggle block comment"},
+  ["<leader>cC"] = { comment.api.toggle.blockwise, "Toggle block comment"}})
+--]]
 
 
 local builtin = require('telescope.builtin')

@@ -12,6 +12,7 @@ local options = {
   lazyredraw     = true,                    --- Makes macros faster & prevent errors in complicated mappings
   mouse          = "a",                     --- Enable mouse
   number         = true,                    --- Shows current line number
+  completeopt    = 'menu,menuone,noselect',
   autoread       = true,                    --- update remotely changed files automatically
   pumheight      = 10,                      --- Max num of items in completion menu
   relativenumber = true,                    --- Enables relative number
@@ -64,6 +65,8 @@ augroup CursorLine
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
 augroup END]])
+
+
 
 -- Set italic fonts
 vim.cmd('set t_ZH=^[[3m')

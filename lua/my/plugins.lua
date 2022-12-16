@@ -44,10 +44,12 @@ return require('packer').startup({
     -- Needed to load first
     use { 'lewis6991/impatient.nvim' } -- Packer can manage itself use { 'wbthomason/packer.nvim'} 
     use { 'nvim-lua/plenary.nvim' }
+    use { 'nvim-lua/popup.nvim' }
     use { 'kyazdani42/nvim-web-devicons' }
 
     -- Themes
     use { 'sainnhe/everforest' }
+    use { 'Shatur/neovim-ayu' }
 
     -- statusline
     use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true }}
@@ -56,9 +58,28 @@ return require('packer').startup({
     use { 'aserowy/tmux.nvim' }
     use {  'christoomey/vim-tmux-navigator' }
 
+    -- quality of life
+    use { 'karb94/neoscroll.nvim' }
+    use 'echasnovski/mini.cursorword'
+    use 'sudormrfbin/cheatsheet.nvim'
+
+    use 'ThePrimeagen/harpoon'
+
+    -- surround
+    use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+    })
+
+    -- comments
+    use { 'numToStr/Comment.nvim' }
 
     -- tpope
-    use { 'tpope/vim-surround' } -- Add brackets, quotes, etc around text-objects
     use { 'tpope/vim-repeat' } -- Integrates the repeat 
     use { 'tpope/vim-vinegar' } -- Improves netrw
 
@@ -71,6 +92,19 @@ return require('packer').startup({
 
     use { 'folke/which-key.nvim' }  -- which-key in neovim
 
+    -- Telescope
+    use {
+  'nvim-telescope/telescope.nvim', tag = '0.1.0',
+  requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use {
+    "benfowler/telescope-luasnip.nvim",
+    }
+    -- integration with obsidian
+    use { 'epwalsh/obsidian.nvim'}
+    use { 'gaoDean/autolist.nvim'}
+
     -- language support and completion
 
     -- LSP Support
@@ -78,6 +112,11 @@ return require('packer').startup({
     use {'williamboman/mason.nvim'}
     use {'williamboman/mason-lspconfig.nvim'}
     use {'mfussenegger/nvim-lint'}
+
+    use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+    }
 
     -- Autocompletion
     use {'hrsh7th/nvim-cmp'}
@@ -91,10 +130,12 @@ return require('packer').startup({
     requires = {
     -- Snippets
     {'L3MON4D3/LuaSnip'},
-    {'rafamadriz/friendly-snippets'},
+    -- {'rafamadriz/friendly-snippets'},
+
   }
 }
 
 
-  end  
+  end
   })
+
