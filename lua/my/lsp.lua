@@ -1,16 +1,33 @@
 local lsp = require('lsp-zero')
 
-lsp.preset('recommended')
+--require'lspconfig'.tsserver.setup {}
+
+
+lsp.set_preferences({
+  suggest_lsp_servers = true,
+  setup_servers_on_start = true,
+  set_lsp_keymaps = false,
+  configure_diagnostics = true,
+  cmp_capabilities = true,
+  manage_nvim_cmp = false,
+  call_servers = 'local',
+  }
+)
+
 lsp.setup()
 
 require('lint').linters_by_ft = {
-  python = {'flake8'}
+  python = {'flake8'},
+ --javascript = {'eslint'}
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   callback = function()
     require("lint").try_lint()
   end,
 })
+
+
+-- Everything below here is copied in to display diagnostics at the bottom of the screen rather than floating
 
 local function setup_diags()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -125,4 +142,4 @@ local signs = { Error = "!!", Warn = ">>", Hint = "--", Info = "??" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl })
-end 
+end

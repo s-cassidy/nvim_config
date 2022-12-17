@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/autolist.nvim",
     url = "https://github.com/gaoDean/autolist.nvim"
   },
+  ["cheatsheet.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/cheatsheet.nvim",
+    url = "https://github.com/sudormrfbin/cheatsheet.nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -123,6 +128,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/flit.nvim",
     url = "https://github.com/ggandor/flit.nvim"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
+  harpoon = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
   },
   ["impatient.nvim"] = {
     loaded = true,
@@ -210,10 +225,20 @@ _G.packer_plugins = {
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/popup.nvim",
+    url = "https://github.com/nvim-lua/popup.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
     url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+  },
+  ["telescope-luasnip.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/telescope-luasnip.nvim",
+    url = "https://github.com/benfowler/telescope-luasnip.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

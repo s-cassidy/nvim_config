@@ -1,8 +1,13 @@
 --vim.cmd('source ~/.vimrc')
 
-require("settings")
-require("plugins")
-require("lsp")
-require("colors")
+require("my.keybindings")
+require("my.settings")
+require("my.plugins")
+require("my.lsp")
+require("my.colors")
 require("statusline")
-require("keybindings")
+require("initialiseplugins")
+require("my.keybindings")
+
+
+
