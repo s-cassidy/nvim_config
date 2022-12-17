@@ -6,7 +6,6 @@ require("my.plugins")
 require("my.lsp")
 require("my.colors")
 require("statusline")
-require("initialiseplugins")
 require("my.keybindings")
 
 

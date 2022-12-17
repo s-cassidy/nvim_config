@@ -3,7 +3,7 @@ local globals = {
 }
 
 local options = {
-  clipboard      = "unnamed,unnamedplus",   --- Copy-paste between vim and everything else
+  -- clipboard      = "unnamed,unnamedplus",   --- Copy-paste between vim and everything else
   cmdheight      = 2,                       --- Give more space for displaying messages
   cursorline     = true,                    --- Highlight of current line
   expandtab      = true,                    --- Use spaces instead of tabs
@@ -36,7 +36,7 @@ local options = {
   linebreak      = true,                    --- Visually break line at edge of window, not "logically" break line
   writebackup    = false,                   --- Not needed
   title          = true,                    --- set window title to current buffer
-  guifont        = "Fira Mono Nerd Font",    --- patched font
+  guifont        = "LigaSFMonoNerdFont",    --- patched font
 
   -- Neovim defaults
   autoindent     = true,                    --- Good auto indent
@@ -46,6 +46,7 @@ local options = {
   encoding       = "utf-8",                 --- The encoding displayed
   errorbells     = false,                   --- Disables sound effect for errors
   fileencoding   = "utf-8",                 --- The encoding written to file
+  hlsearch       = false,                   --- Don't leave searches highlighted
   incsearch      = true,                    --- Start searching before pressing enter
   showmode       = false,                   --- Don't show things like -- INSERT -- anymore
 }

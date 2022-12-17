@@ -1,7 +1,6 @@
 local ls =  require("luasnip")
 local types = require("luasnip.util.types")
 -- require('telescope').load_extension('luasnip')
-print("snip loaded")
 ls.config.set_config({
 
   history = true,
@@ -24,7 +23,7 @@ vim.keymap.set({'i','s'}, "<C-j>", function()
   end
 end, {silent = true})
 
-vim.keymap.set({'i','s'}, "<C-k>", function()
+vim.keymap.set({'i','s'}, "<C-h>", function()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
@@ -39,6 +38,7 @@ end, {silent = true})
 
 local wk = require('which-key')
 wk.register({
+  ["<leader>s"] = {"snippets"},
   ["<leader>ss"] = {":source ~/.config/nvim/after/plugin/luasnip.lua<CR>", "Reload snippets"}})
 
 

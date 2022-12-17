@@ -62,7 +62,7 @@ return require('packer').startup({
     use { 'karb94/neoscroll.nvim' }
     use 'echasnovski/mini.cursorword'
     use 'sudormrfbin/cheatsheet.nvim'
-
+    use 'mbbill/undotree'
     use 'ThePrimeagen/harpoon'
 
     -- surround
@@ -101,9 +101,22 @@ return require('packer').startup({
     use {
     "benfowler/telescope-luasnip.nvim",
     }
-    -- integration with obsidian
-    use { 'epwalsh/obsidian.nvim'}
-    use { 'gaoDean/autolist.nvim'}
+
+     use({
+      "princejoogie/dir-telescope.nvim",
+      -- telescope.nvim is a required dependency
+      requires = {"nvim-telescope/telescope.nvim"},
+      config = function()
+        require("dir-telescope").setup({
+          hidden = true,
+          respect_gitignore = true,
+        })
+      end,
+    }) 
+        -- integration with obsidian
+        use { 'epwalsh/obsidian.nvim'}
+        use { 'gaoDean/autolist.nvim'}
+
 
     -- language support and completion
 
@@ -112,6 +125,7 @@ return require('packer').startup({
     use {'williamboman/mason.nvim'}
     use {'williamboman/mason-lspconfig.nvim'}
     use {'mfussenegger/nvim-lint'}
+  
 
     use {
     'nvim-treesitter/nvim-treesitter',
