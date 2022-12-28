@@ -50,6 +50,7 @@ return require('packer').startup({
     -- Themes
     use { 'sainnhe/everforest' }
     use { 'Shatur/neovim-ayu' }
+    use { 'EdenEast/nightfox.nvim' }
 
     -- statusline
     use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true }}
