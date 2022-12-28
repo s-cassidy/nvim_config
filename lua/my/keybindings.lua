@@ -1,12 +1,11 @@
 local map = vim.keymap.set
 
 require('leap').set_default_keymaps()
-
 -- Normal Mode Remaps
 local normal = {
-  {"<C-D>", ":bd<cr>", {silent=true}}, -- delete current buffer
-  {"<C-L>", ":bn<cr>", {silent=true}}, -- next buffer
-  {"<C-H>", ":bp<cr>", {silent=true}}, -- previous buffer
+  {"<C-s-D>", ":bd<cr>", {silent=true}}, -- delete current buffer
+  {"<C-n>", ":bn<cr>", {silent=true}}, -- next buffer
+  {"<C-p>", ":bp<cr>", {silent=true}}, -- previous buffer
   {"j", "v:count ? 'j' : 'gj'",{silent=true, expr=true}}, -- j goes down by visual lines, unless a count is provided
   {"k", "v:count ? 'k' : 'gk'",{silent=true, expr=true}}, -- k goes up by visual lines, unless a count is provided
   {"<CR>", "<cmd>Telescope oldfiles<cr><esc>k",{silent}}, -- k goes up by visual lines, unless a count is provided
@@ -64,11 +63,11 @@ wk.register({
   ["<leader>C"] = { name = "+config" },
   ["<leader>CE"] = { "<cmd>e ~/.config/nvim<CR>", "View config dir" },
   ["<leader>Ci"] = { "<cmd>e ~/.config/nvim/init.lua<CR>", "init.lua" },
-  ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/colors.lua<CR>", "colours" },
-  ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/settings.lua<CR>", "settings" },
-  ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/keybindings.lua<CR>", "keymaps" },
-  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/plugins.lua<CR>", "plugins" },
-  ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/statusline.lua<CR>", "statusline" },
+  ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/my/colors.lua<CR>", "colours" },
+  ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/my/settings.lua<CR>", "settings" },
+  ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", "keymaps" },
+  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>", "plugins" },
+  ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/my/statusline.lua<CR>", "statusline" },
   ["<leader>CC"] = { "<cmd>so ~/.config/nvim/init.lua<CR>", "reload" },
 
   ["<leader>P"] = { name = "+packer" },
@@ -83,26 +82,28 @@ local bufopts = { noremap=true, silent=true, buffer=bufnr }
 -- LSP binds
 wk.register({
   ["<leader>l"] = { name = "+lsp"},
-  ["<leader>lr"] = { vim.lsp.buf.rename, "Rename" },
+  ["<leader>lR"] = { vim.lsp.buf.rename, "Rename" },
   ["<leader>ld"] = { vim.lsp.buf.definition, "Goto definition" },
   ["<leader>lD"] = { vim.lsp.buf.declaration, "Goto declaration" },
   ["<leader>li"] = { vim.lsp.buf.implementation, "Goto implementation" },
-  ["<leader>lh"] = { vim.lsp.buf.hover, "hover" }
+  ["<leader>lr"] = { vim.lsp.buf.references, "References to QF" },
+  ["<leader>lh"] = { vim.lsp.buf.hover, "hover" },
+  ["<leader>ll"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
 }, {buffer=bufnr})
 
 
 wk.register({["<leader>"] = {
-  y = {"Yank to clipboard"},
-  Y = {"Yank to clipboard"},
-  d = {"Cut to clipboard"},
-  p = {"Paste from clipboard"},
+  y = {'"+y',"Yank to clipboard"},
+  Y = {'"+Y',"Yank to clipboard"},
+  d = {'"+d',"Cut to clipboard"},
+  p = {'"+p', "Paste from clipboard"},
   }})
 
 wk.register({["<leader>"] = {
-  y = {"Yank to clipboard"},
-  d = {"Cut to clipboard"},
-  p = {"Paste from clipboard"},
-  P = {"Paste over and keep"}}}, {mode = "v"})
+  y = {'"+y',"Yank to clipboard"},
+  d = {'"+d',"Cut to clipboard"},
+  p = {'"+p',"Paste from clipboard"},
+  P = {'"+P',"Paste over and keep"}}}, {mode = "v"})
 
 --[[
 wk.register({
@@ -113,11 +114,32 @@ wk.register({
 --]]
 
 
+
+wk.register({
+  ["<leader>Q"] = {name = "+global quickfix"},
+  ["<leader>Qq"] = {":copen<cr>", "open quickfix"},
+  ["<leader>Qn"] = {":cnext<cr>", "next quickfix"},
+  ["<leader>Qp"] = {":cprev<cr>", "previous quickfix"}})
+
+wk.register({
+  ["<leader>q"] = {name = "+local quickfix"},
+  ["<leader>qq"] = {":lopen<cr>", "open local quickfix"},
+  ["<leader>qn"] = {":lnext<cr>", "next local quickfix"},
+  ["<leader>qp"] = {":lprev<cr>", "previous local quickfix"}})
+
 local builtin = require('telescope.builtin')
+local actions = require('telescope.actions')
 wk.register({
   ["<leader>f"] = { name = "+telescope" },
   ['<leader>fz'] =  {builtin.git_files, "Find files"},
   ['<leader>fg'] =  {builtin.live_grep, "grep files"},
   ['<leader>fb'] =  {builtin.buffers, "Current buffers"},
   ['<leader>fD'] =  {builtin.diagnostics, "Diagnostics"},
-  ['<leader>fh'] =  {builtin.help_tags, "Help tags"}})
+  ['<leader>fh'] =  {builtin.help_tags, "Help tags"},
+  ['<leader>fu'] =  {":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree"}})
+
+        -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+wk.register({
+  ["<leader>v"] = {":lua local builtin = require 'telescope.builtin' builtin.find_files({cwd = '~/notes/wiki'})<CR>", "Go to vault"}})
+
+-- wk.register

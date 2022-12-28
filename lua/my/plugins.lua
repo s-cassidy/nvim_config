@@ -64,6 +64,10 @@ return require('packer').startup({
     use 'sudormrfbin/cheatsheet.nvim'
     use 'mbbill/undotree'
     use 'ThePrimeagen/harpoon'
+    use 'drmingdrmer/vim-toggle-quickfix'
+
+    -- AI helper
+    use({'aduros/ai.vim'})
 
     -- surround
     use({
@@ -84,7 +88,7 @@ return require('packer').startup({
     use { 'tpope/vim-vinegar' } -- Improves netrw
 
 
-    use { 'machakann/vim-highlightedyank' } -- Briefly highlights yanked region
+   --  use { 'machakann/vim-highlightedyank' } -- Briefly highlights yanked region
 
     -- motion
     use { 'ggandor/leap.nvim' } -- Use s to leap anywhere on the screen, similar to sneak
@@ -112,9 +116,17 @@ return require('packer').startup({
           respect_gitignore = true,
         })
       end,
-    }) 
+    })
+    use {
+      'debugloop/telescope-undo.nvim',
+      requires = { 'nvim-telescope/telescope.nvim' },
+      config = function()
+        require("telescope").load_extension("undo")
+      end,
+    }
         -- integration with obsidian
-        use { 'epwalsh/obsidian.nvim'}
+        -- use { 'epwalsh/obsidian.nvim'}
+        use { 'SCassidy-UK/obsidian.nvim'}
         use { 'gaoDean/autolist.nvim'}
 
 
@@ -125,7 +137,9 @@ return require('packer').startup({
     use {'williamboman/mason.nvim'}
     use {'williamboman/mason-lspconfig.nvim'}
     use {'mfussenegger/nvim-lint'}
-  
+    use 'jose-elias-alvarez/null-ls.nvim'
+    use 'MunifTanjim/prettier.nvim'
+    use 'windwp/nvim-ts-autotag' 
 
     use {
     'nvim-treesitter/nvim-treesitter',

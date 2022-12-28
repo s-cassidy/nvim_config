@@ -67,6 +67,12 @@ augroup CursorLine
   au WinLeave * setlocal nocursorline
 augroup END]])
 
+vim.cmd([[
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=100 }
+augroup END]])
+
 
 
 -- Set italic fonts

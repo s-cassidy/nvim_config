@@ -1,9 +1,16 @@
+local actions = require "telescope.actions"
 require('telescope').setup {
     defaults = {
       layout_strategy='bottom_pane',
         layout_config = {
             height = 10,
         prompt_position='bottom'},
+    },
+    mappings = {
+      n = {
+        ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<leader>Q"] = actions.smart_add_to_qflist + actions.open_qflist
+      }
     },
   extensions = {
     fzf = {
@@ -21,3 +28,5 @@ require("telescope").setup({
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('luasnip')
+
+

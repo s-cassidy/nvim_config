@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/autolist.nvim",
     url = "https://github.com/gaoDean/autolist.nvim"
   },
+  ["chatgpt.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/chatgpt.nvim",
+    url = "https://github.com/terror/chatgpt.nvim"
+  },
   ["cheatsheet.nvim"] = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/cheatsheet.nvim",
@@ -118,6 +123,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
+  ["dir-telescope.nvim"] = {
+    config = { "\27LJ\2\2]\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\2\vhidden\2\22respect_gitignore\2\nsetup\18dir-telescope\frequire\0" },
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/dir-telescope.nvim",
+    url = "https://github.com/princejoogie/dir-telescope.nvim"
   },
   everforest = {
     loaded = true,
@@ -184,6 +195,11 @@ _G.packer_plugins = {
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/neovim-ayu",
     url = "https://github.com/Shatur/neovim-ayu"
   },
+  ["null-ls.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
+    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -218,7 +234,7 @@ _G.packer_plugins = {
   ["obsidian.nvim"] = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/obsidian.nvim",
-    url = "https://github.com/epwalsh/obsidian.nvim"
+    url = "https://github.com/SCassidy-UK/obsidian.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -229,6 +245,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
+  },
+  ["prettier.nvim"] = {
+    loaded = true,
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/prettier.nvim",
+    url = "https://github.com/MunifTanjim/prettier.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -250,10 +271,10 @@ _G.packer_plugins = {
     path = "/home/sam/.local/share/nvim/site/pack/packer/start/tmux.nvim",
     url = "https://github.com/aserowy/tmux.nvim"
   },
-  ["vim-highlightedyank"] = {
+  undotree = {
     loaded = true,
-    path = "/home/sam/.local/share/nvim/site/pack/packer/start/vim-highlightedyank",
-    url = "https://github.com/machakann/vim-highlightedyank"
+    path = "/home/sam/.local/share/nvim/site/pack/packer/start/undotree",
+    url = "https://github.com/mbbill/undotree"
   },
   ["vim-repeat"] = {
     loaded = true,
@@ -278,6 +299,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: dir-telescope.nvim
+time([[Config for dir-telescope.nvim]], true)
+try_loadstring("\27LJ\2\2]\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\2\vhidden\2\22respect_gitignore\2\nsetup\18dir-telescope\frequire\0", "config", "dir-telescope.nvim")
+time([[Config for dir-telescope.nvim]], false)
 -- Config for: nvim-surround
 time([[Config for nvim-surround]], true)
 try_loadstring("\27LJ\2\2?\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\18nvim-surround\frequire\0", "config", "nvim-surround")
