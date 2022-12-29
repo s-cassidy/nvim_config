@@ -57,8 +57,26 @@ local function setup_diags()
   )
 end
 -- Show line diagnostics automatically in hover window
+local wk = require('which-key')
 vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+local floatdiag = 0;
+local toggle_diagnostics = function() 
+  if floatdiag == 0 then
+  vim.cmd [[
+  augroup DiagnosticFloat
+  autocmd!
+  autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
+  augroup end]]
+  floatdiag = 1
+else
+  floatdiag = 0
+  vim.cmd [[
+  autocmd! DiagnosticFloat CursorHold,CursorHoldI *
+  ]]
+end
+end
+wk.register({
+  ["<leader>lf"] = {toggle_diagnostics, "toggle diagnostics"}})
 
 
 

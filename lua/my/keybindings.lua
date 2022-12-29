@@ -12,8 +12,8 @@ local normal = {
   {"Ja", "mzJ`z"},  -- append line below to current line without moving cursor
   {"n", "nzzzv"},
   {"N", "Nzzzv"}, -- cursor stays centered when searching
-  --{"<C-u>","<C-u>zz"}, -- moving up/down keep cursor centered -- less disorientating
-  --{"<C-d>","<C-d>zz"} -- moving up/down keep cursor centered -- less disorientating
+  {"<C-u>","<C-u>zz"}, -- moving up/down keep cursor centered -- less disorientating
+  {"<C-d>","<C-d>zz"} -- moving up/down keep cursor centered -- less disorientating
 }
 
 -- Insert mode remaps
@@ -142,4 +142,3 @@ wk.register({
 wk.register({
   ["<leader>v"] = {":lua local builtin = require 'telescope.builtin' builtin.find_files({cwd = '~/notes/wiki'})<CR>", "Go to vault"}})
 
--- wk.register
