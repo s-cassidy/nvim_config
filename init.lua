@@ -18,5 +18,3 @@ require("my.settings")
 require("my.lsp")
 require("my.colors")
 require("my.keybindings")
-
-

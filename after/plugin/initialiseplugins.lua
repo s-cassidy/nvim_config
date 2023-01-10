@@ -1,4 +1,3 @@
-require('neoscroll').setup()
 require('mini.cursorword').setup()
-
-
+require('Comment').setup()
+require("nvim-surround").setup()

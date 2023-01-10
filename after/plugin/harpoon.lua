@@ -1,5 +1,4 @@
-
-local wk = require("which-key") 
+local wk = require("which-key")
 
 require("telescope").load_extension('harpoon')
 
@@ -10,4 +9,10 @@ wk.register({
   ["<leader>h["] = { ':lua require("harpoon.ui").nav_prev()<CR>', "Prev file" },
   ["<leader>hm"] = { ':lua require("harpoon.ui").toggle_quick_menu()<CR>', "Menu" },
   ["<leader>ht"] = { ':Telescope harpoon marks<CR>', 'Telescope' },
-  ["<leader>fh"] = { ':Telescope harpoon marks<CR>', 'Harpoon' }})
+  ["<leader>fh"] = { ':Telescope harpoon marks<CR>', 'Harpoon' }
+})
+
+vim.keymap.set("n", "<M+1>", ':lua require("harpoon.ui").nav_file(1)')
+vim.keymap.set("n", "<M+2>", ':lua require("harpoon.ui").nav_file(2)')
+vim.keymap.set("n", "<M+3>", ':lua require("harpoon.ui").nav_file(3)')
+vim.keymap.set("n", "<M+4>", ':lua require("harpoon.ui").nav_file(4)')

@@ -1,19 +1,20 @@
 local lsp = require('lsp-zero')
 
-require'lspconfig'.tsserver.setup {
-filetypes = {"javascript"}}
+require 'lspconfig'.tsserver.setup {
+  filetypes = { "javascript" }
+}
 
 lsp.ensure_installed({
   'tsserver',
   'eslint',
 })
 
-require'lspconfig'.sumneko_lua.setup {
+require 'lspconfig'.sumneko_lua.setup {
   settings = {
     Lua = {
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim', 'silent'},
+        globals = { 'vim', 'silent' },
       },
     },
   },
@@ -27,14 +28,15 @@ lsp.set_preferences({
   cmp_capabilities = true,
   manage_nvim_cmp = false,
   call_servers = 'local',
-  }
+}
 )
+
 
 lsp.setup()
 
 
 require('lint').linters_by_ft = {
-  python = {'flake8'},
+  python = { 'flake8' },
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   callback = function()
@@ -42,6 +44,25 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   end,
 })
 
+
+--require("formatter").setup(
+--{
+--  logging = true,
+--  filetype = {
+--  javascript = {
+--    function()
+--      return {
+--        exe = "npx prettier",
+--        args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+--        stdin = true
+--      }
+--    end
+--  },
+--}
+--})
+
+vim.api.nvim_create_autocmd({ "BufWritePre" },
+  { command = [[lua vim.lsp.buf.format()]] })
 
 -- Everything below here is copied in to display diagnostics at the bottom of the screen rather than floating
 
@@ -56,27 +77,30 @@ local function setup_diags()
     }
   )
 end
+
 -- Show line diagnostics automatically in hover window
 local wk = require('which-key')
 vim.o.updatetime = 250
 local floatdiag = 0;
-local toggle_diagnostics = function() 
+local toggle_diagnostics = function()
   if floatdiag == 0 then
-  vim.cmd [[
-  augroup DiagnosticFloat
-  autocmd!
-  autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})
-  augroup end]]
-  floatdiag = 1
-else
-  floatdiag = 0
-  vim.cmd [[
+    vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = "DiagnosticFloat",
+      pattern = { "*" },
+      command = [[lua vim.diagnostic.open_float(nil, {focus=false})]]
+    })
+    floatdiag = 1
+  else
+    floatdiag = 0
+    vim.cmd [[
   autocmd! DiagnosticFloat CursorHold,CursorHoldI *
   ]]
-end
+  end
 end
 wk.register({
-  ["<leader>lf"] = {toggle_diagnostics, "toggle diagnostics"}})
+  ["<leader>lf"] = { toggle_diagnostics, "toggle diagnostics" }
+})
 
 
 
