@@ -103,15 +103,6 @@ wk.register({ ["<leader>"] = {
   P = { '"+P', "Paste over and keep" }
 } }, { mode = "v" })
 
---[[
-wk.register({
-  ["<leader>c"] = { name = "+comments"},
-  ["<leader>cc"] = { comment.api.toggle.linewise, "Toggle line comment"},
-  ["<leader>cC"] = { comment.api.toggle.blockwise, "Toggle block comment"},
-  ["<leader>cC"] = { comment.api.toggle.blockwise, "Toggle block comment"}})
---]]
-
-
 
 wk.register({
   ["<leader>Q"] = { name = "+global quickfix" },
@@ -141,7 +132,6 @@ wk.register({
   ['<leader>fu'] = { ":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree" }
 })
 
--- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 wk.register({
   ["<leader>v"] = { ":lua local builtin = require 'telescope.builtin' builtin.find_files({cwd = '~/notes/wiki'})<CR>",
     "Go to vault" }
