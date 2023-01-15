@@ -8,7 +8,6 @@ local normal = {
   { "<C-p>", ":bp<cr>", { silent = true } }, -- previous buffer
   { "j", "v:count ? 'j' : 'gj'", { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
   { "k", "v:count ? 'k' : 'gk'", { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
-  { "<CR>", "<cmd>Telescope oldfiles<cr><esc>k", { silent } }, -- k goes up by visual lines, unless a count is provided
   { "Ja", "mzJ`z" }, -- append line below to current line without moving cursor
   { "n", "nzzzv" },
   { "N", "Nzzzv" }, -- cursor stays centered when searching
@@ -16,6 +15,18 @@ local normal = {
   { "<C-d>", "<C-d>zz" }, -- moving up/down keep cursor centered -- less disorientating
   { "d ", "dd" }, -- faster/more comfortable than double jumping?
   { "y ", "yy" } -- faster/more comfortable than double jumping?
+}
+
+require 'nvim-treesitter.configs'.setup {
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<CR>",
+      node_incremental = "<CR>",
+      scope_incremental = "<S-CR>",
+      node_decremental = "<BS>",
+    },
+  },
 }
 
 -- Insert mode remaps
@@ -71,6 +82,7 @@ wk.register({
   ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>", "plugins" },
   ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/my/statusline.lua<CR>", "statusline" },
   ["<leader>CC"] = { "<cmd>so ~/.config/nvim/init.lua<CR>", "reload" },
+  ["<leader>#"] = { ":buffer #<CR>", "Alt buffer" },
 })
 local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -132,6 +144,8 @@ wk.register({
   ["<leader>f"] = { name = "+telescope" },
   ['<leader>fz'] = { builtin.git_files, "Find files" },
   ['<leader>fg'] = { builtin.live_grep, "grep files" },
+  ['<leader>fg'] = { builtin.live_grep, "grep files" },
+  ['<leader>fy'] = { ":Telescope neoclip<cr>", "yanks clipboard" },
   ['<leader>fb'] = { builtin.buffers, "Current buffers" },
   ['<leader>fD'] = { builtin.diagnostics, "Diagnostics" },
   ['<leader>fh'] = { builtin.help_tags, "Help tags" },

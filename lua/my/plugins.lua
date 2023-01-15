@@ -22,7 +22,7 @@ return {
   -- quality of life
   'AckslD/nvim-neoclip.lua',
   'echasnovski/mini.cursorword',
-  'sudormrfbin/cheatsheet.nvim',
+  -- 'sudormrfbin/cheatsheet.nvim',
   'mbbill/undotree',
   'ThePrimeagen/harpoon',
   'drmingdrmer/vim-toggle-quickfix',
@@ -96,10 +96,29 @@ return {
   { 'L3MON4D3/LuaSnip', event = "VeryLazy" },
   { 'rafamadriz/friendly-snippets' },
 
-  { 'VonHeikemen/lsp-zero.nvim',
+  { 'VonHeikemen/lsp-zero.nvim' },
 
-    -- Language-specific
-    { 'AndrewRadev/tagalong.vim', ft = 'html' },
+  -- Language-specific
+  { 'AndrewRadev/tagalong.vim', ft = 'html' },
 
+  -- testing
+  --
+
+  "nvim-neotest/neotest",
+  "nvim-neotest/neotest-python",
+
+  -- DAP
+
+  { "mfussenegger/nvim-dap",
+    lazy = true,
+    event = "BufReadPre",
+    dependencies = {
+      { "Pocco81/DAPInstall.nvim", priority = 100 },
+      "theHamsta/nvim-dap-virtual-text",
+      "rcarriga/nvim-dap-ui",
+      "mfussenegger/nvim-dap-python",
+      "nvim-telescope/telescope-dap.nvim",
+      "jbyuki/one-small-step-for-vimkind"
+    },
   }
 }
