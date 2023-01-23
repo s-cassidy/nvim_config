@@ -11,6 +11,7 @@ return {
   { 'marko-cerovac/material.nvim', priority = 100 },
   { 'Shatur/neovim-ayu', priority = 100 },
   { 'EdenEast/nightfox.nvim', priority = 100 },
+  { 'rebelot/kanagawa.nvim', priority = 100 },
 
   -- statusline
   { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } },
