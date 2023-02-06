@@ -1,5 +1,15 @@
 local lsp = require('lsp-zero')
 
+require('lsp-zero').extend_lspconfig()
+
+require('mason').setup()
+require('mason-lspconfig').setup()
+
+local get_servers = require('mason-lspconfig').get_installed_servers
+for _, server_name in ipairs(get_servers()) do
+  require('lspconfig')[server_name].setup({})
+end
+
 require 'lspconfig'.tsserver.setup {
   filetypes = { "javascript" }
 }
@@ -20,23 +30,28 @@ require 'lspconfig'.sumneko_lua.setup {
   },
 }
 
+require('lsp-zero').set_sign_icons()
+vim.diagnostic.config(require('lsp-zero').defaults.diagnostics({}))
+
 lsp.set_preferences({
   suggest_lsp_servers = true,
   setup_servers_on_start = true,
   set_lsp_keymaps = false,
   configure_diagnostics = true,
-  cmp_capabilities = true,
+  cmp_capabilities = false,
   manage_nvim_cmp = false,
   call_servers = 'local',
 }
 )
 
 
-lsp.setup()
+local cmp = require('cmp')
+local cmp_config = require('lsp-zero').defaults.cmp_config({})
+
 
 
 require('lint').linters_by_ft = {
-  python = { 'flake8' },
+  python = { 'flake8', 'mypy' },
 }
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   callback = function()

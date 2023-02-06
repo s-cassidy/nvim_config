@@ -1,10 +1,6 @@
-local globals = {
-  mapleader = ' ', --- Map leader key to SPC
-}
-
 local options = {
   -- clipboard      = "unnamed,unnamedplus",   --- Copy-paste between vim and everything else
-  cmdheight      = 2, --- Give more space for displaying messages
+  cmdheight      = 1, --- Give more space for displaying messages
   cursorline     = true, --- Highlight of current line
   expandtab      = true, --- Use spaces instead of tabs
   ignorecase     = true, --- Needed for smartcase
@@ -18,7 +14,7 @@ local options = {
   relativenumber = true, --- Enables relative number
   scrolloff      = 8, --- Always keep space when scrolling to bottom/top edge
   shiftwidth     = 2, --- Change a number of space characeters inseted for indentation
-  showtabline    = 2, --- Always show tabs
+  showtabline    = 1,
   smartcase      = true, --- Uses case in search
   smartindent    = true, --- Makes indenting smart
   smarttab       = true, --- Makes tabbing smarter will realize you have 2 vs 4
@@ -55,9 +51,9 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-for k, v in pairs(globals) do
+--[[for k, v in pairs(globals) do
   vim.g[k] = v
-end
+end--]]
 
 -- Don't show the cursor line when the window isn't focused
 vim.cmd([[

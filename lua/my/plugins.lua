@@ -14,7 +14,7 @@ return {
   { 'rebelot/kanagawa.nvim', priority = 100 },
 
   -- statusline
-  { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } },
+  { 'nvim-lualine/lualine.nvim', dependencies = { 'kyazdani42/nvim-web-devicons', opt = true } },
 
   -- Tmux integration
   { 'aserowy/tmux.nvim' },
@@ -23,6 +23,8 @@ return {
   -- quality of life
   'AckslD/nvim-neoclip.lua',
   'echasnovski/mini.cursorword',
+  { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
+
   -- 'sudormrfbin/cheatsheet.nvim',
   'mbbill/undotree',
   'ThePrimeagen/harpoon',
@@ -46,6 +48,7 @@ return {
   -- motion
   { 'ggandor/leap.nvim' }, -- Use s to leap anywhere on the screen, similar to sneak
   { 'ggandor/flit.nvim' }, -- Improves f and t
+  { "LeonHeidelbach/trailblazer.nvim" },
 
   -- text objects
   { "chrisgrieser/nvim-various-textobjs",
@@ -54,14 +57,11 @@ return {
     end, },
   { 'echasnovski/mini.ai' }, -- Improves a and i text objects
 
-  { 'folke/which-key.nvim' }, -- which-key in neovim
+  { 'folke/which-key.nvim' },
 
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', event = 'VeryLazy' },
+  { 'nvim-telescope/telescope.nvim', dependencies = "tsakirist/telescope-lazy.nvim", event = 'VeryLazy' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  {
-    "benfowler/telescope-luasnip.nvim",
-  },
 
   "princejoogie/dir-telescope.nvim",
   -- telescope.nvim is a required dependency
@@ -91,12 +91,11 @@ return {
   { 'hrsh7th/nvim-cmp' },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
-  { 'saadparwaiz1/cmp_luasnip' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/cmp-nvim-lua' },
-  { 'L3MON4D3/LuaSnip', event = "VeryLazy" },
-  { 'rafamadriz/friendly-snippets' },
-
+  { 'dcampos/nvim-snippy', event = 'VeryLazy' },
+  { 'honza/vim-snippets', event = 'VeryLazy' },
+  { 'dcampos/cmp-snippy', event = 'VeryLazy' },
   { 'VonHeikemen/lsp-zero.nvim' },
 
   -- Language-specific
@@ -112,7 +111,7 @@ return {
 
   { "mfussenegger/nvim-dap",
     lazy = true,
-    event = "BufReadPre",
+    event = "VeryLazy",
     dependencies = {
       { "Pocco81/DAPInstall.nvim", priority = 100 },
       "theHamsta/nvim-dap-virtual-text",

@@ -1,4 +1,4 @@
-local ls = require("luasnip")
+--[[ local ls = require("luasnip")
 local types = require("luasnip.util.types")
 -- require('telescope').load_extension('luasnip')
 ls.config.set_config({
@@ -40,4 +40,4 @@ local wk = require('which-key')
 wk.register({
   ["<leader>s"] = { "snippets" },
   ["<leader>ss"] = { ":source ~/.config/nvim/after/plugin/luasnip.lua<CR>", "Reload snippets" }
-})
+}) ]]
