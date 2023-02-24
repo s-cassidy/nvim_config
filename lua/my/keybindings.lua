@@ -85,16 +85,23 @@ wk.register({
 })
 local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
+local def = { vim.lsp.buf.definition, "Goto definition" }
+local dec = { vim.lsp.buf.declaration, "Goto declaration" }
+local imp = { vim.lsp.buf.implementation, "Goto implementation" }
+local hov = { vim.lsp.buf.hover, "hover" }
 -- LSP binds
 wk.register({
   ["<leader>l"] = { name = "+lsp" },
   ["<leader>lR"] = { vim.lsp.buf.rename, "Rename" },
-  ["<leader>ld"] = { vim.lsp.buf.definition, "Goto definition" },
-  ["gd"] = { vim.lsp.buf.definition, "Goto definition" },
-  ["<leader>lD"] = { vim.lsp.buf.declaration, "Goto declaration" },
-  ["<leader>li"] = { vim.lsp.buf.implementation, "Goto implementation" },
+  ["<leader>ld"] = def,
+  ["gd"] = def,
+  ["<leader>lD"] = def,
+  ["gD"] = dec,
+  ["<leader>li"] = imp,
+  ["gi"] = imp,
   ["<leader>lr"] = { vim.lsp.buf.references, "References to QF" },
-  ["<leader>lh"] = { vim.lsp.buf.hover, "hover" },
+  ["<leader>lh"] = hov,
+  ["K"] = hov,
   ["<leader>ll"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
 }, { buffer = bufnr })
 
@@ -138,6 +145,7 @@ wk.register({
   ['<leader>fg'] = { ":lua live_grep_git_dir()<CR>", "grep project files" },
   ['<leader>fG'] = { builtin.live_grep, "grep cwd" },
   ['<leader>fy'] = { ":Telescope neoclip<cr>", "yanks clipboard" },
+  ['<leader>fp'] = { ":Telescope lazy<cr>", "Plugins" },
   ['<leader>fb'] = { builtin.buffers, "Current buffers" },
   ['<leader>b'] = { builtin.buffers, "Current buffers" },
   ['<leader>fD'] = { builtin.diagnostics, "Diagnostics" },

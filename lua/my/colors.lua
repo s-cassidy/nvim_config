@@ -7,11 +7,11 @@ vim.api.nvim_create_autocmd("ColorScheme", { command = "highlight Normal ctermbg
 --  }
 --})
 
-require('ayu').colorscheme()
+-- require('ayu').colorscheme()
 
 
 
-require('nightfox').setup()
+-- require('nightfox').setup()
 vim.cmd('colorscheme kanagawa')
 vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal", bg = "NONE" })
 vim.api.nvim_set_hl(0, "SignColumn", { link = "Normal", bg = "NONE" })

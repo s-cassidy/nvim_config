@@ -44,7 +44,6 @@ require("telescope").load_extension "lazy"
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
-require("telescope").load_extension("undo")
 require('telescope').load_extension('fzf')
 -- require('telescope').load_extension('luasnip')
 require('telescope').load_extension('neoclip')
@@ -55,5 +54,3 @@ function live_grep_git_dir() local git_dir = vim.fn.system(string.format("git -C
   local opts = { cwd = git_dir, }
   require('telescope.builtin').live_grep(opts)
 end
-
---lvim.keys.normal_mode["<leader>gG"] = ""

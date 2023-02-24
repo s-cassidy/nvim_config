@@ -1,5 +1,10 @@
 require("obsidian").setup({
-  dir = "~/notes/wiki",
+  dir = "~/notes/wiki/",
+  templates = {
+    subdir = "templates",
+    date_format = "%Y-%m-%d-%a",
+    time_format = "%H.%M"
+  },
   disable_frontmatter = true,
   note_frontmatter_func = nil,
   daily_notes = { folder = "journal" },

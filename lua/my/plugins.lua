@@ -1,16 +1,16 @@
 return {
   -- Needed to load first
-  { 'lewis6991/impatient.nvim', priority = 100 }, -- Packer can manage itself use { 'wbthomason/packer.nvim'}
+  { 'lewis6991/impatient.nvim', priority = 100 },
   { 'nathom/filetype.nvim', priority = 100 },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
 
   -- Themes
-  { 'sainnhe/everforest', priority = 100 },
-  { 'marko-cerovac/material.nvim', priority = 100 },
-  { 'Shatur/neovim-ayu', priority = 100 },
-  { 'EdenEast/nightfox.nvim', priority = 100 },
+  --{ 'sainnhe/everforest', priority = 100 },
+  --{ 'marko-cerovac/material.nvim', priority = 100 },
+  --{ 'Shatur/neovim-ayu', priority = 100 },
+  --{ 'EdenEast/nightfox.nvim', priority = 100 },
   { 'rebelot/kanagawa.nvim', priority = 100 },
 
   -- statusline
@@ -22,52 +22,49 @@ return {
 
   -- quality of life
   'AckslD/nvim-neoclip.lua',
-  'echasnovski/mini.cursorword',
+  { 'echasnovski/mini.cursorword', config = function() require('mini.cursorword').setup() end, event = "CursorMoved" },
   { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
 
   -- 'sudormrfbin/cheatsheet.nvim',
-  'mbbill/undotree',
-  'ThePrimeagen/harpoon',
-  'drmingdrmer/vim-toggle-quickfix',
+  { 'mbbill/undotree', event = 'VeryLazy' },
+  { 'ThePrimeagen/harpoon', lazy = true },
+  { 'drmingdrmer/vim-toggle-quickfix', lazy = true },
 
   -- AI helper
-  { 'aduros/ai.vim' },
+  { 'aduros/ai.vim', lazy = true },
 
   -- surround
-  "kylechui/nvim-surround",
+  { "kylechui/nvim-surround", event = "VeryLazy" },
 
   -- comments
-  { 'numToStr/Comment.nvim' },
+  { 'numToStr/Comment.nvim', event = "VeryLazy" },
 
   -- tpope
-  { 'tpope/vim-repeat' }, -- Integrates the repeat
+  { 'tpope/vim-repeat', event = "VeryLazy" }, -- Integrates the repeat
   { 'tpope/vim-vinegar' }, -- Improves netrw
 
 
 
   -- motion
   { 'ggandor/leap.nvim' }, -- Use s to leap anywhere on the screen, similar to sneak
-  { 'ggandor/flit.nvim' }, -- Improves f and t
-  { "LeonHeidelbach/trailblazer.nvim" },
+  { "LeonHeidelbach/trailblazer.nvim", lazy = true },
 
   -- text objects
   { "chrisgrieser/nvim-various-textobjs",
     config = function()
       require("various-textobjs").setup({ useDefaultKeymaps = true })
     end, },
-  { 'echasnovski/mini.ai' }, -- Improves a and i text objects
+  { 'echasnovski/mini.ai', event = "VeryLazy" }, -- Improves a and i text objects
 
-  { 'folke/which-key.nvim' },
+  { 'folke/which-key.nvim', lazy = true },
 
   -- Telescope
   { 'nvim-telescope/telescope.nvim', dependencies = "tsakirist/telescope-lazy.nvim", event = 'VeryLazy' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 
-  "princejoogie/dir-telescope.nvim",
-  -- telescope.nvim is a required dependency
-  'debugloop/telescope-undo.nvim',
+  { "princejoogie/dir-telescope.nvim", dependencies = 'nvim-telescope/telescope.nvim' },
   -- integration with obsidian
-  { 'epwalsh/obsidian.nvim' },
+  { 's-cassidy/obsidian.nvim' },
   { 'gaoDean/autolist.nvim' },
 
 
@@ -82,21 +79,21 @@ return {
   'MunifTanjim/prettier.nvim',
   'windwp/nvim-ts-autotag',
 
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  'nvim-treesitter/playground',
-  'mrjones2014/nvim-ts-rainbow',
-  { 'nvim-treesitter/nvim-treesitter-context' },
+  { 'nvim-treesitter/nvim-treesitter' }, -- build = ':TSUpdate' },
+  { 'nvim-treesitter/playground', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+  { 'mrjones2014/nvim-ts-rainbow', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+  { 'nvim-treesitter/nvim-treesitter-context', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
 
   -- Autocompletion
-  { 'hrsh7th/nvim-cmp' },
+  { 'hrsh7th/nvim-cmp' }, -- event = "InsertEnter" },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/cmp-nvim-lua' },
-  { 'dcampos/nvim-snippy', event = 'VeryLazy' },
-  { 'honza/vim-snippets', event = 'VeryLazy' },
-  { 'dcampos/cmp-snippy', event = 'VeryLazy' },
-  { 'VonHeikemen/lsp-zero.nvim' },
+  { 'dcampos/nvim-snippy', event = 'InsertEnter' },
+  { 'honza/vim-snippets', event = 'InsertEnter' },
+  { 'dcampos/cmp-snippy', event = 'InsertEnter' },
+  { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
 
   -- Language-specific
   { 'AndrewRadev/tagalong.vim', ft = 'html' },
@@ -111,7 +108,6 @@ return {
 
   { "mfussenegger/nvim-dap",
     lazy = true,
-    event = "VeryLazy",
     dependencies = {
       { "Pocco81/DAPInstall.nvim", priority = 100 },
       "theHamsta/nvim-dap-virtual-text",
