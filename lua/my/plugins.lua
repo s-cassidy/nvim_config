@@ -24,14 +24,13 @@ return {
   'AckslD/nvim-neoclip.lua',
   { 'echasnovski/mini.cursorword', config = function() require('mini.cursorword').setup() end, event = "CursorMoved" },
   { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
+  { 'tiagovla/scope.nvim', config = function() require('scope').setup() end, event = "VeryLazy" },
 
   -- 'sudormrfbin/cheatsheet.nvim',
   { 'mbbill/undotree', event = 'VeryLazy' },
   { 'ThePrimeagen/harpoon', lazy = true },
   { 'drmingdrmer/vim-toggle-quickfix', lazy = true },
 
-  -- AI helper
-  { 'aduros/ai.vim', lazy = true },
 
   -- surround
   { "kylechui/nvim-surround", event = "VeryLazy" },
@@ -55,12 +54,18 @@ return {
       require("various-textobjs").setup({ useDefaultKeymaps = true })
     end, },
   { 'echasnovski/mini.ai', event = "VeryLazy" }, -- Improves a and i text objects
+  { 'echasnovski/mini.bracketed', event = "VeryLazy" }, -- Improves a and i text objects
 
   { 'folke/which-key.nvim', lazy = true },
 
   -- Telescope
   { 'nvim-telescope/telescope.nvim', dependencies = "tsakirist/telescope-lazy.nvim", event = 'VeryLazy' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+
+  -- fzf lua
+  { 'ibhagwan/fzf-lua' },
+  { 'junegunn/fzf' },
+  { 'junegunn/fzf.vim' },
 
   { "princejoogie/dir-telescope.nvim", dependencies = 'nvim-telescope/telescope.nvim' },
   -- integration with obsidian
@@ -78,6 +83,9 @@ return {
   'jose-elias-alvarez/null-ls.nvim',
   'MunifTanjim/prettier.nvim',
   'windwp/nvim-ts-autotag',
+  { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function()
+    require("lsp_lines").setup()
+  end },
 
   { 'nvim-treesitter/nvim-treesitter' }, -- build = ':TSUpdate' },
   { 'nvim-treesitter/playground', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
@@ -85,8 +93,9 @@ return {
   { 'nvim-treesitter/nvim-treesitter-context', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
 
   -- Autocompletion
-  { 'hrsh7th/nvim-cmp' }, -- event = "InsertEnter" },
+  { 'hrsh7th/nvim-cmp', event = "InsertEnter" },
   { 'hrsh7th/cmp-buffer' },
+  { 'hrsh7th/cmp-cmdline' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/cmp-nvim-lua' },

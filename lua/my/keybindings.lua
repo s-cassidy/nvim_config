@@ -4,6 +4,7 @@ require('leap').set_default_keymaps()
 -- Normal Mode Remaps
 local normal = {
   { "<C-s-D>", ":bd<cr>", { silent = true } }, -- delete current buffer
+  { "<C-s-t>", ":ObsidianTemplate<cr>", { silent = true } },
   { "<S-l>", ":bn<cr>", { silent = true } }, -- next buffer
   { "<S-h>", ":bp<cr>", { silent = true } }, -- previous buffer
   { "j", "v:count ? 'j' : 'gj'", { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
@@ -70,6 +71,11 @@ map("o", "b", "vb")
 
 local wk = require("which-key")
 
+wk.register({
+  ["[<Tab>"] = { ":tabp<CR>", "Tab previous" },
+  ["]<Tab>"] = { ':tabn<CR>', "Tab next" },
+}
+) -- previous tab
 
 wk.register({
   ["<leader>C"] = { name = "+config" },
@@ -93,6 +99,7 @@ local hov = { vim.lsp.buf.hover, "hover" }
 wk.register({
   ["<leader>l"] = { name = "+lsp" },
   ["<leader>lR"] = { vim.lsp.buf.rename, "Rename" },
+  ["<leader>ll"] = { require("lsp_lines").toggle, "Toggle lsp-lines" },
   ["<leader>ld"] = def,
   ["gd"] = def,
   ["<leader>lD"] = def,
@@ -102,7 +109,7 @@ wk.register({
   ["<leader>lr"] = { vim.lsp.buf.references, "References to QF" },
   ["<leader>lh"] = hov,
   ["K"] = hov,
-  ["<leader>ll"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
+  ["<leader>lL"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
 }, { buffer = bufnr })
 
 
@@ -149,13 +156,20 @@ wk.register({
   ['<leader>fb'] = { builtin.buffers, "Current buffers" },
   ['<leader>b'] = { builtin.buffers, "Current buffers" },
   ['<leader>fD'] = { builtin.diagnostics, "Diagnostics" },
+  ['<leader>fo'] = { builtin.oldfiles, "History" },
   ['<leader>fh'] = { builtin.help_tags, "Help tags" },
   ['<leader>fu'] = { ":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree" }
 })
 
 wk.register({
-  ["<leader>v"] = { ":lua local builtin = require 'telescope.builtin' builtin.find_files({cwd = '~/notes/wiki'})<CR>",
-    "Go to vault" }
+  ["<leader>v"] = { name = "+obsidian" },
+  ["<leader>vv"] = { ":tabe ~/notes/wiki<cr>:tcd ~/notes/wiki<cr>",
+    "Go to vault" },
+  ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
+  ["<leader>vn"] = { ":ObsidianNew ", "New note" },
+  ["<leader>vs"] = { ":ObsidianSearch<cr>", "Search" },
+  ["<leader>vo"] = { ":ObsidianSearch<cr>", "Open note" },
+
 })
 
 wk.register({
