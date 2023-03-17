@@ -31,7 +31,7 @@ return {
         max_file_lines = nil,
       },
     }
-    require('nvim-ts-autotag').setup()
+    --require('nvim-ts-autotag').setup()
     local wk = require('which-key')
     wk.register({
       ["<leader>r"] = { ':TSToggle rainbow<CR>', 'Toggle Rainbow' }

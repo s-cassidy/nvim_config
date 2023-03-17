@@ -82,7 +82,7 @@ return {
   { 'mfussenegger/nvim-lint' },
   'jose-elias-alvarez/null-ls.nvim',
   'MunifTanjim/prettier.nvim',
-  'windwp/nvim-ts-autotag',
+  { 'windwp/nvim-ts-autotag', config = function() require('nvim-ts-autotag').setup() end },
   { "https://git.sr.ht/~whynothugo/lsp_lines.nvim", config = function()
     require("lsp_lines").setup()
   end },
