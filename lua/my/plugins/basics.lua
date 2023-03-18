@@ -1,7 +1,6 @@
 return {
   -- Needed to load first
   { 'lewis6991/impatient.nvim', priority = 100 },
-  { 'nathom/filetype.nvim', priority = 100 },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },

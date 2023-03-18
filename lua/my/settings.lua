@@ -15,6 +15,7 @@ local options = {
   scrolloff      = 8, --- Always keep space when scrolling to bottom/top edge
   shiftwidth     = 2, --- Change a number of space characeters inseted for indentation
   showtabline    = 1,
+  foldcolumn     = "1", -- show folds in sign column
   smartcase      = true, --- Uses case in search
   smartindent    = true, --- Makes indenting smart
   smarttab       = true, --- Makes tabbing smarter will realize you have 2 vs 4
@@ -33,6 +34,7 @@ local options = {
   writebackup    = false, --- Not needed
   title          = true, --- set window title to current buffer
   guifont        = "LigaSFMonoNerdFont", --- patched font
+  swapfile     = false, -- don't use swap files
 
   -- Neovim defaults
   autoindent   = true, --- Good auto indent

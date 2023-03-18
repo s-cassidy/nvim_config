@@ -1,6 +1,5 @@
 local map = vim.keymap.set
 
-require('leap').set_default_keymaps()
 -- Normal Mode Remaps
 local normal = {
   { "<C-s-D>", ":bd<cr>", { silent = true } }, -- delete current buffer

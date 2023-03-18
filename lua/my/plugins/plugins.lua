@@ -1,60 +1,9 @@
 return {
-  -- Needed to load first
-  { 'lewis6991/impatient.nvim', priority = 100 },
-  { 'nathom/filetype.nvim', priority = 100 },
-  { 'nvim-lua/plenary.nvim' },
-  { 'nvim-lua/popup.nvim' },
-  { 'kyazdani42/nvim-web-devicons' },
-
-  -- Themes
-  --{ 'sainnhe/everforest', priority = 100 },
-  --{ 'marko-cerovac/material.nvim', priority = 100 },
-  --{ 'Shatur/neovim-ayu', priority = 100 },
-  --{ 'EdenEast/nightfox.nvim', priority = 100 },
-  { 'rebelot/kanagawa.nvim', priority = 100 },
-
-  -- statusline
-  { 'nvim-lualine/lualine.nvim', dependencies = { 'kyazdani42/nvim-web-devicons', opt = true } },
-
-  -- Tmux integration
-  { 'aserowy/tmux.nvim' },
-  { 'christoomey/vim-tmux-navigator' },
-
-  -- quality of life
-  'AckslD/nvim-neoclip.lua',
-  { 'echasnovski/mini.cursorword', config = function() require('mini.cursorword').setup() end, event = "CursorMoved" },
-  { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
-  { 'tiagovla/scope.nvim', config = function() require('scope').setup() end, event = "VeryLazy" },
-
-  -- 'sudormrfbin/cheatsheet.nvim',
-  { 'mbbill/undotree', event = 'VeryLazy' },
-  { 'ThePrimeagen/harpoon', lazy = true },
-  { 'drmingdrmer/vim-toggle-quickfix', lazy = true },
-
-
-  -- surround
-  { "kylechui/nvim-surround", event = "VeryLazy" },
-
-  -- comments
-  { 'numToStr/Comment.nvim', event = "VeryLazy" },
-
-  -- tpope
-  { 'tpope/vim-repeat', event = "VeryLazy" }, -- Integrates the repeat
-  { 'tpope/vim-vinegar' }, -- Improves netrw
-
-
-
-  -- motion
-  { 'ggandor/leap.nvim' }, -- Use s to leap anywhere on the screen, similar to sneak
-  { "LeonHeidelbach/trailblazer.nvim", lazy = true },
-
   -- text objects
   { "chrisgrieser/nvim-various-textobjs",
     config = function()
       require("various-textobjs").setup({ useDefaultKeymaps = true })
     end, },
-  { 'echasnovski/mini.ai', event = "VeryLazy" }, -- Improves a and i text objects
-  { 'echasnovski/mini.bracketed', event = "VeryLazy" }, -- Improves a and i text objects
 
   { 'folke/which-key.nvim', lazy = true },
 
@@ -69,7 +18,7 @@ return {
 
   { "princejoogie/dir-telescope.nvim", dependencies = 'nvim-telescope/telescope.nvim' },
   -- integration with obsidian
-  { 's-cassidy/obsidian.nvim' },
+  { 'epwalsh/obsidian.nvim' },
   { 'gaoDean/autolist.nvim' },
 
 
@@ -105,7 +54,7 @@ return {
   { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
 
   -- Language-specific
-  { 'AndrewRadev/tagalong.vim', ft = 'html' },
+  --{ 'AndrewRadev/tagalong.vim', ft = 'html' },
 
   -- testing
   --

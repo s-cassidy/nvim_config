@@ -25,13 +25,17 @@ return {
         additional_vim_regex_highlighting = { "markdown" },
       },
 
+      autotag = {
+        enable = true,
+      },
+
+
       rainbow = {
         enable = false,
         extended_mode = true,
         max_file_lines = nil,
       },
     }
-    --require('nvim-ts-autotag').setup()
     local wk = require('which-key')
     wk.register({
       ["<leader>r"] = { ':TSToggle rainbow<CR>', 'Toggle Rainbow' }
@@ -40,5 +44,6 @@ return {
   },
   { 'nvim-treesitter/playground', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
   { 'mrjones2014/nvim-ts-rainbow', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+  { 'windwp/nvim-ts-autotag', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
   { 'nvim-treesitter/nvim-treesitter-context', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
 }
