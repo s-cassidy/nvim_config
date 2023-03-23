@@ -1,16 +1,6 @@
 return {
   { 'hrsh7th/nvim-cmp',
     event = "InsertEnter",
-    dependencies = {
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
-      { 'dcampos/nvim-snippy', event = 'InsertEnter' },
-      { 'honza/vim-snippets', event = 'InsertEnter' },
-      { 'dcampos/cmp-snippy', event = 'InsertEnter' },
-    },
     config = function()
 
       -- Set up nvim-cmp.
@@ -62,5 +52,14 @@ return {
         })
       })
     end },
+
+  { 'hrsh7th/cmp-buffer' },
+  { 'hrsh7th/cmp-cmdline' },
+  { 'hrsh7th/cmp-path' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-nvim-lua' },
+  { 'dcampos/nvim-snippy', event = 'InsertEnter' },
+  { 'honza/vim-snippets', event = 'InsertEnter' },
+  { 'dcampos/cmp-snippy', event = 'InsertEnter' },
 
 }
