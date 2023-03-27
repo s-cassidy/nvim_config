@@ -2,6 +2,9 @@ return {
 
   {
     'rebelot/kanagawa.nvim', priority = 100
+  },
+  {
+    "ellisonleao/gruvbox.nvim", priority = 100
   }
 }
 
