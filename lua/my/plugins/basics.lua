@@ -16,6 +16,7 @@ return {
   -- tpope
   { 'tpope/vim-repeat', event = "VeryLazy" }, -- Integrates the repeat
   { 'tpope/vim-vinegar' }, -- Improves netrw
+  { 'tpope/vim-fugitive' },
 
   -- quality of life
   { 'AckslD/nvim-neoclip.lua', config = function() require('neoclip').setup() end }, -- improves clipboard integration
