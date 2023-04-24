@@ -2,50 +2,52 @@ local map = vim.keymap.set
 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>", ":bd<cr>", { silent = true } }, -- delete current buffer
-  { "<C-s-t>", ":ObsidianTemplate<cr>", { silent = true } },
-  { "<S-l>", ":bn<cr>", { silent = true } }, -- next buffer
-  { "<S-h>", ":bp<cr>", { silent = true } }, -- previous buffer
-  { "j", "v:count ? 'j' : 'gj'", { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
-  { "k", "v:count ? 'k' : 'gk'", { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
-  { "<leader>J", "mzJ`z", { desc = "Append line below" } }, -- append line below to current line without moving cursor
-  { "n", "nzzzv" },
-  { "N", "Nzzzv" }, -- cursor stays centered when searching
-  { "<C-u>", "<C-u>zz" }, -- moving up/down keep cursor centered -- less disorientating
-  { "<C-d>", "<C-d>zz" }, -- moving up/down keep cursor centered -- less disorientating
-  { "d ", "dd" }, -- faster/more comfortable than double jumping?
-  { "y ", "yy" }, -- faster/more comfortable than double jumping?
-  { "<C-Up>", "<cmd>resize +2<cr>" }, -- resize windows with ctrl + arrows
-  { "<C-Down>", "<cmd>resize -2<cr>" },
-  { "<C-Left>", "<cmd>vertica resize -2<cr>" },
+  { "<C-s-D>",   ":bd<cr>",                   { silent = true } }, -- delete current buffer
+  { "<C-s-t>",   ":ObsidianTemplate<cr>",     { silent = true } },
+  { "<S-l>",     ":bn<cr>",                   { silent = true } }, -- next buffer
+  { "<S-h>",     ":bp<cr>",                   { silent = true } }, -- previous buffer
+  { "j",         "v:count ? 'j' : 'gj'",      { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
+  { "k",         "v:count ? 'k' : 'gk'",      { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
+  { "<leader>J", "mzJ`z",                     { desc = "Append line below" } }, -- append line below to current line without moving cursor
+  { "n",         "nzzzv" },
+  { "N",         "Nzzzv" },                                        -- cursor stays centered when searching
+  { "<C-u>",     "<C-u>zz" },                                      -- moving up/down keep cursor centered -- less disorientating
+  { "<C-d>",     "<C-d>zz" },                                      -- moving up/down keep cursor centered -- less disorientating
+  { "d ",        "dd" },                                           -- faster/more comfortable than double jumping?
+  { "y ",        "yy" },                                           -- faster/more comfortable than double jumping?
+  { "<C-Up>",    "<cmd>resize +2<cr>" },                           -- resize windows with ctrl + arrows
+  { "<C-Down>",  "<cmd>resize -2<cr>" },
+  { "<C-Left>",  "<cmd>vertica resize -2<cr>" },
   { "<C-Right>", "<cmd>vertica resize +2<cr>" },
-  { "<esc>", "<cmd>noh<cr><esc>" } -- esc also clears hlsearch
+  { "<esc>",     "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
 }
 
 
 -- Insert mode remaps
 local insert = {
-  { "<A-l>", "<C-o>l", { silent } }, -- four mappings so that alt+hjkl moves cursor in insert
-  { "<A-k>", "<C-o>k", { silent } },
-  { "<A-j>", "<C-o>j", { silent } },
-  { "<A-h>", "<C-o>h", { silent } },
+  { "<A-l>", "<C-o>l",           { silent } }, -- four mappings so that alt+hjkl moves cursor in insert
+  { "<A-k>", "<C-o>k",           { silent } },
+  { "<A-j>", "<C-o>j",           { silent } },
+  { "<A-h>", "<C-o>h",           { silent } },
   { "<esc>", "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
-  { ",", ",<c-g>u" },
-  { ".", ".<c-g>u" },
-  { ";", ";<c-g>u" },
+  { ",",     ",<c-g>u" },
+  { ".",     ".<c-g>u" },
+  { ";",     ";<c-g>u" },
 }
 
 -- Visual mode remaps
 local visual = {
-  { "J", ":m '>+1<CR>gv=gv", { silent } },
-  { "K", ":m '<-2<CR>gv=gv", { silent } },
+  { "J",         ":m '>+1<CR>gv=gv", { silent } },
+  { "K",         ":m '<-2<CR>gv=gv", { silent } },
   { "<leader>P", '"_dP' }, -- paste over selection without adding pasted-over text to the register
-  { "<", "<gv" }, -- better indents
-  { ">", ">gv" },
+  { "<",         "<gv" },  -- better indents
+  { ">",         ">gv" },
 }
 
 -- all modes
 local not_insert = {
+  { "-", ":Telescope file_browser path=%:p:h select_buffer=true<cr><esc>k" },
+  { "_", ":Telescope file_browser<cr><esc>kw" },
 }
 -- Set bindings
 for i, bind in ipairs(insert) do
@@ -111,23 +113,36 @@ wk.register({
   ["<leader>lL"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
 }, { buffer = bufnr })
 
+local session = require("my.utils.sessions")
+wk.register({
+  ["<leader>s"] = { name = "+sessions" },
+  ["<leader>ss"] = { session.save_session, "Save session" },
+  ["<leader>so"] = { session.list_sessions, "Open session" },
+}
+)
 
-wk.register({ ["<leader>"] = {
-  y = { '"+y', "Yank to clipboard" },
-  Y = { '"+Y', "Yank to clipboard" },
-  d = { '"+d', "Cut to clipboard" },
-  ["<C-d>"] = { '"_d', "True delete" },
-  p = { '"+p', "Paste from clipboard" },
-} })
 
-wk.register({ ["<leader>"] = {
-  y = { '"+y', "Yank to clipboard" },
-  d = { '"+d', "Cut to clipboard" },
-  p = { '"+p', "Paste from clipboard" },
-  ["<C-d>"] = { '"_d', "True delete" },
-  P = { '"+P', "Paste over and keep" }
-} }, { mode = "v" })
+wk.register({
+  ["<leader>"] = {
+    y = { '"+y', "Yank to clipboard" },
+    Y = { '"+Y', "Yank to clipboard" },
+    d = { '"+d', "Cut to clipboard" },
+    ["<C-d>"] = { '"_d', "True delete" },
+    p = { '"+p', "Paste from clipboard" },
+  }
+})
 
+wk.register({
+  ["<leader>"] = {
+    y = { '"+y', "Yank to clipboard" },
+    d = { '"+d', "Cut to clipboard" },
+    p = { '"+p', "Paste from clipboard" },
+    ["<C-d>"] = { '"_d', "True delete" },
+    P = { '"+P', "Paste over and keep" }
+  }
+}, { mode = "v" })
+
+wk.register({ ["<leader>n"] = { ":Navbuddy<cr>", "Symbols" } })
 
 wk.register({
   ["<leader>Q"] = { name = "+global quickfix" },
@@ -147,6 +162,7 @@ local builtin = require('telescope.builtin')
 local actions = require('telescope.actions')
 wk.register({
   ["<leader>f"] = { name = "+telescope" },
+  ["<leader>F"] = { ":Telescope file_browser path=%:p:h select_buffer=true<cr>", "Browser" },
   ['<leader>fz'] = { builtin.git_files, "Find files" },
   ['<leader>fg'] = { ":lua live_grep_git_dir()<CR>", "grep project files" },
   ['<leader>fG'] = { builtin.live_grep, "grep cwd" },
@@ -168,7 +184,7 @@ wk.register({
   ["<leader>vn"] = { ":ObsidianNew ", "New note" },
   ["<leader>vs"] = { ":ObsidianSearch<cr>", "Search" },
   ["<leader>vo"] = { ":ObsidianSearch<cr>", "Open note" },
-
+  ["<leader>vm"] = { ":GMove ~/notes/wiki/", "Move/rename note" }, -- reqiures fugitive.vim
 })
 
 wk.register({

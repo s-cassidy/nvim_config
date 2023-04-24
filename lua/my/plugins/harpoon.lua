@@ -1,5 +1,5 @@
 return {
-  { 'ThePrimeagen/harpoon', lazy = true, config = function()
+  { 'ThePrimeagen/harpoon', config = function()
 
     local wk = require("which-key")
 

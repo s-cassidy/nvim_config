@@ -7,7 +7,7 @@ require("obsidian").setup({
   },
   disable_frontmatter = true,
   note_frontmatter_func = nil,
-  daily_notes = { folder = "journal" },
+  daily_notes = { folder = "journal", filename_format = "%Y-%m-%d-%a" },
   completion = {
     nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
   },

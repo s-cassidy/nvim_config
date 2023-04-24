@@ -17,7 +17,9 @@ return {
           node_decremental = "<BS>",
         },
       },
-
+      indent = {
+        enable = true
+      },
 
       highlight = {
         enable = true,

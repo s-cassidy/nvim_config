@@ -9,6 +9,14 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
   end,
 })
 
+-- save session if working from a session
+vim.api.nvim_create_autocmd({ "ExitPre", "WinNew", "WinClosed", "TabNew", "TabClosed", "BufAdd", "BufDelete" }, {
+  callback = function()
+    require("my.utils.sessions").try_autosave()
+  end
+}
+)
+
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function()
