@@ -2,20 +2,20 @@ local map = vim.keymap.set
 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>",   ":bd<cr>",                   { silent = true } }, -- delete current buffer
+  { "<C-s-D>",   ":bd<cr>",                   { silent = true } },              -- delete current buffer
   { "<C-s-t>",   ":ObsidianTemplate<cr>",     { silent = true } },
-  { "<S-l>",     ":bn<cr>",                   { silent = true } }, -- next buffer
-  { "<S-h>",     ":bp<cr>",                   { silent = true } }, -- previous buffer
+  { "<S-l>",     ":bn<cr>",                   { silent = true } },              -- next buffer
+  { "<S-h>",     ":bp<cr>",                   { silent = true } },              -- previous buffer
   { "j",         "v:count ? 'j' : 'gj'",      { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
   { "k",         "v:count ? 'k' : 'gk'",      { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
   { "<leader>J", "mzJ`z",                     { desc = "Append line below" } }, -- append line below to current line without moving cursor
   { "n",         "nzzzv" },
-  { "N",         "Nzzzv" },                                        -- cursor stays centered when searching
-  { "<C-u>",     "<C-u>zz" },                                      -- moving up/down keep cursor centered -- less disorientating
-  { "<C-d>",     "<C-d>zz" },                                      -- moving up/down keep cursor centered -- less disorientating
-  { "d ",        "dd" },                                           -- faster/more comfortable than double jumping?
-  { "y ",        "yy" },                                           -- faster/more comfortable than double jumping?
-  { "<C-Up>",    "<cmd>resize +2<cr>" },                           -- resize windows with ctrl + arrows
+  { "N",         "Nzzzv" },                                                     -- cursor stays centered when searching
+  { "<C-u>",     "<C-u>zz" },                                                   -- moving up/down keep cursor centered -- less disorientating
+  { "<C-d>",     "<C-d>zz" },                                                   -- moving up/down keep cursor centered -- less disorientating
+  { "d ",        "dd" },                                                        -- faster/more comfortable than double jumping?
+  { "y ",        "yy" },                                                        -- faster/more comfortable than double jumping?
+  { "<C-Up>",    "<cmd>resize +2<cr>" },                                        -- resize windows with ctrl + arrows
   { "<C-Down>",  "<cmd>resize -2<cr>" },
   { "<C-Left>",  "<cmd>vertica resize -2<cr>" },
   { "<C-Right>", "<cmd>vertica resize +2<cr>" },
@@ -75,22 +75,15 @@ local wk = require("which-key")
 wk.register({
   ["[<Tab>"] = { ":tabp<CR>", "Tab previous" },
   ["]<Tab>"] = { ':tabn<CR>', "Tab next" },
-}
-) -- previous tab
-
-wk.register({
   ["<leader>C"] = { name = "+config" },
   ["<leader>CE"] = { "<cmd>e ~/.config/nvim<CR>", "View config dir" },
   ["<leader>Ci"] = { "<cmd>e ~/.config/nvim/init.lua<CR>", "init.lua" },
   ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/my/colors.lua<CR>", "colours" },
   ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/my/settings.lua<CR>", "settings" },
   ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", "keymaps" },
-  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>", "plugins" },
-  ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/my/statusline.lua<CR>", "statusline" },
-  ["<leader>CC"] = { "<cmd>so ~/.config/nvim/init.lua<CR>", "reload" },
+  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins<CR>", "plugins" },
   ["<leader>#"] = { ":buffer #<CR>", "Alt buffer" },
 })
-local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
 local def = { vim.lsp.buf.definition, "Goto definition" }
 local dec = { vim.lsp.buf.declaration, "Goto declaration" }
@@ -111,15 +104,8 @@ wk.register({
   ["<leader>lh"] = hov,
   ["K"] = hov,
   ["<leader>lL"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
-}, { buffer = bufnr })
+})
 
-local session = require("my.utils.sessions")
-wk.register({
-  ["<leader>s"] = { name = "+sessions" },
-  ["<leader>ss"] = { session.save_session, "Save session" },
-  ["<leader>so"] = { session.list_sessions, "Open session" },
-}
-)
 
 
 wk.register({
@@ -202,3 +188,5 @@ map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result
 map("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
+
+vim.api.nvim_create_user_command("Q", "wqall", {})

@@ -37,16 +37,16 @@ local options = {
   guifont        = "LigaSFMonoNerdFont", --- patched font
   swapfile       = false,                -- don't use swap files
   -- Neovim defaults
-  autoindent     = true,             --- Good auto indent
-  backspace      = "indent,eol,start", --- Making sure backspace works
-  backup         = false,            --- Recommended by coc
-  conceallevel   = 2,                --- Show `` in markdown files
-  encoding       = "utf-8",          --- The encoding displayed
-  errorbells     = false,            --- Disables sound effect for errors
-  fileencoding   = "utf-8",          --- The encoding written to file
-  hlsearch       = false,            --- Don't leave searches highlighted
-  incsearch      = true,             --- Start searching before pressing enter
-  showmode       = false,            --- Don't show things like -- INSERT -- anymore
+  autoindent     = true,                 --- Good auto indent
+  backspace      = "indent,eol,start",   --- Making sure backspace works
+  backup         = false,                --- Recommended by coc
+  conceallevel   = 2,                    --- Show `` in markdown files
+  encoding       = "utf-8",              --- The encoding displayed
+  errorbells     = false,                --- Disables sound effect for errors
+  fileencoding   = "utf-8",              --- The encoding written to file
+  hlsearch       = false,                --- Don't leave searches highlighted
+  incsearch      = true,                 --- Start searching before pressing enter
+  showmode       = false,                --- Don't show things like -- INSERT -- anymore
 }
 
 for k, v in pairs(options) do

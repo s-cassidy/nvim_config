@@ -13,10 +13,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup("my.plugins")
-require("my.utils.sessions").on_startup()
 require("my.colors")
 require("my.keybindings")
 require("my.autocmds")
 require("my.settings")
 require("my.lsp")
 require("my.keybindings")
+require("my.sessions")
