@@ -83,7 +83,10 @@ end
 -- However, running :edit seems to bring TS back to life, so we run it after a short delay
 -- at the end of M.on_startup()
 local function enable_TS()
-  pcall(vim.cmd, "edit")
+  local windows = vim.api.nvim_list_wins()
+  for k, win in ipairs(windows) do
+    vim.api.nvim_call_function("win_execute", { win, 'lua pcall(vim.cmd, "edit")' })
+  end
 end
 
 function M.on_startup()
@@ -93,7 +96,7 @@ function M.on_startup()
       local path = make_full_path(repo_name)
       if vim.fn.filereadable(path) == 1 then
         M.load_session(repo_name)
-        vim.defer_fn(enable_TS, 100)
+        vim.defer_fn(enable_TS, 50)
       end
     end
   end
