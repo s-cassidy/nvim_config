@@ -7,26 +7,6 @@ return {
     end,
   },
 
-  { 'folke/which-key.nvim',                     lazy = true },
-
-  -- Telescope
-  { 'nvim-telescope/telescope.nvim',            dependencies = "tsakirist/telescope-lazy.nvim", event = 'VeryLazy' },
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-  },
-
-  -- fzf lua
-  { 'ibhagwan/fzf-lua' },
-  { 'junegunn/fzf' },
-  { 'junegunn/fzf.vim' },
-
-  { "princejoogie/dir-telescope.nvim",    dependencies = 'nvim-telescope/telescope.nvim' },
-  -- integration with obsidian
-  { 's-cassidy/obsidian.nvim' },
-  { 'gaoDean/autolist.nvim' },
-
 
   -- language support and completion
   { 'brenoprata10/nvim-highlight-colors', config = function() require('nvim-highlight-colors').setup {} end },

@@ -1,8 +1,8 @@
 return {
-  { 'hrsh7th/nvim-cmp',
+  {
+    'hrsh7th/nvim-cmp',
     event = "InsertEnter",
     config = function()
-
       -- Set up nvim-cmp.
       local cmp = require 'cmp'
       cmp.setup({
@@ -21,7 +21,7 @@ return {
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-c>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
@@ -51,7 +51,8 @@ return {
           { name = 'cmdline' }
         })
       })
-    end },
+    end
+  },
 
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-cmdline' },
@@ -59,7 +60,7 @@ return {
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/cmp-nvim-lua' },
   { 'dcampos/nvim-snippy', event = 'InsertEnter' },
-  { 'honza/vim-snippets', event = 'InsertEnter' },
-  { 'dcampos/cmp-snippy', event = 'InsertEnter' },
+  { 'honza/vim-snippets',  event = 'InsertEnter' },
+  { 'dcampos/cmp-snippy',  event = 'InsertEnter' },
 
 }
