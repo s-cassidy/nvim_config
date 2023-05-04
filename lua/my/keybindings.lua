@@ -20,6 +20,8 @@ local normal = {
   { "<C-Left>",  "<cmd>vertica resize -2<cr>" },
   { "<C-Right>", "<cmd>vertica resize +2<cr>" },
   { "<esc>",     "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
+  { "<C-w>|",    "<cmd>vsplit<cr>" },
+  { "<C-w>-",    "<cmd>split<cr>" },
 }
 
 
@@ -46,8 +48,8 @@ local visual = {
 
 -- all modes
 local not_insert = {
-  { "-", ":Telescope file_browser path=%:p:h select_buffer=true<cr><esc>k" },
-  { "_", ":Telescope file_browser<cr><esc>kw" },
+  --   { "-", ":Telescope file_browser path=%:p:h select_buffer=true<cr><esc>k" },
+  --   { "_", ":Telescope file_browser<cr><esc>kw" },
 }
 -- Set bindings
 for i, bind in ipairs(insert) do
@@ -164,7 +166,7 @@ wk.register({
 
 wk.register({
   ["<leader>v"] = { name = "+obsidian" },
-  ["<leader>vv"] = { ":tabe ~/notes/wiki<cr>:tcd ~/notes/wiki<cr>",
+  ["<leader>vv"] = { ":tabe ~/notes/wiki<cr>:tcd ~/notes/wiki<cr>:TabRename vault<cr>",
     "Go to vault" },
   ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
   ["<leader>vn"] = { ":ObsidianNew ", "New note" },
