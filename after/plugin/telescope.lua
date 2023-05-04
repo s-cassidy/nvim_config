@@ -14,29 +14,29 @@ require('telescope').setup {
       ["<leader>Q"] = actions.smart_add_to_qflist + actions.open_qflist
     }
   },
-  extensions = {
-    file_browser = {
-      -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = true,
-      layout_strategy = 'horizontal',
-      respect_gitignore = false,
-      layout_config = {
-        height = 30
-      },
-      mappings = {
-        ["n"] = {
-          ["-"] = fb_actions.goto_parent_dir,
-          ["h"] = fb_actions.goto_parent_dir,
-        }
-      },
-    },
-  },
+  -- extensions = {
+  --   file_browser = {
+  --     -- disables netrw and use telescope-file-browser in its place
+  --     hijack_netrw = true,
+  --     layout_strategy = 'horizontal',
+  --     respect_gitignore = false,
+  --     layout_config = {
+  --       height = 30
+  --     },
+  --     mappings = {
+  --       ["n"] = {
+  --         ["-"] = fb_actions.goto_parent_dir,
+  --         ["h"] = fb_actions.goto_parent_dir,
+  --       }
+  --     },
+  --   },
+  -- },
 
   fzf = {
-    fuzzy = true, -- false will only do exact matching
+    fuzzy = true,                   -- false will only do exact matching
     override_generic_sorter = true, -- override the generic sorter
-    override_file_sorter = true, -- override the file sorter
-    case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+    override_file_sorter = true,    -- override the file sorter
+    case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
     -- the default case_mode is "smart_case"
   },
   lazy = {
@@ -66,7 +66,8 @@ require('telescope').load_extension('fzf')
 -- require('telescope').load_extension('luasnip')
 require('telescope').load_extension('neoclip')
 
-function live_grep_git_dir() local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel",
+function live_grep_git_dir()
+  local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel",
     vim.fn.expand("%:p:h")))
   git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
   local opts = { cwd = git_dir, }
