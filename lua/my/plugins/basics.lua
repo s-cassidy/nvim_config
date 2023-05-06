@@ -28,8 +28,7 @@ return {
   },
 
   -- tpope
-  { 'tpope/vim-repeat',  event = "VeryLazy" },               -- Integrates the repeat
-  { 'tpope/vim-vinegar' },                                   -- Improves netrw
+  { 'tpope/vim-repeat',  event = "VeryLazy" }, -- Integrates the repeat
   { 'tpope/vim-fugitive' },
 
 
@@ -43,7 +42,7 @@ return {
 
   -- quality of life
   { 'AckslD/nvim-neoclip.lua',         config = function() require('neoclip').setup() end }, -- improves clipboard integration
-  -- { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' }, -- better folding
+  { 'kevinhwang91/nvim-ufo',           dependencies = 'kevinhwang91/promise-async' },        -- better folding
 
-  { 'drmingdrmer/vim-toggle-quickfix', event = VeryLazy }, -- toggle the quickfix
+  { 'drmingdrmer/vim-toggle-quickfix', event = "VeryLazy" },                                 -- toggle the quickfix
 }
