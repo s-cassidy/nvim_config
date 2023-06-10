@@ -25,8 +25,8 @@ local function configure_debuggers()
 end
 
 function M.setup()
-  configure_exts() -- Extensions
-  configure_debuggers() -- Debugger
+  configure_exts()                  -- Extensions
+  configure_debuggers()             -- Debugger
   require("my.dap.keymaps").setup() -- Keymaps
 end
 

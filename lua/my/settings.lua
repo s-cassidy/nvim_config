@@ -46,7 +46,7 @@ local options = {
   fileencoding   = "utf-8",              --- The encoding written to file
   hlsearch       = false,                --- Don't leave searches highlighted
   incsearch      = true,                 --- Start searching before pressing enter
-  showmode       = false,                --- Don't show things like -- INSERT -- anymore
+  showmode       = true,                 --- Don't show things like -- INSERT -- anymore
 }
 
 for k, v in pairs(options) do

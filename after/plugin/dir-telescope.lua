@@ -6,7 +6,7 @@ require("dir-telescope").setup({
 local wk = require('which-key')
 
 wk.register({
-  ["<leader>fd"] = {'dir...'},
-  ["<leader>fdf"] = {':Telescope dir find_files', 'Find files'},
-  ["<leader>fdg"] = {':Telescope dir live_grep', 'grep'},})
-
+  ["<leader>fD"] = { 'dir...' },
+  ["<leader>fDf"] = { ':Telescope dir find_files', 'Find files' },
+  ["<leader>fDg"] = { ':Telescope dir live_grep', 'grep' },
+})

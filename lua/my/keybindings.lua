@@ -2,26 +2,28 @@ local map = vim.keymap.set
 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>",   ":bd<cr>",                   { silent = true } },              -- delete current buffer
-  { "<C-s-t>",   ":ObsidianTemplate<cr>",     { silent = true } },
-  { "<S-l>",     ":bn<cr>",                   { silent = true } },              -- next buffer
-  { "<S-h>",     ":bp<cr>",                   { silent = true } },              -- previous buffer
-  { "j",         "v:count ? 'j' : 'gj'",      { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
-  { "k",         "v:count ? 'k' : 'gk'",      { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
-  { "<leader>J", "mzJ`z",                     { desc = "Append line below" } }, -- append line below to current line without moving cursor
+  { "<C-s-D>",   ":bd<cr>",                    { silent = true } },              -- delete current buffer
+  { "<C-s-t>",   ":ObsidianTemplate<cr>",      { silent = true } },
+  { "<S-l>",     ":bn<cr>",                    { silent = true } },              -- next buffer
+  { "<S-h>",     ":bp<cr>",                    { silent = true } },              -- previous buffer
+  { "j",         "v:count ? 'j' : 'gj'",       { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
+  { "k",         "v:count ? 'k' : 'gk'",       { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
+  { "<leader>J", "mzJ`z",                      { desc = "Append line below" } }, -- append line below to current line without moving cursor
   { "n",         "nzzzv" },
-  { "N",         "Nzzzv" },                                                     -- cursor stays centered when searching
-  { "<C-u>",     "<C-u>zz" },                                                   -- moving up/down keep cursor centered -- less disorientating
-  { "<C-d>",     "<C-d>zz" },                                                   -- moving up/down keep cursor centered -- less disorientating
-  { "d ",        "dd" },                                                        -- faster/more comfortable than double jumping?
-  { "y ",        "yy" },                                                        -- faster/more comfortable than double jumping?
-  { "<C-Up>",    "<cmd>resize +2<cr>" },                                        -- resize windows with ctrl + arrows
+  { "N",         "Nzzzv" },                                                      -- cursor stays centered when searching
+  { "<C-u>",     "<C-u>zz" },                                                    -- moving up/down keep cursor centered -- less disorientating
+  { "<C-d>",     "<C-d>zz" },                                                    -- moving up/down keep cursor centered -- less disorientating
+  { "d ",        "dd" },                                                         -- faster/more comfortable than double jumping?
+  { "y ",        "yy" },                                                         -- faster/more comfortable than double jumping?
+  { "<C-Up>",    "<cmd>resize +2<cr>" },                                         -- resize windows with ctrl + arrows
   { "<C-Down>",  "<cmd>resize -2<cr>" },
-  { "<C-Left>",  "<cmd>vertica resize -2<cr>" },
-  { "<C-Right>", "<cmd>vertica resize +2<cr>" },
+  { "<C-Left>",  "<cmd>vertical resize -2<cr>" },
+  { "<C-Right>", "<cmd>vertical resize +2<cr>" },
   { "<esc>",     "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
   { "<C-w>|",    "<cmd>vsplit<cr>" },
   { "<C-w>-",    "<cmd>split<cr>" },
+  { "<CR>",      "o<esc>" },
+  { "<S-CR>",    "O<esc>" },
 }
 
 
@@ -151,14 +153,14 @@ local actions = require('telescope.actions')
 wk.register({
   ["<leader>f"] = { name = "+telescope" },
   ["<leader>F"] = { ":Telescope file_browser path=%:p:h select_buffer=true<cr>", "Browser" },
-  ['<leader>fz'] = { builtin.git_files, "Find files" },
+  ['<leader>fz'] = { builtin.find_files, "Find files" },
   ['<leader>fg'] = { ":lua live_grep_git_dir()<CR>", "grep project files" },
   ['<leader>fG'] = { builtin.live_grep, "grep cwd" },
   ['<leader>fy'] = { ":Telescope neoclip<cr>", "yanks clipboard" },
   ['<leader>fp'] = { ":Telescope lazy<cr>", "Plugins" },
   ['<leader>fb'] = { builtin.buffers, "Current buffers" },
   ['<leader>b'] = { builtin.buffers, "Current buffers" },
-  ['<leader>fD'] = { builtin.diagnostics, "Diagnostics" },
+  ['<leader>fd'] = { function() builtin.diagnostics({ bufnr = 0 }) end, "Diagnostics" },
   ['<leader>fo'] = { builtin.oldfiles, "History" },
   ['<leader>fh'] = { builtin.help_tags, "Help tags" },
   ['<leader>fu'] = { ":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree" }
@@ -166,13 +168,13 @@ wk.register({
 
 wk.register({
   ["<leader>v"] = { name = "+obsidian" },
-  ["<leader>vv"] = { ":tabe ~/notes/wiki<cr>:tcd ~/notes/wiki<cr>:TabRename vault<cr>",
+  ["<leader>vv"] = { ":tabe ~/wiki<cr>:tcd ~/wiki<cr>:TabRename vault<cr>",
     "Go to vault" },
   ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
   ["<leader>vn"] = { ":ObsidianNew ", "New note" },
   ["<leader>vs"] = { ":ObsidianSearch<cr>", "Search" },
   ["<leader>vo"] = { ":ObsidianSearch<cr>", "Open note" },
-  ["<leader>vm"] = { ":GMove ~/notes/wiki/", "Move/rename note" }, -- reqiures fugitive.vim
+  ["<leader>vm"] = { ":GMove ~/wiki/", "Move/rename note" }, -- reqiures fugitive.vim
 })
 
 wk.register({
