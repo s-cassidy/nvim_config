@@ -1,4 +1,5 @@
 return {
+
   -- Needed to load first
   { 'lewis6991/impatient.nvim',    priority = 100 },
   { 'nvim-lua/plenary.nvim' },
@@ -69,7 +70,7 @@ return {
     'kevinhwang91/nvim-ufo', -- better folding
     dependencies = 'kevinhwang91/promise-async',
     config = function()
-      require "my.plugins.config.ufo"
+      require "my.plugin-config.ufo"
     end,
   },
   {
@@ -90,7 +91,7 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = "tsakirist/telescope-lazy.nvim",
     config = function()
-      require("my.plugins.config.telescope")
+      require("my.plugin-config.telescope")
     end,
     event = 'VeryLazy'
   },
@@ -112,7 +113,7 @@ return {
     dependencies =
     { 'gaoDean/autolist.nvim' },
     config = function()
-      require "my.plugins.config.obsidian"
+      require "my.plugin-config.obsidian"
     end
   },
 
@@ -120,7 +121,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      require "my.plugins.config.treesitter"
+      require "my.plugin-config.treesitter"
     end
   },
   {
@@ -144,7 +145,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     config = function()
-      require "my.plugins.config.tstextobj"
+      require "my.plugin-config.tstextobj"
     end
   },
 
@@ -152,7 +153,7 @@ return {
   {
     'ThePrimeagen/harpoon',
     config = function()
-      require("my.plugins.config.harpoon")
+      require("my.plugin-config.harpoon")
     end
   },
 
@@ -164,12 +165,6 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       {
-        "SmiteshP/nvim-navbuddy",
-        dependencies = {
-          "SmiteshP/nvim-navic",
-          "MunifTanjim/nui.nvim"
-        },
-        opts = { lsp = { auto_attach = true } }
       }
     },
   },
@@ -179,13 +174,24 @@ return {
   {
     'jose-elias-alvarez/null-ls.nvim',
     config = function()
-      require("my.plugins.config.null")
+      require("my.plugin-config.null")
     end,
+  },
+  {
+    "SmiteshP/nvim-navbuddy",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "MunifTanjim/nui.nvim"
+    },
+    opts = { lsp = { auto_attach = true } },
+    config = function()
+      require('which-key').register({ ["<leader>n"] = { ":Navbuddy<cr>", "Symbols" } })
+    end
   },
   {
     'MunifTanjim/prettier.nvim',
     config = function()
-      require "my.plugins.config.prettier"
+      require "my.plugin-config.prettier"
     end
   },
   {
@@ -210,7 +216,7 @@ return {
       { 'dcampos/cmp-snippy',  event = 'InsertEnter' },
     },
     config = function()
-      require "my.plugins.config.cmp"
+      require "my.plugin-config.cmp"
     end
   },
 
@@ -218,7 +224,7 @@ return {
   {
     'dcampos/nvim-snippy',
     config = function()
-      require "my.plugins.config.snippy"
+      require "my.plugin-config.snippy"
     end,
     event = 'InsertEnter'
   },
@@ -232,7 +238,13 @@ return {
   -- testing
   --
 
-  "nvim-neotest/neotest",
+  {
+    "nvim-neotest/neotest",
+    config = function()
+      require "my.plugin-config.neotest"
+    end,
+    event = "VeryLazy",
+  },
   "nvim-neotest/neotest-python",
 
   -- STATUS LINES
@@ -241,19 +253,19 @@ return {
   --   'nvim-lualine/lualine.nvim',
   --   dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
   --   config = function()
-  --     require("my.plugins.config.lualine")
+  --     require("my.plugin-config.lualine")
   --   end
   -- },
   {
     "luukvbaal/statuscol.nvim",
     config = function()
-      require("my.plugins.config.statuscol")
+      require("my.plugin-config.statuscol")
     end
   },
   {
     'nanozuki/tabby.nvim',
     config = function()
-      require("my.plugins.config.tabby")
+      require("my.plugin-config.tabby")
     end
   },
 

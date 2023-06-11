@@ -1,4 +1,7 @@
 local actions = require "telescope.actions"
+local wk = require('which-key')
+local builtin = require('telescope.builtin')
+
 require('telescope').setup {
   defaults = {
     layout_strategy = 'bottom_pane',
@@ -70,9 +73,23 @@ require("dir-telescope").setup({
   hidden = true,
   respect_gitignore = true,
 })
-local wk = require('which-key')
 
+
+-- set bindings
 wk.register({
+  ["<leader>f"] = { name = "+telescope" },
+  ["<leader>F"] = { ":Telescope file_browser path=%:p:h select_buffer=true<cr>", "Browser" },
+  ['<leader>fz'] = { builtin.find_files, "Find files" },
+  ['<leader>fg'] = { ":lua live_grep_git_dir()<CR>", "grep project files" },
+  ['<leader>fG'] = { builtin.live_grep, "grep cwd" },
+  ['<leader>fy'] = { ":Telescope neoclip<cr>", "yanks clipboard" },
+  ['<leader>fp'] = { ":Telescope lazy<cr>", "Plugins" },
+  ['<leader>fb'] = { builtin.buffers, "Current buffers" },
+  ['<leader>b'] = { builtin.buffers, "Current buffers" },
+  ['<leader>fd'] = { function() builtin.diagnostics({ bufnr = 0 }) end, "Diagnostics" },
+  ['<leader>fo'] = { builtin.oldfiles, "History" },
+  ['<leader>fh'] = { builtin.help_tags, "Help tags" },
+  ['<leader>fu'] = { ":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree" },
   ["<leader>ff"] = { 'dir...' },
   ["<leader>fff"] = { ':Telescope dir find_files', 'Find files' },
   ["<leader>ffg"] = { ':Telescope dir live_grep', 'grep' },

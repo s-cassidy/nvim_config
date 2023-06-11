@@ -29,11 +29,8 @@ local normal = {
 
 -- Insert mode remaps
 local insert = {
-  { "<A-l>", "<C-o>l",           { silent } }, -- four mappings so that alt+hjkl moves cursor in insert
-  { "<A-k>", "<C-o>k",           { silent } },
-  { "<A-j>", "<C-o>j",           { silent } },
-  { "<A-h>", "<C-o>h",           { silent } },
   { "<esc>", "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
+  -- Add undo points at convenient punctuation marks
   { ",",     ",<c-g>u" },
   { ".",     ".<c-g>u" },
   { ";",     ";<c-g>u" },
@@ -48,11 +45,14 @@ local visual = {
   { ">",         ">gv" },
 }
 
--- all modes
+-- all non-insert modes
 local not_insert = {
-  --   { "-", ":Telescope file_browser path=%:p:h select_buffer=true<cr><esc>k" },
-  --   { "_", ":Telescope file_browser<cr><esc>kw" },
+  { "<leader>y", '"+y', { desc = "Yank to clipboard" } },
+  { "<leader>Y", '"+Y', { desc = "Yank end of line to clipboard" } },
+  { "<leader>d", '"+d', { desc = "Cut to clipboard" } },
+  { "<leader>p", '"+p', { desc = "Paste from clipboard" } },
 }
+
 -- Set bindings
 for i, bind in ipairs(insert) do
   map("i", unpack(bind))
@@ -76,25 +76,25 @@ map("o", "b", "vb")
 
 local wk = require("which-key")
 
+local def = { vim.lsp.buf.definition, "Goto definition" }
+local dec = { vim.lsp.buf.declaration, "Goto declaration" }
+local imp = { vim.lsp.buf.implementation, "Goto implementation" }
+local hov = { vim.lsp.buf.hover, "hover" }
+
 wk.register({
   ["[<Tab>"] = { ":tabp<CR>", "Tab previous" },
   ["]<Tab>"] = { ':tabn<CR>', "Tab next" },
   ["<leader>C"] = { name = "+config" },
   ["<leader>CE"] = { "<cmd>e ~/.config/nvim<CR>", "View config dir" },
+  ["<leader>CP"] = { "<cmd>e ~/.config/nvim/lua/my/plugin-config<CR>", "Configure individual plugins" },
   ["<leader>Ci"] = { "<cmd>e ~/.config/nvim/init.lua<CR>", "init.lua" },
   ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/my/colors.lua<CR>", "colours" },
   ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/my/settings.lua<CR>", "settings" },
   ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", "keymaps" },
   ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins<CR>", "plugins" },
   ["<leader>#"] = { ":buffer #<CR>", "Alt buffer" },
-})
 
-local def = { vim.lsp.buf.definition, "Goto definition" }
-local dec = { vim.lsp.buf.declaration, "Goto declaration" }
-local imp = { vim.lsp.buf.implementation, "Goto implementation" }
-local hov = { vim.lsp.buf.hover, "hover" }
--- LSP binds
-wk.register({
+  -- LSP binds
   ["<leader>l"] = { name = "+lsp" },
   ["<leader>lR"] = { vim.lsp.buf.rename, "Rename" },
   ["<leader>ll"] = { require("lsp_lines").toggle, "Toggle lsp-lines" },
@@ -107,77 +107,15 @@ wk.register({
   ["<leader>lr"] = { vim.lsp.buf.references, "References to QF" },
   ["<leader>lh"] = hov,
   ["K"] = hov,
-  ["<leader>lL"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" }
-})
+  ["<leader>lL"] = { vim.diagnostic.setloclist, "Diagnostics to local qf" },
 
 
+  -- Quickfix menu
+  ["<leader>Q"] = { ":copen<cr>", "Toggle global quickfix" },
+  ["<leader>q"] = { ":lopen<cr>", "Toggle local quickfix" },
 
-wk.register({
-  ["<leader>"] = {
-    y = { '"+y', "Yank to clipboard" },
-    Y = { '"+Y', "Yank to clipboard" },
-    d = { '"+d', "Cut to clipboard" },
-    ["<C-d>"] = { '"_d', "True delete" },
-    p = { '"+p', "Paste from clipboard" },
-  }
-})
+  -- Splits
 
-wk.register({
-  ["<leader>"] = {
-    y = { '"+y', "Yank to clipboard" },
-    d = { '"+d', "Cut to clipboard" },
-    p = { '"+p', "Paste from clipboard" },
-    ["<C-d>"] = { '"_d', "True delete" },
-    P = { '"+P', "Paste over and keep" }
-  }
-}, { mode = "v" })
-
-wk.register({ ["<leader>n"] = { ":Navbuddy<cr>", "Symbols" } })
-
-wk.register({
-  ["<leader>Q"] = { name = "+global quickfix" },
-  ["<leader>Qq"] = { ":copen<cr>", "open quickfix" },
-  ["<leader>Qn"] = { ":cnext<cr>", "next quickfix" },
-  ["<leader>Qp"] = { ":cprev<cr>", "previous quickfix" }
-})
-
-wk.register({
-  ["<leader>q"] = { name = "+local quickfix" },
-  ["<leader>qq"] = { ":lopen<cr>", "open local quickfix" },
-  ["<leader>qn"] = { ":lnext<cr>", "next local quickfix" },
-  ["<leader>qp"] = { ":lprev<cr>", "previous local quickfix" }
-})
-
-local builtin = require('telescope.builtin')
-local actions = require('telescope.actions')
-wk.register({
-  ["<leader>f"] = { name = "+telescope" },
-  ["<leader>F"] = { ":Telescope file_browser path=%:p:h select_buffer=true<cr>", "Browser" },
-  ['<leader>fz'] = { builtin.find_files, "Find files" },
-  ['<leader>fg'] = { ":lua live_grep_git_dir()<CR>", "grep project files" },
-  ['<leader>fG'] = { builtin.live_grep, "grep cwd" },
-  ['<leader>fy'] = { ":Telescope neoclip<cr>", "yanks clipboard" },
-  ['<leader>fp'] = { ":Telescope lazy<cr>", "Plugins" },
-  ['<leader>fb'] = { builtin.buffers, "Current buffers" },
-  ['<leader>b'] = { builtin.buffers, "Current buffers" },
-  ['<leader>fd'] = { function() builtin.diagnostics({ bufnr = 0 }) end, "Diagnostics" },
-  ['<leader>fo'] = { builtin.oldfiles, "History" },
-  ['<leader>fh'] = { builtin.help_tags, "Help tags" },
-  ['<leader>fu'] = { ":lua require('telescope').extensions.undo.undo()<cr><esc>k", "View undo tree" }
-})
-
-wk.register({
-  ["<leader>v"] = { name = "+obsidian" },
-  ["<leader>vv"] = { ":tabe ~/wiki<cr>:tcd ~/wiki<cr>:TabRename vault<cr>",
-    "Go to vault" },
-  ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
-  ["<leader>vn"] = { ":ObsidianNew ", "New note" },
-  ["<leader>vs"] = { ":ObsidianSearch<cr>", "Search" },
-  ["<leader>vo"] = { ":ObsidianSearch<cr>", "Open note" },
-  ["<leader>vm"] = { ":GMove ~/wiki/", "Move/rename note" }, -- reqiures fugitive.vim
-})
-
-wk.register({
   ["<leader>w"] = { name = "+window" },
   ["<leader>wd"] = { "<C-W>c", "close window" },
   ["<leader>ww"] = { "<C-W>w", "close window" },
