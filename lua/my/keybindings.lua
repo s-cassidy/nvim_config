@@ -22,8 +22,6 @@ local normal = {
   { "<esc>",     "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
   { "<C-w>|",    "<cmd>vsplit<cr>" },
   { "<C-w>-",    "<cmd>split<cr>" },
-  { "<CR>",      "o<esc>" },
-  { "<S-CR>",    "O<esc>" },
 }
 
 
@@ -91,7 +89,7 @@ wk.register({
   ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/my/colors.lua<CR>", "colours" },
   ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/my/settings.lua<CR>", "settings" },
   ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", "keymaps" },
-  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins<CR>", "plugins" },
+  ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>", "plugins" },
   ["<leader>#"] = { ":buffer #<CR>", "Alt buffer" },
 
   -- LSP binds
