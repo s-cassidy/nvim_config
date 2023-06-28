@@ -9,6 +9,10 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
   end,
 })
 
+vim.cmd [[
+au BufWinEnter *.md set updatetime=300 | set ft=markdown| set autoread
+au CursorHold *.md  checktime
+]]
 
 --
 

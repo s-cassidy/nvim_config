@@ -18,11 +18,11 @@ local cmp_config = require('lsp-zero').defaults.cmp_config({})
 
 
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  callback = function()
-    require("lint").try_lint()
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+--   callback = function()
+--     require("lint").try_lint()
+--   end,
+-- })
 
 
 vim.api.nvim_create_autocmd({ "BufWritePre" },

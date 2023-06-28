@@ -77,6 +77,15 @@ return {
     'drmingdrmer/vim-toggle-quickfix', -- toggle the quickfix
     event = "VeryLazy"
   },
+  {
+    'jinh0/eyeliner.nvim',
+    config = function()
+      require 'eyeliner'.setup {
+        highlight_on_key = true, -- show highlights only after keypress
+        dim = false              -- dim all other characters if set to true (recommended!)
+      }
+    end
+  },
 
   -- TEXT OBJECTS
   {
@@ -170,7 +179,7 @@ return {
   },
   { 'williamboman/mason.nvim' },
   { 'williamboman/mason-lspconfig.nvim' },
-  { 'mfussenegger/nvim-lint' },
+  -- { 'mfussenegger/nvim-lint' },
   {
     'jose-elias-alvarez/null-ls.nvim',
     config = function()
@@ -213,7 +222,19 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lua' },
-      { 'dcampos/cmp-snippy',  event = 'InsertEnter' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      {
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp",
+        event = "InsertEnter",
+        config = function()
+          require "my.plugin-config.luasnip"
+        end
+      },
+      { 'dcampos/cmp-snippy', event = 'InsertEnter' },
     },
     config = function()
       require "my.plugin-config.cmp"
@@ -221,6 +242,7 @@ return {
   },
 
   -- SNIPPETS
+  { 'honza/vim-snippets',       event = 'InsertEnter' },
   {
     'dcampos/nvim-snippy',
     config = function()
@@ -228,7 +250,6 @@ return {
     end,
     event = 'InsertEnter'
   },
-  { 'honza/vim-snippets',       event = 'InsertEnter' },
 
   -- Language-specific
   { 'AndrewRadev/tagalong.vim', ft = 'html' },

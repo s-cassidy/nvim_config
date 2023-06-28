@@ -4,8 +4,8 @@ local map = vim.keymap.set
 local normal = {
   { "<C-s-D>",   ":bd<cr>",                    { silent = true } },              -- delete current buffer
   { "<C-s-t>",   ":ObsidianTemplate<cr>",      { silent = true } },
-  { "<S-l>",     ":bn<cr>",                    { silent = true } },              -- next buffer
-  { "<S-h>",     ":bp<cr>",                    { silent = true } },              -- previous buffer
+  { "<S-l>",     "$",                          { silent = true } },              -- end of line
+  { "<S-h>",     "^",                          { silent = true } },              -- start of line
   { "j",         "v:count ? 'j' : 'gj'",       { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
   { "k",         "v:count ? 'k' : 'gk'",       { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
   { "<leader>J", "mzJ`z",                      { desc = "Append line below" } }, -- append line below to current line without moving cursor
@@ -52,19 +52,19 @@ local not_insert = {
 }
 
 -- Set bindings
-for i, bind in ipairs(insert) do
+for _, bind in ipairs(insert) do
   map("i", unpack(bind))
 end
 
-for i, bind in ipairs(normal) do
+for _, bind in ipairs(normal) do
   map("n", unpack(bind))
 end
 
-for i, bind in ipairs(visual) do
+for _, bind in ipairs(visual) do
   map("v", unpack(bind))
 end
 
-for i, bind in ipairs(not_insert) do
+for _, bind in ipairs(not_insert) do
   map("v", unpack(bind))
   map("n", unpack(bind))
 end
