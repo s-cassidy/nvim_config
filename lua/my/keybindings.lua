@@ -27,11 +27,12 @@ local normal = {
 
 -- Insert mode remaps
 local insert = {
-  { "<esc>", "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
+  { "<esc>",  "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
   -- Add undo points at convenient punctuation marks
-  { ",",     ",<c-g>u" },
-  { ".",     ".<c-g>u" },
-  { ";",     ";<c-g>u" },
+  { ",",      ",<c-g>u" },
+  { ".",      ".<c-g>u" },
+  { ";",      ";<c-g>u" },
+  { "<s-cr>", '<cr><esc>ko' },
 }
 
 -- Visual mode remaps
