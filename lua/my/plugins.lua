@@ -1,7 +1,6 @@
 return {
 
   -- Needed to load first
-  { 'lewis6991/impatient.nvim',    priority = 100 },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
@@ -198,12 +197,6 @@ return {
     end
   },
   {
-    'MunifTanjim/prettier.nvim',
-    config = function()
-      require "my.plugin-config.prettier"
-    end
-  },
-  {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup()
@@ -222,19 +215,19 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lua' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      {
-        "L3MON4D3/LuaSnip",
-        -- follow latest release.
-        version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-        -- install jsregexp (optional!).
-        build = "make install_jsregexp",
-        event = "InsertEnter",
-        config = function()
-          require "my.plugin-config.luasnip"
-        end
-      },
-      { 'dcampos/cmp-snippy', event = 'InsertEnter' },
+      -- { 'saadparwaiz1/cmp_luasnip' },
+      -- {
+      --   "L3MON4D3/LuaSnip",
+      --   -- follow latest release.
+      --   version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      --   -- install jsregexp (optional!).
+      --   build = "make install_jsregexp",
+      --   event = "InsertEnter",
+      --   config = function()
+      --     require "my.plugin-config.luasnip"
+      --   end
+      -- },
+      { 'dcampos/cmp-snippy',  event = 'InsertEnter' },
     },
     config = function()
       require "my.plugin-config.cmp"
@@ -253,20 +246,6 @@ return {
 
   -- Language-specific
   { 'AndrewRadev/tagalong.vim', ft = 'html' },
-
-
-
-  -- testing
-  --
-
-  {
-    "nvim-neotest/neotest",
-    config = function()
-      require "my.plugin-config.neotest"
-    end,
-    event = "VeryLazy",
-  },
-  "nvim-neotest/neotest-python",
 
   -- STATUS LINES
 
@@ -292,13 +271,6 @@ return {
 
   -- MINI
   {
-    'echasnovski/mini.cursorword', -- underline occurrences of word under cursor
-    config = function()
-      require('mini.cursorword').setup()
-    end,
-    event = "CursorMoved"
-  },
-  {
     'echasnovski/mini.ai', -- Improves a and i text objects
     event = "VeryLazy",
     config = function()
@@ -313,19 +285,12 @@ return {
     end
   },
   {
-    'echasnovski/mini.splitjoin',
+    'echasnovski/mini.splitjoin', -- join and split things
     event = "VeryLazy",
     config = function()
       require('mini.splitjoin').setup()
     end
-  }, -- join and split things
-  {
-    'echasnovski/mini.colors',
-    event = "VeryLazy",
-    config = function()
-      require('mini.colors').setup()
-    end
-  }, -- join and split things
+  },
 
   -- UTILITIES
   {
