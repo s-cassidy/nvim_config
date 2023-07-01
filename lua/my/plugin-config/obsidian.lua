@@ -1,5 +1,5 @@
 require("obsidian").setup({
-  dir = "~/wiki/",
+  dir = "~/notes/",
   templates = {
     subdir = "templates",
     date_format = "%Y-%m-%d-%a",
