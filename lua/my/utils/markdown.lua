@@ -4,7 +4,6 @@ M.toggle_checkbox = function()
   local line = vim.api.nvim_get_current_line()
   line = line:gsub("^%s*(.-)%s*$", "%1")
   if string.sub(line, 1, 2) ~= "- " and string.sub(line, 1, 2) ~= "* " then
-    print("got here")
     return
   end
 

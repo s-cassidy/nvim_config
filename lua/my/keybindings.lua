@@ -2,13 +2,13 @@ local map = vim.keymap.set
 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>",   ":bd<cr>",                    { silent = true } },              -- delete current buffer
-  { "<C-s-t>",   ":ObsidianTemplate<cr>",      { silent = true } },
-  { "<S-l>",     "$",                          { silent = true } },              -- end of line
-  { "<S-h>",     "^",                          { silent = true } },              -- start of line
-  { "j",         "v:count ? 'j' : 'gj'",       { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
-  { "k",         "v:count ? 'k' : 'gk'",       { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
-  { "<leader>J", "mzJ`z",                      { desc = "Append line below" } }, -- append line below to current line without moving cursor
+  { "<C-s-D>",   ":bd<cr>",                                    { silent = true } }, -- delete current buffer
+  { "<C-s-t>",   ":ObsidianTemplate<cr>",                      { silent = true } },
+  { "<S-l>",     "$",                                          { silent = true } }, -- end of line
+  { "<S-h>",     "^",                                          { silent = true } }, -- start of line
+  { "j",         "v:count ? 'j' : 'gj'",                       { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
+  { "k",         "v:count ? 'k' : 'gk'",                       { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
+  { "<leader>J", "mzJ`z",                                      { desc = "Append line below" } }, -- append line below to current line without moving cursor
   { "n",         "nzzzv" },
   { "N",         "Nzzzv" },                                                      -- cursor stays centered when searching
   { "<C-u>",     "<C-u>zz" },                                                    -- moving up/down keep cursor centered -- less disorientating
@@ -22,6 +22,7 @@ local normal = {
   { "<esc>",     "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
   { "<C-w>|",    "<cmd>vsplit<cr>" },
   { "<C-w>-",    "<cmd>split<cr>" },
+  { "gtt",       require("my.utils.markdown").toggle_checkbox, { desc = "Add a checkbox, or toggle its status" } },
 }
 
 
