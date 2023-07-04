@@ -48,8 +48,23 @@ local toggle_floating_diagnostics = function()
   ]]
   end
 end
+
+local lines_on = false
+vim.diagnostic.config({ virtual_lines = false })
+local lines_toggle = function()
+  if lines_on == false then
+    vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+    lines_on = true
+  else
+    lines_on = false
+    vim.diagnostic.config({ virtual_lines = false })
+  end
+end
+
+
 wk.register({
-  ["<leader>lf"] = { toggle_floating_diagnostics, "toggle floating diagnostics" }
+  ["<leader>lf"] = { toggle_floating_diagnostics, "toggle floating diagnostics" },
+  ["<leader>ll"] = { lines_toggle, "Toggle lsp-lines" },
 })
 
 

@@ -2,20 +2,20 @@ local map = vim.keymap.set
 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>",   ":bd<cr>",                                    { silent = true } }, -- delete current buffer
+  { "<C-s-D>",   ":bd<cr>",                                    { silent = true } },              -- delete current buffer
   { "<C-s-t>",   ":ObsidianTemplate<cr>",                      { silent = true } },
-  { "<S-l>",     "$",                                          { silent = true } }, -- end of line
-  { "<S-h>",     "^",                                          { silent = true } }, -- start of line
+  { "<S-l>",     "$",                                          { silent = true } },              -- end of line
+  { "<S-h>",     "^",                                          { silent = true } },              -- start of line
   { "j",         "v:count ? 'j' : 'gj'",                       { silent = true, expr = true } }, -- j goes down by visual lines, unless a count is provided
   { "k",         "v:count ? 'k' : 'gk'",                       { silent = true, expr = true } }, -- k goes up by visual lines, unless a count is provided
   { "<leader>J", "mzJ`z",                                      { desc = "Append line below" } }, -- append line below to current line without moving cursor
   { "n",         "nzzzv" },
-  { "N",         "Nzzzv" },                                                      -- cursor stays centered when searching
-  { "<C-u>",     "<C-u>zz" },                                                    -- moving up/down keep cursor centered -- less disorientating
-  { "<C-d>",     "<C-d>zz" },                                                    -- moving up/down keep cursor centered -- less disorientating
-  { "d ",        "dd" },                                                         -- faster/more comfortable than double jumping?
-  { "y ",        "yy" },                                                         -- faster/more comfortable than double jumping?
-  { "<C-Up>",    "<cmd>resize +2<cr>" },                                         -- resize windows with ctrl + arrows
+  { "N",         "Nzzzv" },                                                                      -- cursor stays centered when searching
+  { "<C-u>",     "<C-u>zz" },                                                                    -- moving up/down keep cursor centered -- less disorientating
+  { "<C-d>",     "<C-d>zz" },                                                                    -- moving up/down keep cursor centered -- less disorientating
+  { "d ",        "dd" },                                                                         -- faster/more comfortable than double jumping?
+  { "y ",        "yy" },                                                                         -- faster/more comfortable than double jumping?
+  { "<C-Up>",    "<cmd>resize +2<cr>" },                                                         -- resize windows with ctrl + arrows
   { "<C-Down>",  "<cmd>resize -2<cr>" },
   { "<C-Left>",  "<cmd>vertical resize -2<cr>" },
   { "<C-Right>", "<cmd>vertical resize +2<cr>" },
@@ -97,7 +97,6 @@ wk.register({
   -- LSP binds
   ["<leader>l"] = { name = "+lsp" },
   ["<leader>lR"] = { vim.lsp.buf.rename, "Rename" },
-  ["<leader>ll"] = { require("lsp_lines").toggle, "Toggle lsp-lines" },
   ["<leader>ld"] = def,
   ["gd"] = def,
   ["<leader>lD"] = def,
