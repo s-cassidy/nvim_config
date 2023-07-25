@@ -148,9 +148,6 @@ return {
     end
   },
   {
-    'nvim-treesitter/nvim-treesitter-context', dependencies = { 'nvim-treesitter/nvim-treesitter' }
-  },
-  {
     'nvim-treesitter/nvim-treesitter-textobjects',
     config = function()
       require "my.plugin-config.tstextobj"
@@ -262,12 +259,12 @@ return {
       require("my.plugin-config.statuscol")
     end
   },
-  {
-    'nanozuki/tabby.nvim',
-    config = function()
-      require("my.plugin-config.tabby")
-    end
-  },
+  -- {
+  --   'nanozuki/tabby.nvim',
+  --   config = function()
+  --     require("my.plugin-config.tabby")
+  --   end
+  -- },
 
   -- MINI
   {

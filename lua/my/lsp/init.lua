@@ -19,6 +19,9 @@ lsp.ensure_installed({
   'eslint',
 })
 
+require 'lspconfig'.intelephense.setup {}
+
+
 require 'lspconfig'.lua_ls.setup {
   settings = {
     Lua = {
