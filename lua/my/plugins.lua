@@ -1,5 +1,4 @@
 return {
-
   -- Needed to load first
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
@@ -10,10 +9,15 @@ return {
   -- COLORSCHEME
 
   {
-    "ellisonleao/gruvbox.nvim", priority = 100
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
   },
 
   -- other themes I like
+  --{"ellisonleao/gruvbox.nvim", priority = 100},
+  --"folke/tokyonight.nvim",
   --{ 'sainnhe/everforest', priority = 100 },
   -- {'rebelot/kanagawa.nvim', priority = 100},
   --{ 'Shatur/neovim-ayu', priority = 100 },
@@ -46,7 +50,7 @@ return {
     'tpope/vim-fugitive'
   },
 
-  -- FILE BROWSERS
+  -- FILE BROWSER
   {
     'stevearc/oil.nvim',
     config = function()
@@ -66,15 +70,11 @@ return {
     end
   },
   {
-    'kevinhwang91/nvim-ufo', -- better folding
-    dependencies = 'kevinhwang91/promise-async',
-    config = function()
-      require "my.plugin-config.ufo"
-    end,
-  },
-  {
-    'drmingdrmer/vim-toggle-quickfix', -- toggle the quickfix
-    event = "VeryLazy"
+    'shadyalfred/electric-quotes.nvim',
+    dependencies = {
+      'uga-rosa/utf8.nvim',
+    },
+    cmd = 'ElectricQuotesToggle',
   },
   {
     'jinh0/eyeliner.nvim',
@@ -85,13 +85,10 @@ return {
       }
     end
   },
-
-  -- TEXT OBJECTS
   {
-    "chrisgrieser/nvim-various-textobjs",
-    config = function()
-      require("various-textobjs").setup({ useDefaultKeymaps = true })
-    end,
+    "chrisgrieser/nvim-early-retirement",
+    -- config = true,
+    event = "VeryLazy",
   },
 
   -- TELESCOPE
@@ -110,9 +107,6 @@ return {
   {
     "princejoogie/dir-telescope.nvim",
     dependencies = 'nvim-telescope/telescope.nvim'
-  },
-  {
-    "Theo-Steiner/togglescope"
   },
 
   -- OBSIDIAN
@@ -133,18 +127,10 @@ return {
     end
   },
   {
-    'nvim-treesitter/playground',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' }
-  },
-  {
-    'mrjones2014/nvim-ts-rainbow',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' }
-  },
-  {
-    'windwp/nvim-ts-autotag',
+    'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('nvim-ts-autotag').setup()
+      require "my.plugin-config.rainbow"
     end
   },
   {
@@ -181,17 +167,6 @@ return {
     config = function()
       require("my.plugin-config.null")
     end,
-  },
-  {
-    "SmiteshP/nvim-navbuddy",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "MunifTanjim/nui.nvim"
-    },
-    opts = { lsp = { auto_attach = true } },
-    config = function()
-      require('which-key').register({ ["<leader>n"] = { ":Navbuddy<cr>", "Symbols" } })
-    end
   },
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -244,25 +219,38 @@ return {
   -- Language-specific
   { 'AndrewRadev/tagalong.vim', ft = 'html' },
 
+
+  -- QMK
+  --
+  {
+    'codethread/qmk.nvim',
+    config = function()
+      ---@type qmk.UserConfig
+      local conf = {
+        name = 'LAYOUT_planck_grid',
+        comment_preview = {
+          keymap_overrides = {
+            HERE_BE_A_LONG_KEY = 'Magic', -- replace any long key codes
+          }
+        },
+        layout = {
+          '_ x x x x x x _ x x x x x x',
+          '_ x x x x x x _ x x x x x x',
+          '_ x x x x x x _ x x x x x x',
+          '_ x x x x x x _ x x x x x x',
+        }
+      }
+      require('qmk').setup(conf)
+    end
+  },
+
+
   -- STATUS LINES
 
   -- {
-  --   'nvim-lualine/lualine.nvim',
-  --   dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
+  --   "luukvbaal/statuscol.nvim",
   --   config = function()
-  --     require("my.plugin-config.lualine")
-  --   end
-  -- },
-  {
-    "luukvbaal/statuscol.nvim",
-    config = function()
-      require("my.plugin-config.statuscol")
-    end
-  },
-  -- {
-  --   'nanozuki/tabby.nvim',
-  --   config = function()
-  --     require("my.plugin-config.tabby")
+  --     require("my.plugin-config.statuscol")
   --   end
   -- },
 
@@ -274,11 +262,41 @@ return {
       require('mini.ai').setup()
     end
   },
+  -- {
+  --   'echasnovski/mini.animate', -- Animate stuff
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require('mini.animate').setup({
+  --       cursor = {
+  --         timing = require('mini.animate').gen_timing.linear({ duration = 150, unit = 'total' }),
+  --       },
+  --       scroll = {
+  --         enable = false
+  --       }
+  --     })
+  --   end
+  -- },
+  {
+    'echasnovski/mini.pairs', -- pair brackets etc
+    event = "VeryLazy",
+    config = function()
+      require('my.plugin-config.minipairs')
+    end
+  },
+  {
+    'echasnovski/mini.align', -- Align columns of text
+    event = "VeryLazy",
+    config = function()
+      require('mini.align').setup()
+    end
+  },
   {
     'echasnovski/mini.bracketed', -- lots of [ ] pair commands
     event = "VeryLazy",
     config = function()
-      require('mini.bracketed').setup()
+      require('mini.bracketed').setup({
+        file = { suffix = '', options = {} },
+      })
     end
   },
   {

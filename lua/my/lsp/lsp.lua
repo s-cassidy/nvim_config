@@ -1,6 +1,4 @@
 local lsp = require('lsp-zero')
-require('lsp-zero').set_sign_icons()
-vim.diagnostic.config(require('lsp-zero').defaults.diagnostics({}))
 
 lsp.set_preferences({
   suggest_lsp_servers = true,

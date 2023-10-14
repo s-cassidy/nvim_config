@@ -23,6 +23,7 @@ local normal = {
   { "<C-w>|",    "<cmd>vsplit<cr>" },
   { "<C-w>-",    "<cmd>split<cr>" },
   { "gtt",       require("my.utils.markdown").toggle_checkbox, { desc = "Add a checkbox, or toggle its status" } },
+  { "<leader>L", ":lua = ",                                    { desc = "Evaluate lua" } },
 }
 
 
@@ -47,10 +48,11 @@ local visual = {
 
 -- all non-insert modes
 local not_insert = {
-  { "<leader>y", '"+y', { desc = "Yank to clipboard" } },
-  { "<leader>Y", '"+Y', { desc = "Yank end of line to clipboard" } },
-  { "<leader>d", '"+d', { desc = "Cut to clipboard" } },
-  { "<leader>p", '"+p', { desc = "Paste from clipboard" } },
+  { "<leader>y", '"+y',     { desc = "Yank to clipboard" } },
+  { "<leader>Y", '"+Y',     { desc = "Yank end of line to clipboard" } },
+  { "<leader>d", '"+d',     { desc = "Cut to clipboard" } },
+  { "<leader>p", '"+p',     { desc = "Paste from clipboard" } },
+  { "<C-F>",     ":<C-F>a", { desc = "Edit command" } },
 }
 
 -- Set bindings
@@ -89,6 +91,7 @@ wk.register({
   ["<leader>CP"] = { "<cmd>e ~/.config/nvim/lua/my/plugin-config<CR>", "Configure individual plugins" },
   ["<leader>Ci"] = { "<cmd>e ~/.config/nvim/init.lua<CR>", "init.lua" },
   ["<leader>Cc"] = { "<cmd>e ~/.config/nvim/lua/my/colors.lua<CR>", "colours" },
+  ["<leader>Cl"] = { "<cmd>e ~/.config/nvim/lua/my/lsp<CR>", "lsp" },
   ["<leader>Cs"] = { "<cmd>e ~/.config/nvim/lua/my/settings.lua<CR>", "settings" },
   ["<leader>Ck"] = { "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", "keymaps" },
   ["<leader>Cp"] = { "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>", "plugins" },

@@ -14,10 +14,6 @@ require 'lspconfig'.tsserver.setup {
   filetypes = { "javascript" }
 }
 
-lsp.ensure_installed({
-  'tsserver',
-  'eslint',
-})
 
 require 'lspconfig'.intelephense.setup {}
 

@@ -9,10 +9,10 @@ require 'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<A-CR>",
-      node_incremental = "<A-CR>",
-      scope_incremental = "<A-S-CR>",
-      node_decremental = "<A-BS>",
+      init_selection = "<A-v>",
+      node_incremental = "<A-v>",
+      scope_incremental = false,
+      node_decremental = "<A-d>",
     },
   },
   indent = {
@@ -29,16 +29,4 @@ require 'nvim-treesitter.configs'.setup {
   },
 
 
-  rainbow = {
-    enable = false,
-    extended_mode = true,
-    max_file_lines = nil,
-  },
 }
-
-
-
-local wk = require('which-key')
-wk.register({
-  ["<leader>r"] = { ':TSToggle rainbow<CR>', 'Toggle Rainbow' }
-})
