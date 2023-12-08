@@ -70,6 +70,10 @@ return {
     end
   },
   {
+    "chrisgrieser/nvim-puppeteer", -- automatically convert to f-string
+    lazy = false,                  -- plugin lazy-loads itself. Can also load on filetypes.
+  },
+  {
     'shadyalfred/electric-quotes.nvim',
     dependencies = {
       'uga-rosa/utf8.nvim',
@@ -116,6 +120,16 @@ return {
     { 'gaoDean/autolist.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
+    end
+  },
+  {
+    'arnarg/todotxt.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = function()
+      require('todotxt-nvim').setup({
+        todo_file = "~/notes/todo/todo.txt",
+      })
+      require "my.plugin-config.todotxt"
     end
   },
 
@@ -262,20 +276,20 @@ return {
       require('mini.ai').setup()
     end
   },
-  -- {
-  --   'echasnovski/mini.animate', -- Animate stuff
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require('mini.animate').setup({
-  --       cursor = {
-  --         timing = require('mini.animate').gen_timing.linear({ duration = 150, unit = 'total' }),
-  --       },
-  --       scroll = {
-  --         enable = false
-  --       }
-  --     })
-  --   end
-  -- },
+  {
+    'echasnovski/mini.animate', -- Animate stuff
+    event = "VeryLazy",
+    config = function()
+      require('mini.animate').setup({
+        cursor = {
+          timing = require('mini.animate').gen_timing.linear({ duration = 150, unit = 'total' }),
+        },
+        scroll = {
+          enable = false
+        }
+      })
+    end
+  },
   {
     'echasnovski/mini.pairs', -- pair brackets etc
     event = "VeryLazy",
