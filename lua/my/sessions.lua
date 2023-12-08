@@ -187,15 +187,14 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end
 }
 )
-
-local wk = require("which-key")
-wk.register({
-  ["<leader>s"] = { name = "+sessions" },
-  ["<leader>ss"] = { M.save_session, "Save session" },
-  ["<leader>so"] = { M.list_sessions, "Open session" },
-  ["<leader>st"] = { M.toggle_tracking, "Toggle session recording" },
-  ["<leader>sd"] = { M.delete_session, "Delete a session file" },
+local binds = {
+  { "<leader>ss", M.save_session,    { desc = "Save session" } },
+  { "<leader>so", M.list_sessions,   { desc = "Open session" } },
+  { "<leader>st", M.toggle_tracking, { desc = "Toggle session recording" } },
+  { "<leader>sd", M.delete_session,  { desc = "Delete a session file" } },
 }
-)
 
+for _, bind in ipairs(binds) do
+  vim.keymap.set("n", unpack(bind))
+end
 return M
