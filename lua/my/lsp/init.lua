@@ -10,12 +10,9 @@ for _, server_name in ipairs(get_servers()) do
   require('lspconfig')[server_name].setup({})
 end
 
-require 'lspconfig'.tsserver.setup {
-  filetypes = { "javascript" }
-}
-
-
-require 'lspconfig'.intelephense.setup {}
+-- require 'lspconfig'.tsserver.setup {
+--   filetypes = { "javascript" }
+-- }
 
 
 require 'lspconfig'.lua_ls.setup {
@@ -29,8 +26,44 @@ require 'lspconfig'.lua_ls.setup {
   },
 }
 
+vim.api.nvim_create_autocmd({ "BufWritePre" },
+  { command = [[lua vim.lsp.buf.format()]] })
 
 
-require('my.lsp.lsp')
-require('my.lsp.webdev')
--- require('my.lsp.signatures')
+vim.o.updatetime = 250
+local floatdiag = 0;
+local toggle_floating_diagnostics = function()
+  if floatdiag == 0 then
+    vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = "DiagnosticFloat",
+      pattern = { "*" },
+      command = [[lua vim.diagnostic.open_float(nil, {focus=false})]]
+    })
+    floatdiag = 1
+  else
+    floatdiag = 0
+    vim.cmd [[
+  autocmd! DiagnosticFloat CursorHold,CursorHoldI *
+  ]]
+  end
+end
+
+vim.keymap.set("n", "<leader>lf", toggle_floating_diagnostics, { desc = "toggle floating diagnostics" })
+
+
+local signs = { Error = "!!", Warn = ">>", Hint = "--", Info = "??" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl })
+end
+
+
+
+require 'lspconfig'.html.setup {}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require 'lspconfig'.cssls.setup {
+  capabilities = capabilities,
+}
