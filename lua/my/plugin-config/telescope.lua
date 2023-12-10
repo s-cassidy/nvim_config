@@ -2,27 +2,17 @@ local actions = require "telescope.actions"
 local builtin = require('telescope.builtin')
 
 require('telescope').setup {
-  defaults = {
-    layout_strategy = 'bottom_pane',
-    layout_config = {
-      height = 10,
-      prompt_position = 'bottom'
-    },
-  },
+  -- defaults = {
+  --   layout_strategy = 'bottom_pane',
+  --   layout_config = {
+  --     height = 10,
+  --     prompt_position = 'bottom'
+  --   },
+  -- },
   mappings = {
     n = {
       ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,
       ["<leader>Q"] = actions.smart_add_to_qflist + actions.open_qflist
-    }
-  },
-  extensions = {
-    togglescope = {
-      ["find_files"] = {
-        ['<C-x>'] = {
-          hidden = true,
-          no_ignore = true,
-        }
-      }
     }
   },
 
@@ -52,11 +42,7 @@ require('telescope').setup {
   },
 }
 require("telescope").load_extension "lazy"
-
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
--- require('telescope').load_extension('luasnip')
 require('telescope').load_extension('neoclip')
 
 function live_grep_git_dir()
@@ -76,7 +62,6 @@ require("dir-telescope").setup({
 
 -- set bindings
 local binds = {
-  { "<leader>F",   ":Telescope file_browser path=%:p:h select_buffer=true<cr>",  { desc = "Browser" } },
   { '<leader>fz',  builtin.find_files,                                           { desc = "Find files" } },
   { '<C-p>',       builtin.find_files,                                           { desc = "Find files" } },
   { '<leader>fg',  ":lua live_grep_git_dir()<CR>",                               { desc = "grep project files" } },

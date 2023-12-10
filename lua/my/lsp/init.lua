@@ -33,4 +33,4 @@ require 'lspconfig'.lua_ls.setup {
 
 require('my.lsp.lsp')
 require('my.lsp.webdev')
-require('my.lsp.signatures')
+-- require('my.lsp.signatures')

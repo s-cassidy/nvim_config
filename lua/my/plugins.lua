@@ -50,6 +50,16 @@ return {
     'tpope/vim-fugitive'
   },
 
+  -- GIT
+  --
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+    ,
+  },
+
   -- FILE BROWSER
   {
     'stevearc/oil.nvim',
@@ -169,12 +179,18 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      {
-      }
+      { 'williamboman/mason.nvim' },
+      "williamboman/mason-lspconfig.nvim",
     },
   },
-  { 'williamboman/mason.nvim' },
-  { 'williamboman/mason-lspconfig.nvim' },
+  {
+    "folke/neoconf.nvim",
+    cmd = "Neoconf",
+    config = false,
+    dependencies = {
+      "nvim-lspconfig" }
+  },
+  { "folke/neodev.nvim",                  opts = {} },
   -- { 'mfussenegger/nvim-lint' },
   {
     'jose-elias-alvarez/null-ls.nvim',
@@ -188,7 +204,7 @@ return {
       require("lsp_lines").setup()
     end
   },
-  { 'ray-x/lsp_signature.nvim',  event = "InsertEnter" },
+  -- { 'ray-x/lsp_signature.nvim',  event = "InsertEnter" },
 
   -- Autocompletion
   { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
@@ -221,7 +237,7 @@ return {
   },
 
   -- SNIPPETS
-  { 'honza/vim-snippets',       event = 'InsertEnter' },
+  { 'honza/vim-snippets',        event = 'InsertEnter' },
   {
     'dcampos/nvim-snippy',
     config = function()
@@ -230,8 +246,67 @@ return {
     event = 'InsertEnter'
   },
 
+
+  -- UI
+  --
+  -- lazy.nvim
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("noice").setup({
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["config.lsp.signature.enabled"] = false,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+          bottom_search = true,         -- use a classic bottom cmdline for search
+          command_palette = true,       -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false,       -- add a border to hover docs and signature help
+        },
+      }
+      )
+    end,
+    opts = {
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  },
+  {
+    "stevearc/dressing.nvim",
+    lazy = true,
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.select(...)
+      end
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.input(...)
+      end
+    end,
+  },
+
+
+
   -- Language-specific
-  { 'AndrewRadev/tagalong.vim', ft = 'html' },
+  { 'AndrewRadev/tagalong.vim',      ft = 'html' },
 
 
   -- QMK
@@ -275,6 +350,36 @@ return {
     config = function()
       require('mini.ai').setup()
     end
+  },
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = "VeryLazy",
+    opts = {
+      -- symbol = "▏",
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
   },
   {
     'echasnovski/mini.animate', -- Animate stuff
