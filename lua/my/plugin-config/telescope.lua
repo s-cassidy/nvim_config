@@ -2,13 +2,6 @@ local actions = require "telescope.actions"
 local builtin = require('telescope.builtin')
 
 require('telescope').setup {
-  -- defaults = {
-  --   layout_strategy = 'bottom_pane',
-  --   layout_config = {
-  --     height = 10,
-  --     prompt_position = 'bottom'
-  --   },
-  -- },
   mappings = {
     n = {
       ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,
@@ -45,7 +38,26 @@ require("telescope").load_extension "lazy"
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('neoclip')
 
-function live_grep_git_dir()
+local is_inside_work_tree = {}
+
+local project_files = function()
+  local opts = {} -- define here if you want to define something
+
+  local cwd = vim.fn.getcwd()
+  if is_inside_work_tree[cwd] == nil then
+    vim.fn.system("git rev-parse --is-inside-work-tree")
+    is_inside_work_tree[cwd] = vim.v.shell_error == 0
+  end
+
+  if is_inside_work_tree[cwd] then
+    builtin.git_files(opts)
+  else
+    builtin.find_files(opts)
+  end
+end
+
+
+local function live_grep_git_dir()
   local git_dir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel",
     vim.fn.expand("%:p:h")))
   git_dir = string.gsub(git_dir, "\n", "") -- remove newline character from git_dir
@@ -62,13 +74,14 @@ require("dir-telescope").setup({
 
 -- set bindings
 local binds = {
-  { '<leader>fz',  builtin.find_files,                                           { desc = "Find files" } },
-  { '<C-p>',       builtin.find_files,                                           { desc = "Find files" } },
-  { '<leader>fg',  ":lua live_grep_git_dir()<CR>",                               { desc = "grep project files" } },
-  { '<C-g>',       ":lua live_grep_git_dir()<CR>",                               { desc = "grep project files" } },
+  { '<leader>fz',  project_files,                                                { desc = "Find files" } },
+  { '<C-p>',       project_files,                                                { desc = "Find files" } },
+  { '<leader>fg',  live_grep_git_dir,                                            { desc = "grep project files" } },
+  { '<C-g>',       live_grep_git_dir,                                            { desc = "grep project files" } },
   { '<leader>fG',  builtin.live_grep,                                            { desc = "grep cwd" } },
   { '<leader>fy',  ":Telescope neoclip<cr>",                                     { desc = "yanks clipboard" } },
   { '<leader>fp',  ":Telescope lazy<cr>",                                        { desc = "Plugins" } },
+  { '<leader>fk',  ":Telescope keymaps<cr>",                                     { desc = "Plugins" } },
   { '<leader>fb',  builtin.buffers,                                              { desc = "Current buffers" } },
   { '<leader>b',   builtin.buffers,                                              { desc = "Current buffers" } },
   { '<leader>fd',  function() builtin.diagnostics({ bufnr = 0 }) end,            { desc = "Diagnostics" } },
