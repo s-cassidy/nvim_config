@@ -4,33 +4,53 @@ return {
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
 
-  { 'folke/which-key.nvim',        lazy = true },
+  {
+    'folke/which-key.nvim',
+    lazy = true,
+  },
 
   -- COLORSCHEME
 
   {
     "folke/tokyonight.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1000,
     opts = {},
+  },
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("cyberdream").setup({
+        -- Recommended - see "Configuring" below for more config options
+        transparent = true,
+        italic_comments = true,
+        hide_fillchars = true,
+        borderless_telescope = true,
+      })
+    end,
+  },
+
+  { "catppuccin/nvim",       lazy = true, name = "catppuccin", priority = 1000 },
+
+  {
+    'crispybaccoon/evergarden',
+    opts = {
+      transparent_background = true,
+      contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
+      overrides = {},           -- add custom overrides
+    }
   },
 
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
   --"folke/tokyonight.nvim",
-  --{ 'sainnhe/everforest', priority = 100 },
-  -- {'rebelot/kanagawa.nvim', priority = 100},
-  --{ 'Shatur/neovim-ayu', priority = 100 },
+  { 'sainnhe/everforest',    lazy = true, priority = 100 },
+  { 'rebelot/kanagawa.nvim', lazy = true, priority = 100 },
+  { 'Shatur/neovim-ayu',     lazy = true, priority = 100 },
   --{ 'EdenEast/nightfox.nvim', priority = 100 },
 
-  -- SURROUND
-  {
-    "kylechui/nvim-surround",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
-    end
-  },
 
   -- COMMENTS
   {
@@ -66,9 +86,36 @@ return {
     config = function()
       require("oil").setup({
         keymaps = {
-          ["<C-h>"] = false }
+          ["<C-h>"] = false,
+          ["<C-p>"] = false,
+          ["<C-S-p>"] = "actions.preview"
+        }
       })
       vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+    end
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      require("neo-tree").setup(
+        {
+          filesystem = {
+            window = {
+              mappings = {
+                ["-"] = "navigate_up",
+              }
+            }
+          }
+        }
+      )
+      vim.keymap.set("n", "_", ":Neotree left<CR>", { desc = "Open filetree" })
     end
   },
 
@@ -78,6 +125,9 @@ return {
     config = function()
       require('neoclip').setup()
     end
+  },
+  {
+    "mateuszwieloch/automkdir.nvim"
   },
   {
     "chrisgrieser/nvim-puppeteer", -- automatically convert to f-string
@@ -154,7 +204,19 @@ return {
     'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require "my.plugin-config.rainbow"
+      require('rainbow-delimiters.setup').setup(
+        {
+          highlight = {
+            'RainbowDelimiterViolet',
+            'RainbowDelimiterBlue',
+            'RainbowDelimiterCyan',
+            'RainbowDelimiterGreen',
+            'RainbowDelimiterOrange',
+            'RainbowDelimiterYellow',
+            'RainbowDelimiterRed',
+          },
+        }
+      )
     end
   },
   {
@@ -193,15 +255,33 @@ return {
   { "folke/neodev.nvim",                  opts = {} },
   -- { 'mfussenegger/nvim-lint' },
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     config = function()
       require("my.plugin-config.null")
     end,
   },
   {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     config = function()
       require("lsp_lines").setup()
+      vim.diagnostic.config({ virtual_text = false })
+      local lines_on = true;
+      local toggle_lines = function()
+        if lines_on then
+          vim.diagnostic.config({ virtual_lines = false })
+          lines_on = false
+        else
+          vim.diagnostic.config({ virtual_lines = true })
+          vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+          lines_on = true
+        end
+      end
+      vim.keymap.set(
+        "",
+        "<Leader>ll",
+        toggle_lines,
+        { desc = "Toggle lsp_lines" }
+      )
     end
   },
   -- { 'ray-x/lsp_signature.nvim',  event = "InsertEnter" },
@@ -217,19 +297,39 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lua' },
-      -- { 'saadparwaiz1/cmp_luasnip' },
-      -- {
-      --   "L3MON4D3/LuaSnip",
-      --   -- follow latest release.
-      --   version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-      --   -- install jsregexp (optional!).
-      --   build = "make install_jsregexp",
-      --   event = "InsertEnter",
-      --   config = function()
-      --     require "my.plugin-config.luasnip"
-      --   end
-      -- },
-      { 'dcampos/cmp-snippy',  event = 'InsertEnter' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { "rafamadriz/friendly-snippets" },
+      {
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp",
+        event = "InsertEnter",
+        dependencies = {
+          "rafamadriz/friendly-snippets",
+          config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+          end,
+        },
+        keys = {
+          {
+            "<tab>",
+            function()
+              return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = "i",
+          },
+          { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+          { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+        },
+        config = function()
+          require "my.plugin-config.luasnip"
+        end
+      },
+      -- { 'dcampos/cmp-snippy', event = 'InsertEnter' },
     },
     config = function()
       require "my.plugin-config.cmp"
@@ -255,6 +355,55 @@ return {
     event = "VeryLazy",
     config = function()
       require("noice").setup({
+        routes = {
+          {
+            filter = {
+              event = "msg_show",
+              kind = "search_count",
+            },
+            opts = { skip = true },
+          },
+        },
+        views = {
+          cmdline_popup = {
+            position = {
+              row = 5,
+              col = "50%",
+            },
+            size = {
+              width = 60,
+              height = "auto",
+            },
+          },
+          popupmenu = {
+            relative = "editor",
+            position = {
+              row = 8,
+              col = "50%",
+            },
+            size = {
+              width = 60,
+              height = 10,
+            },
+            border = {
+              style = "rounded",
+              padding = { 0, 1 },
+            },
+            win_options = {
+              winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+            },
+          },
+        },
+        messages = {
+          -- NOTE: If you enable messages, then the cmdline is enabled automatically.
+          -- This is a current Neovim limitation.
+          enabled = true,              -- enables the Noice messages UI
+          view = "mini",               -- default view for messages
+          view_error = "mini",         -- view for errors
+          view_warn = "mini",          -- view for warnings
+          view_history = "messages",   -- view for :messages
+          view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+        },
         lsp = {
           -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
           override = {
@@ -262,6 +411,12 @@ return {
             ["vim.lsp.util.stylize_markdown"] = true,
             ["config.lsp.signature.enabled"] = false,
             ["cmp.entry.get_documentation"] = true,
+          },
+          message = {
+            -- Messages shown by lsp servers
+            enabled = true,
+            view = "mini",
+            opts = {},
           },
         },
         -- you can enable a preset for easier configuration
@@ -301,6 +456,13 @@ return {
         return vim.ui.input(...)
       end
     end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("my.plugin-config.lualine")
+    end
   },
 
 
@@ -352,6 +514,13 @@ return {
     end
   },
   {
+    'echasnovski/mini.surround', -- Improves a and i text objects
+    event = "VeryLazy",
+    config = function()
+      require('mini.surround').setup()
+    end
+  },
+  {
     "echasnovski/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
     event = "VeryLazy",
@@ -393,13 +562,6 @@ return {
           enable = false
         }
       })
-    end
-  },
-  {
-    'echasnovski/mini.pairs', -- pair brackets etc
-    event = "VeryLazy",
-    config = function()
-      require('my.plugin-config.minipairs')
     end
   },
   {
