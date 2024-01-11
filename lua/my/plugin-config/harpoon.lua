@@ -6,18 +6,13 @@ require('harpoon').setup(
   }
 )
 
-local wk = require("which-key")
-
---require("telescope").load_extension('harpoon')
-
 local binds = {
   ["<leader>h"] = { name = "+harpoon" },
   { "<leader>ha", ':lua require("harpoon.mark").add_file()<CR>',        { desc = "Add file to Harpoon" } },
   { "<leader>h]", ':lua require("harpoon.ui").nav_next()<CR>',          { desc = "Next file" } },
   { "<leader>h[", ':lua require("harpoon.ui").nav_prev()<CR>',          { desc = "Prev file" } },
   { "<leader>hm", ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { desc = "Menu" } },
-  { "<leader>ht", ':Telescope harpoon marks<CR>',                       { desc = 'Telescope' } },
-  { "<leader>fh", ':Telescope harpoon marks<CR>',                       { desc = 'Harpoon' } }
+  { "<leader>ht", ':Telescope harpoon marks<CR>',                       { desc = 'Show marks' } },
 }
 
 for _, bind in ipairs(binds) do
