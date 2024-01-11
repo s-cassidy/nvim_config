@@ -10,7 +10,7 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      require('snippy').expand_snippet(args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   window = {
@@ -22,14 +22,14 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<C-c>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   },
 
   sources = cmp.config.sources({
     { name = 'nvim_lsp', priority = 7 },
-    { name = 'snippy',   priority = 8 }, -- For snippy users.
+    { name = 'luasnip',  priority = 8 }, -- For snippy users.
   }, {
     { name = 'buffer', priority = 3 },
   })
