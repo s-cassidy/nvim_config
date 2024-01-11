@@ -3,7 +3,10 @@ local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false 
 local event = "BufWritePre" -- or "BufWritePost"
 local async = event == "BufWritePost"
 
-local sources = { null_ls.builtins.diagnostics.mypy }
+local sources = {
+  null_ls.builtins.diagnostics.mypy,
+  null_ls.builtins.formatting.prettierd
+}
 
 null_ls.setup({
   on_attach = function(client, bufnr)
