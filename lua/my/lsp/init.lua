@@ -1,6 +1,6 @@
-local lsp = require('lsp-zero')
+-- local lsp = require('lsp-zero')
 
-require('lsp-zero').extend_lspconfig()
+-- require('lsp-zero').extend_lspconfig()
 
 require('mason').setup()
 require('mason-lspconfig').setup()
@@ -71,3 +71,5 @@ require 'lspconfig'.cssls.setup {
 require 'lspconfig'.tailwindcss.setup {
   capabilities = capabilities,
 }
+
+require('my.lsp.signatures')

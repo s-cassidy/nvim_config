@@ -284,10 +284,10 @@ return {
       )
     end
   },
-  -- { 'ray-x/lsp_signature.nvim',  event = "InsertEnter" },
+  { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
 
   -- Autocompletion
-  { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
+  -- { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
@@ -337,7 +337,7 @@ return {
   },
 
   -- SNIPPETS
-  { 'honza/vim-snippets',        event = 'InsertEnter' },
+  { 'honza/vim-snippets',       event = 'InsertEnter' },
   {
     'dcampos/nvim-snippy',
     config = function()
@@ -409,7 +409,6 @@ return {
           override = {
             ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
             ["vim.lsp.util.stylize_markdown"] = true,
-            ["config.lsp.signature.enabled"] = false,
             ["cmp.entry.get_documentation"] = true,
           },
           message = {
@@ -418,6 +417,7 @@ return {
             view = "mini",
             opts = {},
           },
+          signature = { enabled = false }
         },
         -- you can enable a preset for easier configuration
         presets = {
