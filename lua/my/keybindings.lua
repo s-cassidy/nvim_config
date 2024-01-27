@@ -1,5 +1,6 @@
 local map = vim.keymap.set
 
+
 -- Normal Mode Remaps
 local normal = {
   { "<C-s-D>",    ":bd<cr>",                                          { silent = true } },              -- delete current buffer
@@ -35,7 +36,7 @@ local normal = {
   { "<leader>Ck", "<cmd>e ~/.config/nvim/lua/my/keybindings.lua<CR>", { desc = "keymaps" } },
   { "<leader>Cp", "<cmd>e ~/.config/nvim/lua/my/plugins.lua<CR>",     { desc = "plugins" } },
   { "<leader>#",  ":buffer #<CR>",                                    { desc = "Alt buffer" } },
-  { "<leader>Q",  ":copen<cr>",                                       { desc = "Toggle global quickfix" } },
+  { "<leader>Q",   ":copen<cr>",               { desc = "Toggle global quickfix" } },
   { "<leader>q",  ":lopen<cr>",                                       { desc = "Toggle local quickfix" } },
   { "<leader>wd", "<C-W>c",                                           { desc = "close window" } },
   { "<leader>ww", "<C-W>w",                                           { desc = "close window" } },
@@ -52,6 +53,7 @@ local normal = {
   { "<leader>lh", vim.lsp.buf.hover,                                  { desc = "hover" } },
   { "K",          vim.lsp.buf.hover,                                  { desc = "hover" } },
   { "<leader>lL", vim.diagnostic.setloclist,                          { desc = "Diagnostics to local qf" } },
+  { "<leader>r",  ":%s/<C-r><C-w>/",                                  { desc = "Search and replace me" } },
 }
 
 
