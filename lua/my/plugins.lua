@@ -67,7 +67,10 @@ return {
     event = "VeryLazy"
   },
   {
-    'tpope/vim-fugitive'
+    'tpope/vim-fugitive',
+    config = function()
+      require("my.plugin-config.fugitive")
+    end
   },
 
   -- GIT
@@ -96,6 +99,7 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
+    event = "VeryLazy",
     branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -124,6 +128,13 @@ return {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
     config = function()
       require('neoclip').setup()
+    end
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+    config = function()
+      require('my.plugin-config.ufo')
     end
   },
   {
@@ -176,6 +187,7 @@ return {
   -- OBSIDIAN
   {
     's-cassidy/obsidian.nvim',
+    event = "VeryLazy",
     dependencies =
     { 'gaoDean/autolist.nvim' },
     config = function()
@@ -608,7 +620,7 @@ return {
 
   {
     "mfussenegger/nvim-dap",
-    event = "VeryLazy",
+    lazy = true,
     dependencies = {
       { "Pocco81/DAPInstall.nvim", priority = 100 },
       "theHamsta/nvim-dap-virtual-text",

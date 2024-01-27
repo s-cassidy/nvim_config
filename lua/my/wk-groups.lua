@@ -4,6 +4,7 @@ wk.register({
   -- LSP binds
   ["<leader>l"] = { name = "+lsp" },
   ["<leader>t"] = { name = "+tasks" },
+  ["<leader>g"] = { name = "+git" },
   ["<leader>w"] = { name = "+window" },
   ["<leader>s"] = { name = "+sessions" },
   ["<leader>f"] = { name = "+telescope" },
