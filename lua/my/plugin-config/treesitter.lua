@@ -8,6 +8,7 @@ require 'nvim-treesitter.configs'.setup {
     "markdown_inline",
     "html",
     "css",
+    "vim",
     "vimdoc"
   },
 
@@ -30,6 +31,7 @@ require 'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = { "markdown" },
+    disable = { "vimdoc" }
   },
 
   autotag = {

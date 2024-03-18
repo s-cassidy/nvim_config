@@ -68,8 +68,8 @@ require 'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
 
-require 'lspconfig'.tailwindcss.setup {
-  capabilities = capabilities,
-}
+-- require 'lspconfig'.tailwindcss.setup {
+--   capabilities = capabilities,
+-- }
 
 require('my.lsp.signatures')

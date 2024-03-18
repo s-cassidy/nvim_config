@@ -130,6 +130,25 @@ return {
       require('neoclip').setup()
     end
   },
+  -- Lua
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    config = function()
+      require("zen-mode").setup({
+        on_open = function()
+          vim.o.cmdheight = 1
+        end,
+        on_close = function()
+          vim.o.cmdheight = 0
+        end,
+      })
+    end
+  },
   {
     'kevinhwang91/nvim-ufo',
     dependencies = 'kevinhwang91/promise-async',
@@ -187,7 +206,7 @@ return {
   -- OBSIDIAN
   {
     's-cassidy/obsidian.nvim',
-    event = "VeryLazy",
+    keys = "<leader>v",
     dependencies =
     { 'gaoDean/autolist.nvim' },
     config = function()
