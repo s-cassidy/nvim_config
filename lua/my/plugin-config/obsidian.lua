@@ -10,6 +10,7 @@ require("obsidian").setup({
   daily_notes = { folder = "journal", date_format = "%Y-%m-%d-%a" },
   completion = {
     nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
+    min_chars = 2,
   },
   note_id_func = function(title)
     -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
@@ -49,15 +50,15 @@ local clear_and_add_template = function(template)
 end
 
 local daily_template = function()
-  clear_and_add_template("Daily Pages Template.md")
+  clear_and_add_template("daily.md")
 end
 
 local note_template = function()
-  clear_and_add_template("Note Template.md")
+  clear_and_add_template("note.md")
 end
 
 local source_template = function()
-  clear_and_add_template("Source Template.md")
+  clear_and_add_template("source.md")
 end
 
 
