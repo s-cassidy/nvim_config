@@ -5,9 +5,11 @@ local config = {
   api_key_command = '~/.local/bin/mb-api-key'
 }
 
+
 local get_full_path = function(path_string)
   return path:new(path_string):expand()
 end
+
 
 local get_api_key = function()
   local command = get_full_path(config.api_key_command)
@@ -20,16 +22,21 @@ local get_api_key = function()
   return key
 end
 
+
 local collect_user_options = function()
-  local title = vim.ui.input({ prompt = "Post title (optional): " })
-  local draft = vim.ui.select({ "Yes", "No" }, {
+  local title
+  local draft
+  vim.ui.input({ prompt = "Post title (optional): " }, function(input) title = input end)
+  vim.ui.select({ "Yes", "No" }, {
     prompt = "Post as a draft?"
-  })
+  }, function(choice) draft = (choice == "Yes") end
+  )
   return {
     title = title,
     draft = draft
   }
 end
+
 
 local get_text = function()
   local line_start
@@ -49,20 +56,16 @@ local get_text = function()
   return text
 end
 
-local prepare_post_data = function()
-  local opts = collect_user_options()
-  local text = get_text()
-end
 
-local send_post = function(text, api_key, opts)
+local send_request = function(text, api_key, opts)
   local auth_string = "Authorization: Bearer " .. api_key
   local args = {
     "-X", "POST",
     "-H", auth_string,
     "-d", "h=entry",
-    "--data-urlencode", "title=" .. opts.title,
+    "--data-urlencode", "name=" .. opts.title,
     "--data-urlencode", "content=" .. text,
-    "-d", "post-status=draft",
+    "-d", "post-status=" .. (opts.draft and "draft" or ""),
     "https://micro.blog/micropub"
   }
   local curl_job = job:new({
@@ -71,8 +74,15 @@ local send_post = function(text, api_key, opts)
     enable_recording = true
   })
   curl_job:sync()
-  return curl_job:result()
+  local result_raw = curl_job:result()
+  local result = vim.fn.json_decode(result_raw)
+  vim.b.micro = result
 end
 
-local key = get_api_key()
-curl_result = send_post(get_text(), key, { title = "This is a title" })
+
+local new_post = function()
+  local text = get_text()
+  local key = get_api_key()
+  local opts = collect_user_options()
+  return send_request(text, key, opts)
+end
