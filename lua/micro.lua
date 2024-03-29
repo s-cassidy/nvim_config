@@ -1,4 +1,3 @@
-local curl = require('plenary.curl')
 local job = require('plenary.job')
 local path = require('plenary.path')
 
@@ -32,12 +31,30 @@ local collect_user_options = function()
   }
 end
 
-local construct_data_string = function(text, opts)
-  local data_string = "h=entry&"
+local get_text = function()
+  local line_start
+  local line_end
+  if vim.api.nvim_get_mode().mode == "n" then
+    line_start = 0
+    line_end = -1
+  elseif vim.api.nvim_get_mode().mode == "v" then
+    local visual_start = vim.fn.getpos("'<")
+    local visual_end = vim.fn.getpos("'>")
+    line_start = visual_start[2]
+    line_end = visual_end[2]
+  end
+
+  local content_lines = vim.api.nvim_buf_get_lines(0, line_start, line_end, false)
+  local text = table.concat(content_lines, "\n")
+  return text
+end
+
+local prepare_post_data = function()
+  local opts = collect_user_options()
+  local text = get_text()
 end
 
 local send_post = function(text, api_key, opts)
-  -- local data = construct_data(text)
   local auth_string = "Authorization: Bearer " .. api_key
   local args = {
     "-X", "POST",
@@ -58,4 +75,4 @@ local send_post = function(text, api_key, opts)
 end
 
 local key = get_api_key()
-curl_result = send_post("Hello world", key, { title = "" })
+curl_result = send_post(get_text(), key, { title = "This is a title" })
