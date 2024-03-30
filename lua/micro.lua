@@ -41,17 +41,17 @@ end
 local get_text = function()
   local line_start
   local line_end
-  if vim.api.nvim_get_mode().mode == "n" then
+  if vim.fn.mode() == "n" then
     line_start = 0
     line_end = -1
-  elseif vim.api.nvim_get_mode().mode == "v" then
-    local visual_start = vim.fn.getpos("'<")
-    local visual_end = vim.fn.getpos("'>")
+  elseif vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+    local visual_start = vim.fn.getpos("v")
+    local visual_end = vim.fn.getpos(".")
     line_start = visual_start[2]
     line_end = visual_end[2]
   end
 
-  local content_lines = vim.api.nvim_buf_get_lines(0, line_start, line_end, false)
+  local content_lines = vim.api.nvim_buf_get_lines(0, line_start, line_end + 1, false)
   local text = table.concat(content_lines, "\n")
   return text
 end
@@ -62,17 +62,25 @@ local send_request = function(text, api_key, opts)
   local args = {
     "-X", "POST",
     "-H", auth_string,
-    "-d", "h=entry",
-    "--data-urlencode", "name=" .. opts.title,
-    "--data-urlencode", "content=" .. text,
-    "-d", "post-status=" .. (opts.draft and "draft" or ""),
+    "-H", "Content-Type: application/json",
+    "--data", vim.fn.json_encode({
+    type = "h-entry",
+    properties = {
+      content = { text },
+      name = { opts.title },
+      ["post-status"] = { "draft" },
+    }
+  }
+  ),
     "https://micro.blog/micropub"
   }
+
   local curl_job = job:new({
     command = "curl",
     args = args,
     enable_recording = true
   })
+
   curl_job:sync()
   local result_raw = curl_job:result()
   local result = vim.fn.json_decode(result_raw)
@@ -86,3 +94,5 @@ local new_post = function()
   local opts = collect_user_options()
   return send_request(text, key, opts)
 end
+
+vim.keymap.set({ "n", "v" }, "<leader>mp", new_post)
