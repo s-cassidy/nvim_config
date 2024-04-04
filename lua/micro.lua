@@ -4,6 +4,7 @@ local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
+local action_utils = require "telescope.actions.utils"
 local telescope_conf = require("telescope.config").values
 
 local config = {
@@ -56,9 +57,12 @@ local telescope_choose_categories = function(all_categories, chosen_categories, 
     sorter = telescope_conf.generic_sorter(),
     attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
+        local current_picker = action_state.get_current_picker(prompt_bufnr)
+        for _, selection in ipairs(current_picker:get_multi_selection()) do
+          table.insert(chosen_categories, selection[1])
+        end
+        print(vim.inspect(chosen_categories))
         actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        table.insert(chosen_categories, selection[1])
         cb()
       end)
       return true
@@ -143,7 +147,6 @@ local new_post = function()
   data.text = text
   data.key = get_api_key()
   data.opts = collect_user_options()
-  print(vim.inspect(data))
   local all_categories = extract_categories_from_json_feed(categories_feed)
   local chosen_categories = {}
   telescope_choose_categories(all_categories, chosen_categories, function()
