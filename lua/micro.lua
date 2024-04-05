@@ -109,23 +109,19 @@ end
 
 local send_request = function(data)
   local auth_string = "Authorization: Bearer " .. data.key
-  print(vim.inspect(data.opts.categories))
   local args = {
+    "https://micro.blog/micropub",
     "-X", "POST",
     "-H", auth_string,
-    "-H", "Content-Type: application/json",
-    "--data", vim.fn.json_encode({
-    type = "h-entry",
-    properties = {
-      content = { data.text },
-      name = { data.opts.title },
-      ["post-status"] = { "draft" },
-      category = { data.opts.categories }
-    }
+    "--data", "h=entry",
+    "--data-urlencode", "content=" .. data.text,
+    "--data-urlencode", "name=" .. (data.opts.title or ""),
+    "--data", "post-status=draft",
   }
-  ),
-    "https://micro.blog/micropub"
-  }
+  for _, cat in ipairs(data.opts.categories) do
+    table.insert(args, "--data-urlencode")
+    table.insert(args, "category[]=" .. cat)
+  end
 
   local curl_job = job:new({
     command = "curl",
