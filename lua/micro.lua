@@ -1,33 +1,22 @@
 local job = require('plenary.job')
-local path = require('plenary.path')
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
-local action_utils = require "telescope.actions.utils"
 local telescope_conf = require("telescope.config").values
 
 local config = {
-  api_key_command = '~/.local/bin/mb-api-key',
-  blog_url = 'https://samjc.me'
+  blog_url = "https://samjc.me",
+  blog_uid = "https://samjc.micro.blog"
 }
 
-
-local get_full_path = function(path_string)
-  return path:new(path_string):expand()
-end
+local categories
 
 
 local get_api_key = function()
-  local command = get_full_path(config.api_key_command)
-  local key_job = job:new({
-    command = command,
-    enable_recording = true,
-  })
-  key_job:sync()
-  local key = key_job:result()[1]
-  return key
+  return os.getenv("MB_API_KEY")
 end
+
 
 local fetch_categories = function(blog_url)
   local category_job = job:new({
@@ -39,33 +28,65 @@ local fetch_categories = function(blog_url)
   return category_job:result()
 end
 
+
 local extract_categories_from_json_feed = function(json_feed)
-  local categories = {}
+  local categories_table = {}
   local feeds_table = vim.fn.json_decode(json_feed)
-  for k, item in pairs(feeds_table.items) do
-    table.insert(categories, item.title)
+  for _, item in pairs(feeds_table.items) do
+    table.insert(categories_table, item.title)
   end
-  return categories
+  return categories_table
 end
 
-local telescope_choose_categories = function(all_categories, chosen_categories, cb)
+
+local refresh_categories = function()
+  local categories_json = fetch_categories(config.blog_url)
+  local await_categories_feed = vim.wait(5000, function() return #categories_json > 0 end)
+  if await_categories_feed then
+    categories = extract_categories_from_json_feed(categories_json)
+  else
+    print("No categories found at " .. config.blog_url .. "/categories/feed.json")
+  end
+end
+
+
+local setup = function()
+  config.api_key = get_api_key()
+  refresh_categories()
+end
+
+local telescope_choose_categories = function(chosen_categories, cb)
   local cat_picker = pickers.new({}, {
-    prompt_title = "Select categories (optional)",
+    prompt_title =
+    "Select categories (Use <tab> to select categories, <CR> to confirm selection. Quit this window to abort)",
     finder = finders.new_table(
-      { results = all_categories }
+      { results = categories }
     ),
     sorter = telescope_conf.generic_sorter(),
     attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
         local current_picker = action_state.get_current_picker(prompt_bufnr)
-        for _, selection in ipairs(current_picker:get_multi_selection()) do
+        local multi_selection = current_picker:get_multi_selection()
+        for _, selection in ipairs(multi_selection) do
           table.insert(chosen_categories, selection[1])
         end
-        print(vim.inspect(chosen_categories))
         actions.close(prompt_bufnr)
         cb()
       end)
-      return true
+      map("i", "<CR>", actions.select_default)
+      map("n", "<CR>", actions.select_default)
+      map("i", "<tab>", actions.toggle_selection)
+      map("n", "<tab>", actions.toggle_selection)
+      map("n", "<esc>", actions.close)
+      map("n", "q", actions.close)
+      map("n", "<C-c>", actions.close)
+      map("i", "<up>", actions.move_selection_previous)
+      map("i", "<down>", actions.move_selection_next)
+      map("i", "<C-p>", actions.move_selection_previous)
+      map("i", "<next>", actions.move_selection_next)
+      map("n", "<up>", actions.move_selection_previous)
+      map("n", "<down>", actions.move_selection_next)
+      return false
     end
   })
   cat_picker:find()
@@ -74,10 +95,20 @@ end
 
 local collect_user_options = function()
   local title
+  local destination
   local draft
-  vim.ui.input({ prompt = "Post title (optional): " }, function(input)
-    title = input
-  end)
+  vim.ui.input(
+    { prompt = "Post title (optional): " },
+    function(input)
+      title = input
+    end)
+  vim.ui.input({
+      prompt = "Destination: ",
+      default = config.blog_uid
+    },
+    function(input)
+      destination = input
+    end)
   vim.ui.select({ "Yes", "No" }, {
       prompt = "Post as a draft?"
     },
@@ -85,7 +116,7 @@ local collect_user_options = function()
       draft = (choice == "Yes")
     end
   )
-  return { title, draft }
+  return { title = title, draft = draft, destination = destination }
 end
 
 
@@ -114,9 +145,10 @@ local send_request = function(data)
     "-X", "POST",
     "-H", auth_string,
     "--data", "h=entry",
+    "--data", "mp-destination=" .. data.opts.destination,
     "--data-urlencode", "content=" .. data.text,
     "--data-urlencode", "name=" .. (data.opts.title or ""),
-    "--data", "post-status=draft",
+    "--data", "post-status=" .. (data.opts.draft and "draft" or ""),
   }
   for _, cat in ipairs(data.opts.categories) do
     table.insert(args, "--data-urlencode")
@@ -131,25 +163,32 @@ local send_request = function(data)
 
   curl_job:sync()
   local result_raw = curl_job:result()
-  local result = vim.fn.json_decode(result_raw)
-  vim.b.micro = result
+  local await_post_confirmation = vim.wait(5000, function() return #result_raw > 0 end)
+  if await_post_confirmation then
+    local result = vim.fn.json_decode(result_raw)
+    if result.error then
+      print("Posting failed: " .. result.error_description)
+    else
+      vim.b.micro = result
+      print("New post made to " .. result.url)
+    end
+  end
 end
 
 
 local new_post = function()
   local text = get_text()
-  local categories_feed = fetch_categories(config.blog_url)
   local data = {}
   data.text = text
   data.key = get_api_key()
   data.opts = collect_user_options()
-  local all_categories = extract_categories_from_json_feed(categories_feed)
   local chosen_categories = {}
-  telescope_choose_categories(all_categories, chosen_categories, function()
+  telescope_choose_categories(chosen_categories, function()
     data.opts.categories = chosen_categories
     send_request(data)
   end
   )
 end
 
+setup()
 vim.keymap.set({ "n", "v" }, "<leader>mp", new_post)
