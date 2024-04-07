@@ -10,7 +10,6 @@ local config = {
   blog_uid = "https://samjc.micro.blog"
 }
 
-local categories
 
 
 local get_api_key = function()
@@ -43,7 +42,7 @@ local refresh_categories = function()
   local categories_json = fetch_categories(config.blog_url)
   local await_categories_feed = vim.wait(5000, function() return #categories_json > 0 end)
   if await_categories_feed then
-    categories = extract_categories_from_json_feed(categories_json)
+    config.categories = extract_categories_from_json_feed(categories_json)
   else
     print("No categories found at " .. config.blog_url .. "/categories/feed.json")
   end
@@ -60,7 +59,7 @@ local telescope_choose_categories = function(chosen_categories, cb)
     prompt_title =
     "Select categories (Use <tab> to select categories, <CR> to confirm selection. Quit this window to abort)",
     finder = finders.new_table(
-      { results = categories }
+      { results = config.categories }
     ),
     sorter = telescope_conf.generic_sorter(),
     attach_mappings = function(prompt_bufnr, map)
@@ -119,26 +118,27 @@ local collect_user_options = function()
   return { title = title, draft = draft, destination = destination }
 end
 
-
+--- Get contents of a buffer or lines appearing in a visual selection
+---
+--- @return string
 local get_text = function()
-  local line_start
-  local line_end
   local content_lines
   if vim.fn.mode() == "n" then
     content_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   elseif vim.fn.mode() == "v" or vim.fn.mode() == "V" then
-    local visual_start = vim.fn.getpos("v")
-    local visual_end = vim.fn.getpos(".")
-    line_start = visual_start[2]
-    line_end = visual_end[2]
+    local line_start = vim.fn.getpos("v")[2]
+    local line_end = vim.fn.getpos(".")[2]
     content_lines = vim.api.nvim_buf_get_lines(0, line_start - 1, line_end, false)
   end
   local text = table.concat(content_lines, "\n")
   return text
 end
 
-
-local send_request = function(data)
+--- Run curl to post to the blog
+---
+--- @param data {text: string, key: string, opts: {title: string?, destination: string, categories: string[]?}}
+--- @return boolean
+local send_post_request = function(data)
   local auth_string = "Authorization: Bearer " .. data.key
   local args = {
     "https://micro.blog/micropub",
@@ -168,25 +168,40 @@ local send_request = function(data)
     local result = vim.fn.json_decode(result_raw)
     if result.error then
       print("Posting failed: " .. result.error_description)
+      return false
     else
       vim.b.micro = result
       print("New post made to " .. result.url)
+      return true
     end
   end
 end
 
 
 local new_post = function()
-  local text = get_text()
   local data = {}
-  data.text = text
+  data.text = get_text()
   data.key = get_api_key()
   data.opts = collect_user_options()
   local chosen_categories = {}
-  telescope_choose_categories(chosen_categories, function()
-    data.opts.categories = chosen_categories
-    send_request(data)
-  end
+  telescope_choose_categories(chosen_categories,
+    function()
+      data.opts.categories = chosen_categories
+      send_post_request(data)
+    end
+  )
+end
+
+local get_posts = function()
+  local curl_job = job:new(
+    {
+      command = "curl",
+      args = {
+        "https://micro.blog/micropub?q=source",
+        "-H", "Authorization Bearer: " .. config.api_key,
+      },
+      enabled_recording = true,
+    }
   )
 end
 
