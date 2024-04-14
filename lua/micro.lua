@@ -4,6 +4,7 @@ local finders = require "telescope.finders"
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local telescope_conf = require("telescope.config").values
+local previewers = require "telescope.previewers"
 
 local config = {
   blog_url = "https://samjc.me",
@@ -52,6 +53,9 @@ end
 local setup = function()
   config.api_key = get_api_key()
   refresh_categories()
+  if not config.blogs then
+    config.blogs = { config.blog_uid }
+  end
 end
 
 local telescope_choose_categories = function(chosen_categories, cb)
@@ -136,7 +140,7 @@ end
 
 --- Run curl to post to the blog
 ---
---- @param data {text: string, key: string, opts: {title: string?, destination: string, categories: string[]?}}
+--- @param data {text: string, key: string, opts: {title: string?, destination: string, draft: boolean, categories: string[]?}}
 --- @return boolean
 local send_post_request = function(data)
   local auth_string = "Authorization: Bearer " .. data.key
@@ -198,12 +202,60 @@ local get_posts = function()
       command = "curl",
       args = {
         "https://micro.blog/micropub?q=source",
-        "-H", "Authorization Bearer: " .. config.api_key,
+        "-H", "Authorization: Bearer " .. get_api_key(),
       },
       enabled_recording = true,
     }
   )
+  print("Acquiring posts — this may take a moment")
+  curl_job:sync()
+  local result_raw = curl_job:result()
+  local result = vim.fn.json_decode(result_raw)["items"]
+  return result
+end
+
+local format_telescope_entry_string = function(post)
+  local published = post.properties.published[1]
+  local post_date = string.sub(published, 1, 10)
+  local snippet
+  if post.properties.name[1] == "" then
+    snippet = post.properties.content[1]
+  else
+    snippet = post.properties.name[1]
+  end
+  return post_date .. "  " .. snippet
+end
+
+local telescope_choose_post = function(posts, cb)
+  local post_picker = pickers.new({}, {
+    prompt_title =
+    "Select a post",
+    finder = finders.new_table({
+      results = posts,
+      entry_maker = function(entry)
+        local display = format_telescope_entry_string(entry)
+        return {
+          value = entry,
+          display = display,
+          ordinal = entry.properties.published[1],
+        }
+      end
+    }),
+    sorter = telescope_conf.generic_sorter(),
+    sorting_strategy = "ascending",
+  })
+  post_picker:find()
+end
+
+
+local edit_post = function()
+  local posts = get_posts()
+  if vim.wait(10000, function() return #posts > 0 end, 400) then
+    -- print(vim.inspect(posts))
+    telescope_choose_post(posts)
+  end
 end
 
 setup()
 vim.keymap.set({ "n", "v" }, "<leader>mp", new_post)
+edit_post()
