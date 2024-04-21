@@ -2,6 +2,10 @@ local actions = require "telescope.actions"
 local builtin = require('telescope.builtin')
 
 require('telescope').setup {
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = { width = 0.5 }
+  },
   mappings = {
     n = {
       ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,

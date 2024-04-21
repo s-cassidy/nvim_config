@@ -50,7 +50,7 @@ local toggle_floating_diagnostics = function()
 end
 
 vim.keymap.set("n", "<leader>lf", toggle_floating_diagnostics, { desc = "toggle floating diagnostics" })
-
+vim.diagnostic.config({ virtual_text = false, })
 
 local signs = { Error = "!!", Warn = ">>", Hint = "--", Info = "??" }
 for type, icon in pairs(signs) do

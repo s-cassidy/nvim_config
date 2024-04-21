@@ -10,9 +10,22 @@ return {
   },
 
   -- COLORSCHEME
+  {
+    'andrew-george/telescope-themes',
+    config = function()
+      require('telescope').load_extension('themes')
+    end
+  },
+
 
   {
     "folke/tokyonight.nvim",
+    lazy = true,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    "aktersnurra/no-clown-fiesta.nvim",
     lazy = true,
     priority = 1000,
     opts = {},
@@ -284,6 +297,43 @@ return {
       "nvim-lspconfig" }
   },
   { "folke/neodev.nvim",                  opts = {} },
+  {
+    "folke/trouble.nvim",
+    branch = "dev", -- IMPORTANT!
+    keys = {
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+  },
   -- { 'mfussenegger/nvim-lint' },
   {
     'nvimtools/none-ls.nvim',
@@ -291,30 +341,14 @@ return {
       require("my.plugin-config.null")
     end,
   },
-  {
-    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    config = function()
-      require("lsp_lines").setup()
-      vim.diagnostic.config({ virtual_text = false })
-      local lines_on = true;
-      local toggle_lines = function()
-        if lines_on then
-          vim.diagnostic.config({ virtual_lines = false })
-          lines_on = false
-        else
-          vim.diagnostic.config({ virtual_lines = true })
-          vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
-          lines_on = true
-        end
-      end
-      vim.keymap.set(
-        "",
-        "<Leader>ll",
-        toggle_lines,
-        { desc = "Toggle lsp_lines" }
-      )
-    end
-  },
+  -- {
+  --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+  --   config = function()
+  --     require("lsp_lines").setup()
+  --     vim.diagnostic.config({ virtual_text = false, })
+  --     vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+  --   end
+  -- },
   { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
 
   -- Autocompletion
