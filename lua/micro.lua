@@ -217,13 +217,31 @@ end
 local format_telescope_entry_string = function(post)
   local published = post.properties.published[1]
   local post_date = string.sub(published, 1, 10)
-  local snippet
-  if post.properties.name[1] == "" then
+  local snippet = post.properties.name[1]
+  if snippet == "" then
+    local newline_index = string.find(post.properties.content[1], "\n")
     snippet = post.properties.content[1]
-  else
-    snippet = post.properties.name[1]
+    if newline_index then
+      snippet = string.sub(snippet, 1, newline_index - 1)
+    end
   end
   return post_date .. "  " .. snippet
+end
+
+local open_post = function(post)
+  local props = post.properties
+  local post_text = props.content[1]
+  local text_lines = vim.split(post_text, "\n")
+  local buffer = vim.api.nvim_create_buf(true, false)
+  vim.api.nvim_set_current_buf(buffer)
+  vim.api.nvim_buf_set_lines(buffer, 0, 0, false, text_lines)
+  vim.bo.filetype = "markdown"
+  vim.b.micro = {
+    url = props.url[1],
+    uid = props.uid[1],
+    categories = props.category,
+    title = props.name[1]
+  }
 end
 
 local telescope_choose_post = function(posts, cb)
@@ -242,7 +260,14 @@ local telescope_choose_post = function(posts, cb)
       end
     }),
     sorter = telescope_conf.generic_sorter(),
-    sorting_strategy = "ascending",
+    attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(function()
+        local selection = action_state.get_selected_entry().value
+        actions.close(prompt_bufnr)
+        cb(selection)
+      end)
+      return true
+    end
   })
   post_picker:find()
 end
@@ -251,11 +276,9 @@ end
 local edit_post = function()
   local posts = get_posts()
   if vim.wait(10000, function() return #posts > 0 end, 400) then
-    -- print(vim.inspect(posts))
-    telescope_choose_post(posts)
+    telescope_choose_post(posts, open_post)
   end
 end
 
 setup()
-vim.keymap.set({ "n", "v" }, "<leader>mp", new_post)
-edit_post()
+vim.keymap.set({ "n", "v" }, "<leader>mp", edit_post)
