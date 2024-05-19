@@ -7,6 +7,24 @@ return {
   {
     'folke/which-key.nvim',
     lazy = true,
+    config = function()
+      local wk = require("which-key")
+      wk.register({
+        ["<leader>C"] = { name = "+config" },
+        -- LSP binds
+        ["<leader>l"] = { name = "+lsp" },
+        ["<leader>t"] = { name = "+tasks" },
+        ["<leader>g"] = { name = "+git" },
+        ["<leader>w"] = { name = "+window" },
+        ["<leader>s"] = { name = "+sessions" },
+        ["<leader>f"] = { name = "+telescope" },
+        ["<leader>m"] = { name = "+microblog" },
+        ["<leader>c"] = { name = "+symbols" },
+        ["<leader>x"] = { name = "+diagnostics" },
+        ["<leader>h"] = { name = "+harpoon" },
+        ["<leader>ff"] = { 'dir...' },
+      })
+    end
   },
 
   -- COLORSCHEME
@@ -17,6 +35,17 @@ return {
     end
   },
 
+  {
+    "cdmill/neomodern.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("neomodern").setup({
+        style = "darkforest"
+      })
+      require("neomodern").load()
+    end,
+  },
 
   {
     "folke/tokyonight.nvim",
