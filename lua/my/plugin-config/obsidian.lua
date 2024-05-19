@@ -1,5 +1,12 @@
+local vault_path = "~/notes/"
+
 require("obsidian").setup({
-  dir = "~/notes/",
+  workspaces = {
+    {
+      name = "notes",
+      path = vault_path
+    }
+  },
   templates = {
     subdir = "templates",
     date_format = "%Y-%m-%d-%a",
@@ -49,6 +56,23 @@ local clear_and_add_template = function(template)
   vim.cmd("call feedkeys(':','nx')") -- clear message window
 end
 
+local new_note = function()
+  local title
+  vim.ui.input({ prompt = "Note title: " },
+    function(input)
+      title = input
+    end)
+  local filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
+  local buffer = vim.api.nvim_create_buf(true, false)
+  vim.api.nvim_set_current_buf(buffer)
+  vim.bo.filetype = "markdown"
+  vim.cmd("w " .. vault_path .. filename)
+  vim.cmd("ObsidianTemplate note")
+  vim.cmd("w")
+  vim.cmd("Git add .")
+  vim.cmd("Git commit -q -m 'Create note " .. tostring(os.date("%Y%m%d%H%M")) .. "'")
+end
+
 local daily_template = function()
   clear_and_add_template("daily.md")
 end
@@ -64,11 +88,11 @@ end
 
 require("which-key").register({
   ["<leader>v"] = { name = "+obsidian" },
-  ["<leader>vv"] = { ":tabe ~/wiki<cr>:tcd ~/wiki<cr>:TabRename vault<cr>",
+  ["<leader>vv"] = { ":tabe ~/notes<cr>:tcd ~/notes<cr>:TabRename vault<cr>",
     "Go to vault" },
   ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
   ["<leader>vd"] = { ":ObsidianToday<cr>", "Daily note" },
-  ["<leader>vn"] = { ":ObsidianNew ", "New note" },
+  ["<leader>vn"] = { new_note, "New note" },
   ["<leader>vs"] = { source_template, "Source template" },
   ["<leader>vz"] = { note_template, "Note template" },
   ["<leader>vj"] = { daily_template, "Daily template" },
