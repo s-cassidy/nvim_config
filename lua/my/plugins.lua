@@ -86,6 +86,34 @@ return {
     end
   },
 
+
+  -- my microblog plugin
+  {
+    's-cassidy/microblog.nvim',
+    config = function()
+      require('microblog').setup(
+        {
+          blogs = {
+            {
+              url = "https://samjc.me",
+              uid = "https://samjc.micro.blog"
+            },
+            {
+              url = "https://samjc-test.micro.blog",
+              uid = "https://samjc-test.micro.blog"
+            }
+          },
+          no_save_quickpost = true,
+        }
+      )
+      vim.keymap.set({ "n", "v" }, "<leader>me", require("microblog").pick_post, { desc = "Edit a post" })
+      vim.keymap.set({ "n", "v" }, "<leader>mp", require("microblog").publish, { desc = "Send a post" })
+      vim.keymap.set({ "n", "v" }, "<leader>mq", require("microblog").quickpost, { desc = "Quick post" })
+      vim.keymap.set({ "n", "v" }, "<leader>mu", require("microblog").get_post_from_url, { desc = "Open micro.blog url" })
+      vim.keymap.set({ "n", "v" }, "<leader>ms", require("microblog").display_post_status,
+        { desc = "Display post status" })
+    end
+  },
   -- GIT
   --
   {
@@ -110,31 +138,31 @@ return {
       vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
     end
   },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
-    config = function()
-      require("neo-tree").setup(
-        {
-          filesystem = {
-            window = {
-              mappings = {
-                ["-"] = "navigate_up",
-              }
-            }
-          }
-        }
-      )
-      vim.keymap.set("n", "_", ":Neotree left<CR>", { desc = "Open filetree" })
-    end
-  },
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   event = "VeryLazy",
+  --   branch = "v3.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+  --     "MunifTanjim/nui.nvim",
+  --     -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+  --   },
+  --   config = function()
+  --     require("neo-tree").setup(
+  --       {
+  --         filesystem = {
+  --           window = {
+  --             mappings = {
+  --               ["-"] = "navigate_up",
+  --             }
+  --           }
+  --         }
+  --       }
+  --     )
+  --     vim.keymap.set("n", "_", ":Neotree left<CR>", { desc = "Open filetree" })
+  --   end
+  -- },
 
   -- quality of life
   {
@@ -218,8 +246,8 @@ return {
 
   -- OBSIDIAN
   {
-    's-cassidy/obsidian.nvim',
-    keys = "<leader>v",
+    'epwalsh/obsidian.nvim',
+    -- keys = "<leader>v",
     dependencies =
     { 'gaoDean/autolist.nvim' },
     config = function()
@@ -288,6 +316,12 @@ return {
       { 'williamboman/mason.nvim' },
       "williamboman/mason-lspconfig.nvim",
     },
+  },
+  {
+    "danymat/neogen",
+    config = true,
+    -- Uncomment next line if you want to follow only stable versions
+    -- version = "*"
   },
   {
     "folke/neoconf.nvim",
