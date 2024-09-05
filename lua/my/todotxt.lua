@@ -52,7 +52,7 @@ local function on_write(opts)
     end
   end
   for _, line in ipairs(complete) do
-    vim.cmd("!echo " .. line .. " >> /home/sam/notes/todo/archive.txt")
+    vim.cmd("silent!!echo " .. line .. " >> /home/sam/notes/todo/archive.txt")
   end
   vim.api.nvim_buf_set_lines(opts.buf, 0, -1, false, pending)
 end
