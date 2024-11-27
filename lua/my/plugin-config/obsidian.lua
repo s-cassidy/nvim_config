@@ -137,19 +137,18 @@ local move_to_folder = function()
 end
 
 
-require("which-key").register({
-  ["<leader>v"] = { name = "+obsidian" },
-  ["<leader>vv"] = { ":tabe ~/notes<cr>:tcd ~/notes<cr>:TabRename vault<cr>",
-    "Go to vault" },
-  ["<leader>vt"] = { ":ObsidianTemplate<cr>", "Insert template" },
-  ["<leader>vb"] = { ":ObsidianBacklinks<cr>", "Backlinks" },
-  ["<leader>vff"] = { find_in_folder, "Folder files" },
-  ["<leader>vfs"] = { search_in_folder, "Folder search" },
-  ["<leader>vd"] = { daily_note, "Daily note" },
-  ["<leader>vn"] = { new_note, "New note" },
-  ["<leader>vs"] = { source_template, "Source template" },
-  ["<leader>vz"] = { note_template, "Note template" },
-  ["<leader>vj"] = { daily_template, "Daily template" },
-  ["<leader>vg"] = { ":ObsidianSearch<cr>", "Search in vault" },
-  ["<leader>vm"] = { move_to_folder, "Move note" }, -- reqiures fugitive.vim
+require("which-key").add({
+  { "<leader>v",   name = "+obsidian" },
+  { "<leader>vv",  ":tabe ~/notes<cr>:tcd ~/notes<cr>:TabRename vault<cr>", desc = "Go to vault" },
+  { "<leader>vt",  ":ObsidianTemplate<cr>",                                 desc = "Insert template" },
+  { "<leader>vb",  ":ObsidianBacklinks<cr>",                                desc = "Backlinks" },
+  { "<leader>vff", find_in_folder,                                          desc = "Folder files" },
+  { "<leader>vfs", search_in_folder,                                        desc = "Folder search" },
+  { "<leader>vd",  daily_note,                                              desc = "Daily note" },
+  { "<leader>vn",  new_note,                                                desc = "New note" },
+  { "<leader>vs",  source_template,                                         desc = "Source template" },
+  { "<leader>vz",  note_template,                                           desc = "Note template" },
+  { "<leader>vj",  daily_template,                                          desc = "Daily template" },
+  { "<leader>vg",  ":ObsidianSearch<cr>",                                   desc = "Search in vault" },
+  { "<leader>vm",  move_to_folder,                                          desc = "Move note" }, -- reqiures fugitive.vim
 })

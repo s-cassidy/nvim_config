@@ -9,20 +9,20 @@ return {
     lazy = true,
     config = function()
       local wk = require("which-key")
-      wk.register({
-        ["<leader>C"] = { name = "+config" },
-        -- LSP binds
-        ["<leader>l"] = { name = "+lsp" },
-        ["<leader>t"] = { name = "+tasks" },
-        ["<leader>g"] = { name = "+git" },
-        ["<leader>w"] = { name = "+window" },
-        ["<leader>s"] = { name = "+sessions" },
-        ["<leader>f"] = { name = "+telescope" },
-        ["<leader>m"] = { name = "+microblog" },
-        ["<leader>c"] = { name = "+symbols" },
-        ["<leader>x"] = { name = "+diagnostics" },
-        ["<leader>h"] = { name = "+harpoon" },
-        ["<leader>ff"] = { 'dir...' },
+      wk.add({
+        { "<leader>C",  name = "+config" },
+        { "<leader>l",  name = "+lsp" },
+        { "<leader>t",  name = "+tasks" },
+        { "<leader>g",  name = "+git" },
+        { "<leader>w",  name = "+window" },
+        { "<leader>s",  name = "+sessions" },
+        { "<leader>f",  name = "+telescope" },
+        { "<leader>m",  name = "+microblog" },
+        { "<leader>c",  name = "+symbols" },
+        { "<leader>x",  name = "+diagnostics" },
+        { "<leader>h",  name = "+harpoon" },
+        { "<leader>ff", 'dir...' },
+        { "g<c-g>",     'Word count' },
       })
     end
   },
@@ -138,6 +138,7 @@ return {
       vim.keymap.set({ "n", "v" }, "<leader>me", require("microblog").pick_post, { desc = "Edit a post" })
       vim.keymap.set({ "n", "v" }, "<leader>mp", require("microblog").publish, { desc = "Send a post" })
       vim.keymap.set({ "n", "v" }, "<leader>mq", require("microblog").quickpost, { desc = "Quick post" })
+      vim.keymap.set({ "n", "v" }, "<leader>mP", require("microblog").pick_page, { desc = "Pick page" })
       vim.keymap.set({ "n", "v" }, "<leader>mu", require("microblog").get_post_from_url, { desc = "Open micro.blog url" })
       vim.keymap.set({ "n", "v" }, "<leader>ms", require("microblog").display_post_status,
         { desc = "Display post status" })
@@ -194,6 +195,43 @@ return {
   -- },
 
   -- quality of life
+  -- Lua
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup(
+        {
+          window = {
+            options = {
+              signcolumn = "no", -- disable signcolumn
+              number = false,    -- disable number column
+              -- relativenumber = false, -- disable relative numbers
+              -- cursorline = false, -- disable cursorline
+              -- cursorcolumn = false, -- disable cursor column
+              foldcolumn = "0", -- disable fold column
+              list = false,     -- disable whitespace characters
+            }
+          },
+          plugins = {
+            options = {
+              enabled = true,
+              ruler = false,   -- disables the ruler text in the cmd line area
+              showcmd = false, -- disables the command in the last line of the screen
+              -- you may turn on/off statusline in zen mode by setting 'laststatus'
+              -- statusline will be shown only if 'laststatus' == 3
+              laststatus = 0,               -- turn off the statusline in zen mode
+            },
+            gitsigns = { enabled = false }, -- disables git signs
+            kitty = {
+              enabled = false,
+              font = "+4",              -- font size increment
+            },
+            tmux = { enabled = false }, -- disables the tmux statusline
+          }
+        }
+      )
+    end
+  },
   {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
     config = function()
@@ -201,24 +239,6 @@ return {
     end
   },
   -- Lua
-  {
-    "folke/zen-mode.nvim",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-    config = function()
-      require("zen-mode").setup({
-        on_open = function()
-          vim.o.cmdheight = 1
-        end,
-        on_close = function()
-          vim.o.cmdheight = 0
-        end,
-      })
-    end
-  },
   {
     'kevinhwang91/nvim-ufo',
     dependencies = 'kevinhwang91/promise-async',
@@ -337,6 +357,16 @@ return {
 
   -- language support and completion
   { 'brenoprata10/nvim-highlight-colors', config = function() require('nvim-highlight-colors').setup {} end },
+  {
+    "lervag/vimtex",
+    lazy = true, -- we don't want to lazy load VimTeX
+    ft = "tex",
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = "zathura"
+    end
+  },
 
   -- LSP Support
   {
@@ -362,7 +392,6 @@ return {
   { "folke/neodev.nvim",                  opts = {} },
   {
     "folke/trouble.nvim",
-    branch = "dev", -- IMPORTANT!
     keys = {
       {
         "<leader>xX",
@@ -731,8 +760,8 @@ return {
     event = 'VeryLazy',
     config = function()
       local wk = require("which-key")
-      wk.register({
-        ["<leader>u"] = { vim.cmd.UndotreeToggle, "Undotree" }
+      wk.add({
+        { "<leader>u", vim.cmd.UndotreeToggle, desc = "Undotree" }
       })
     end
   },
