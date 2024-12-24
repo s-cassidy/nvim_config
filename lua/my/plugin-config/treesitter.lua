@@ -4,6 +4,7 @@ require 'nvim-treesitter.configs'.setup {
     "lua",
     "typescript",
     "javascript",
+    "go",
     "markdown",
     "markdown_inline",
     "html",
