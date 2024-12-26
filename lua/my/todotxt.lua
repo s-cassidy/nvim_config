@@ -72,8 +72,8 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   pattern = "/home/sam/notes/todo/*",
   group = "todotxt",
   callback = function()
-    vim.keymap.set("n", "<leader>tx", toggle_completion, { buffer = true, silent = true })
-    vim.keymap.set("n", "<leader>ts", grep_in_todo, { buffer = true, silent = true })
+    vim.keymap.set("n", "<leader>tx", toggle_completion, { buffer = true, silent = true, desc = "Task completed" })
+    vim.keymap.set("n", "<leader>ts", grep_in_todo, { buffer = true, silent = true, desc = "Search todos" })
     vim.keymap.set("n", "o", function() date_on_newline("o") end, { noremap = true, buffer = true, silent = true })
     vim.keymap.set("n", "O", function() date_on_newline("O") end, { noremap = true, buffer = true, silent = true })
   end

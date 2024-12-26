@@ -6,24 +6,8 @@ return {
 
   {
     'folke/which-key.nvim',
-    lazy = true,
     config = function()
-      local wk = require("which-key")
-      wk.add({
-        { "<leader>C",  name = "+config" },
-        { "<leader>l",  name = "+lsp" },
-        { "<leader>t",  name = "+tasks" },
-        { "<leader>g",  name = "+git" },
-        { "<leader>w",  name = "+window" },
-        { "<leader>s",  name = "+sessions" },
-        { "<leader>f",  name = "+telescope" },
-        { "<leader>m",  name = "+microblog" },
-        { "<leader>c",  name = "+symbols" },
-        { "<leader>x",  name = "+diagnostics" },
-        { "<leader>h",  name = "+harpoon" },
-        { "<leader>ff", 'dir...' },
-        { "g<c-g>",     'Word count' },
-      })
+      require("my.plugin-config.which-key")
     end
   },
 
@@ -74,7 +58,12 @@ return {
     end,
   },
 
-  { "catppuccin/nvim",       lazy = true, name = "catppuccin", priority = 1000 },
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    name = "catppuccin",
+    priority = 1000
+  },
 
   {
     'crispybaccoon/evergarden',
@@ -93,16 +82,6 @@ return {
   { 'Shatur/neovim-ayu',     lazy = true, priority = 100 },
   --{ 'EdenEast/nightfox.nvim', priority = 100 },
 
-
-  -- COMMENTS
-  {
-    'numToStr/Comment.nvim',
-    event = "VeryLazy",
-    config = function()
-      require('Comment').setup()
-    end
-  },
-
   -- tpope
   {
     'tpope/vim-repeat', -- Integrates the repeat operator with plugins
@@ -120,28 +99,7 @@ return {
   {
     's-cassidy/microblog.nvim',
     config = function()
-      require('microblog').setup(
-        {
-          blogs = {
-            {
-              url = "https://samjc.me",
-              uid = "https://samjc.micro.blog"
-            },
-            {
-              url = "https://samjc-test.micro.blog",
-              uid = "https://samjc-test.micro.blog"
-            }
-          },
-          no_save_quickpost = true,
-        }
-      )
-      vim.keymap.set({ "n", "v" }, "<leader>me", require("microblog").pick_post, { desc = "Edit a post" })
-      vim.keymap.set({ "n", "v" }, "<leader>mp", require("microblog").publish, { desc = "Send a post" })
-      vim.keymap.set({ "n", "v" }, "<leader>mq", require("microblog").quickpost, { desc = "Quick post" })
-      vim.keymap.set({ "n", "v" }, "<leader>mP", require("microblog").pick_page, { desc = "Pick page" })
-      vim.keymap.set({ "n", "v" }, "<leader>mu", require("microblog").get_post_from_url, { desc = "Open micro.blog url" })
-      vim.keymap.set({ "n", "v" }, "<leader>ms", require("microblog").display_post_status,
-        { desc = "Display post status" })
+      require("my.plugin-config.microblog")
     end
   },
   -- GIT
@@ -158,78 +116,16 @@ return {
   {
     'stevearc/oil.nvim',
     config = function()
-      require("oil").setup({
-        keymaps = {
-          ["<C-h>"] = false,
-          ["<C-p>"] = false,
-          ["<C-S-p>"] = "actions.preview"
-        }
-      })
-      vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+      require("my.plugin-config.oil")
     end
   },
-  -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   event = "VeryLazy",
-  --   branch = "v3.x",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-  --     "MunifTanjim/nui.nvim",
-  --     -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-  --   },
-  --   config = function()
-  --     require("neo-tree").setup(
-  --       {
-  --         filesystem = {
-  --           window = {
-  --             mappings = {
-  --               ["-"] = "navigate_up",
-  --             }
-  --           }
-  --         }
-  --       }
-  --     )
-  --     vim.keymap.set("n", "_", ":Neotree left<CR>", { desc = "Open filetree" })
-  --   end
-  -- },
 
   -- quality of life
   -- Lua
   {
     "folke/zen-mode.nvim",
     config = function()
-      require("zen-mode").setup(
-        {
-          window = {
-            options = {
-              signcolumn = "no", -- disable signcolumn
-              number = false,    -- disable number column
-              -- relativenumber = false, -- disable relative numbers
-              -- cursorline = false, -- disable cursorline
-              -- cursorcolumn = false, -- disable cursor column
-              foldcolumn = "0", -- disable fold column
-              list = false,     -- disable whitespace characters
-            }
-          },
-          plugins = {
-            options = {
-              enabled = true,
-              ruler = false,   -- disables the ruler text in the cmd line area
-              showcmd = false, -- disables the command in the last line of the screen
-              -- you may turn on/off statusline in zen mode by setting 'laststatus'
-              -- statusline will be shown only if 'laststatus' == 3
-              laststatus = 0,               -- turn off the statusline in zen mode
-            },
-            gitsigns = { enabled = false }, -- disables git signs
-            kitty = {
-              enabled = false,
-              font = "+4",              -- font size increment
-            },
-            tmux = { enabled = false }, -- disables the tmux statusline
-          }
-        }
-      )
+      require("my.plugin-config.zenmode")
     end
   },
   {
@@ -296,24 +192,13 @@ return {
   -- OBSIDIAN
   {
     'epwalsh/obsidian.nvim',
-    -- keys = "<leader>v",
+    event = "VeryLazy",
     dependencies =
     { 'gaoDean/autolist.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
     end
   },
-  {
-    'arnarg/todotxt.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    config = function()
-      require('todotxt-nvim').setup({
-        todo_file = "~/notes/todo/todo.txt",
-      })
-      require "my.plugin-config.todotxt"
-    end
-  },
-
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter',
@@ -325,19 +210,7 @@ return {
     'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('rainbow-delimiters.setup').setup(
-        {
-          highlight = {
-            'RainbowDelimiterViolet',
-            'RainbowDelimiterBlue',
-            'RainbowDelimiterCyan',
-            'RainbowDelimiterGreen',
-            'RainbowDelimiterOrange',
-            'RainbowDelimiterYellow',
-            'RainbowDelimiterRed',
-          },
-        }
-      )
+      require("my.plugin-config.rainbow-delimiters")
     end
   },
   {
@@ -356,15 +229,16 @@ return {
   },
 
   -- language support and completion
-  { 'brenoprata10/nvim-highlight-colors', config = function() require('nvim-highlight-colors').setup {} end },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    config = function() require('nvim-highlight-colors').setup {} end
+  },
   {
     "lervag/vimtex",
     lazy = true, -- we don't want to lazy load VimTeX
     ft = "tex",
-    -- tag = "v2.15", -- uncomment to pin to a specific release
     init = function()
-      -- VimTeX configuration goes here, e.g.
-      vim.g.vimtex_view_method = "zathura"
+      require("my.plugin-config.vimtex")
     end
   },
 
@@ -372,79 +246,28 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      { 'williamboman/mason.nvim' },
+      'williamboman/mason.nvim',
       "williamboman/mason-lspconfig.nvim",
     },
   },
-  {
-    "danymat/neogen",
-    config = true,
-    -- Uncomment next line if you want to follow only stable versions
-    -- version = "*"
-  },
-  {
-    "folke/neoconf.nvim",
-    cmd = "Neoconf",
-    config = false,
-    dependencies = {
-      "nvim-lspconfig" }
-  },
-  { "folke/neodev.nvim",                  opts = {} },
+  -- {
+  --   "danymat/neogen",
+  --   config = true,
+  --   -- Uncomment next line if you want to follow only stable versions
+  --   -- version = "*"
+  -- },
   {
     "folke/trouble.nvim",
-    keys = {
-      {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
+    keys = require("my.plugin-config.trouble-keys"),
     opts = {}, -- for default options, refer to the configuration section for custom setup.
   },
-  -- { 'mfussenegger/nvim-lint' },
   {
     'nvimtools/none-ls.nvim',
     config = function()
       require("my.plugin-config.null")
     end,
   },
-  -- {
-  --   'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-  --   config = function()
-  --     require("lsp_lines").setup()
-  --     vim.diagnostic.config({ virtual_text = false, })
-  --     vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
-  --   end
-  -- },
   { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
-
-  -- Autocompletion
-  -- { 'VonHeikemen/lsp-zero.nvim', event = 'VeryLazy' },
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
@@ -494,126 +317,16 @@ return {
   },
 
   -- SNIPPETS
-  { 'honza/vim-snippets',       event = 'InsertEnter' },
-  {
-    'dcampos/nvim-snippy',
-    config = function()
-      require "my.plugin-config.snippy"
-    end,
-    event = 'InsertEnter'
-  },
-
+  -- { 'honza/vim-snippets',       event = 'InsertEnter' },
+  -- {
+  --   'dcampos/nvim-snippy',
+  --   config = function()
+  --     require "my.plugin-config.snippy"
+  --   end,
+  --   event = 'InsertEnter'
+  -- },
 
   -- UI
-  --
-  -- lazy.nvim
-  -- {
-  --   "folke/noice.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("noice").setup({
-  --       routes = {
-  --         {
-  --           filter = {
-  --             event = "msg_show",
-  --             kind = "search_count",
-  --           },
-  --           opts = { skip = true },
-  --         },
-  --       },
-  --       views = {
-  --         cmdline_popup = {
-  --           position = {
-  --             row = 5,
-  --             col = "50%",
-  --           },
-  --           size = {
-  --             width = 60,
-  --             height = "auto",
-  --           },
-  --         },
-  --         popupmenu = {
-  --           relative = "editor",
-  --           position = {
-  --             row = 8,
-  --             col = "50%",
-  --           },
-  --           size = {
-  --             width = 60,
-  --             height = 10,
-  --           },
-  --           border = {
-  --             style = "rounded",
-  --             padding = { 0, 1 },
-  --           },
-  --           win_options = {
-  --             winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
-  --           },
-  --         },
-  --       },
-  --       messages = {
-  --         -- NOTE: If you enable messages, then the cmdline is enabled automatically.
-  --         -- This is a current Neovim limitation.
-  --         enabled = true,              -- enables the Noice messages UI
-  --         view = "mini",               -- default view for messages
-  --         view_error = "mini",         -- view for errors
-  --         view_warn = "mini",          -- view for warnings
-  --         view_history = "messages",   -- view for :messages
-  --         view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
-  --       },
-  --       lsp = {
-  --         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-  --         override = {
-  --           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-  --           ["vim.lsp.util.stylize_markdown"] = true,
-  --           ["cmp.entry.get_documentation"] = true,
-  --         },
-  --         message = {
-  --           -- Messages shown by lsp servers
-  --           enabled = true,
-  --           view = "mini",
-  --           opts = {},
-  --         },
-  --         signature = { enabled = false }
-  --       },
-  --       -- you can enable a preset for easier configuration
-  --       presets = {
-  --         bottom_search = true,         -- use a classic bottom cmdline for search
-  --         command_palette = true,       -- position the cmdline and popupmenu together
-  --         long_message_to_split = true, -- long messages will be sent to a split
-  --         inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-  --         lsp_doc_border = false,       -- add a border to hover docs and signature help
-  --       },
-  --     }
-  --     )
-  --   end,
-  --   opts = {
-  --   },
-  --   dependencies = {
-  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-  --     "MunifTanjim/nui.nvim",
-  --     -- OPTIONAL:
-  --     --   `nvim-notify` is only needed, if you want to use the notification view.
-  --     --   If not available, we use `mini` as the fallback
-  --     "rcarriga/nvim-notify",
-  --   }
-  -- },
-  -- {
-  --   "stevearc/dressing.nvim",
-  --   lazy = true,
-  --   init = function()
-  --     ---@diagnostic disable-next-line: duplicate-set-field
-  --     vim.ui.select = function(...)
-  --       require("lazy").load({ plugins = { "dressing.nvim" } })
-  --       return vim.ui.select(...)
-  --     end
-  --     ---@diagnostic disable-next-line: duplicate-set-field
-  --     vim.ui.input = function(...)
-  --       require("lazy").load({ plugins = { "dressing.nvim" } })
-  --       return vim.ui.input(...)
-  --     end
-  --   end,
-  -- },
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -625,7 +338,7 @@ return {
 
 
   -- Language-specific
-  { 'AndrewRadev/tagalong.vim',      ft = 'html' },
+  { 'AndrewRadev/tagalong.vim', ft = 'html' },
 
   {
     'MeanderingProgrammer/markdown.nvim',
@@ -642,34 +355,11 @@ return {
   {
     'codethread/qmk.nvim',
     config = function()
-      ---@type qmk.UserConfig
-      local conf = {
-        name = 'LAYOUT_planck_grid',
-        comment_preview = {
-          keymap_overrides = {
-            HERE_BE_A_LONG_KEY = 'Magic', -- replace any long key codes
-          }
-        },
-        layout = {
-          '_ x x x x x x _ x x x x x x',
-          '_ x x x x x x _ x x x x x x',
-          '_ x x x x x x _ x x x x x x',
-          '_ x x x x x x _ x x x x x x',
-        }
-      }
-      require('qmk').setup(conf)
+      require("my.plugin-config.qmk")
     end
   },
 
 
-  -- STATUS LINES
-
-  -- {
-  --   "luukvbaal/statuscol.nvim",
-  --   config = function()
-  --     require("my.plugin-config.statuscol")
-  --   end
-  -- },
 
   -- MINI
   {
@@ -680,54 +370,10 @@ return {
     end
   },
   {
-    'echasnovski/mini.surround', -- Improves a and i text objects
+    'echasnovski/mini.surround', -- Surround stuff
     event = "VeryLazy",
     config = function()
       require('mini.surround').setup()
-    end
-  },
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = "VeryLazy",
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "help",
-          "alpha",
-          "dashboard",
-          "neo-tree",
-          "Trouble",
-          "trouble",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-          "lazyterm",
-        },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-    end,
-  },
-  {
-    'echasnovski/mini.animate', -- Animate stuff
-    event = "VeryLazy",
-    config = function()
-      require('mini.animate').setup({
-        cursor = {
-          timing = require('mini.animate').gen_timing.linear({ duration = 150, unit = 'total' }),
-        },
-        scroll = {
-          enable = false
-        }
-      })
     end
   },
   {
