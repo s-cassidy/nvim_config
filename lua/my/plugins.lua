@@ -294,7 +294,7 @@ return {
         },
         keys = {
           {
-            "<tab>",
+            "<C-space>",
             function()
               return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
             end,
@@ -302,14 +302,14 @@ return {
             silent = true,
             mode = "i",
           },
-          { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
-          { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+          { "<C-space>",   function() require("luasnip").jump(1) end,  mode = "s" },
+          { "<C-s-space>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
         config = function()
-          require "my.plugin-config.luasnip"
+          require("my.plugin-config.luasnip")
+          require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/my/snippets/" })
         end
       },
-      -- { 'dcampos/cmp-snippy', event = 'InsertEnter' },
     },
     config = function()
       require "my.plugin-config.cmp"
