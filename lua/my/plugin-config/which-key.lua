@@ -10,8 +10,7 @@ wk.add({
   { "<leader>c",  name = "+symbols" },
   { "<leader>x",  name = "+diagnostics" },
   { "<leader>h",  name = "+harpoon" },
-  { "<leader>ff", 'dir...' },
-  { "g<c-g>",     'Word count' },
+  { "<leader>ff", name = 'dir...' },
 })
 
 
