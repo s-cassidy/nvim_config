@@ -1,8 +1,8 @@
 local ls = require("luasnip")
 
 vim.keymap.set({ "i" }, "<C-space>", function() ls.expand() end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-space>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-s-space>", function() ls.jump(-1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-s-j>", function() ls.jump(-1) end, { silent = true })
 
 vim.keymap.set({ "i", "s" }, "<C-E>", function()
   if ls.choice_active() then
@@ -34,16 +34,15 @@ local edit = function()
         return nil
       end
     end
-    ,
-    extend = function(ft, _)
-      return {
-        { ft,
-          string.format(("%s/%s.lua"), "~/.config/nvim/lua/my/snippets", ft)
-        }
-      }
-    end
+    -- ,
+    -- extend = function(ft, _)
+    --   return {
+    --     { ft,
+    --       string.format(("%s/%s.lua"), "~/.config/nvim/lua/my/snippets", ft)
+    --     }
+    --   }
+    -- end
   }
 end
-print("Hello")
 
 vim.api.nvim_create_user_command("LuaSnipEdit", edit, {})
