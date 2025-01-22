@@ -189,7 +189,7 @@ return {
     dependencies = 'nvim-telescope/telescope.nvim'
   },
 
-  -- OBSIDIAN
+  -- WRITING
   {
     'epwalsh/obsidian.nvim',
     event = "VeryLazy",
@@ -198,6 +198,21 @@ return {
     config = function()
       require "my.plugin-config.obsidian"
     end
+  },
+  {
+    "jalvesaq/zotcite",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("zotcite").setup({
+        -- your options here (see doc/zotcite.txt)
+      })
+    end
+  },
+  {
+    'jalvesaq/cmp-zotcite',
   },
   -- TREESITTER
   {
@@ -413,8 +428,8 @@ return {
   },
 
   -- tmux integration
-  { 'aserowy/tmux.nvim' },
-  { 'christoomey/vim-tmux-navigator' },
+  -- { 'aserowy/tmux.nvim' },
+  -- { 'christoomey/vim-tmux-navigator' },
 
   -- DAP
 

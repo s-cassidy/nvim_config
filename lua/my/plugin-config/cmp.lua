@@ -24,8 +24,9 @@ cmp.setup({
   },
 
   sources = cmp.config.sources({
-    { name = 'nvim_lsp', priority = 7 },
-    { name = 'luasnip',  priority = 8 }, -- For snippy users.
+    { name = 'nvim_lsp',   priority = 7 },
+    { name = 'cmp_zotcite' },
+    { name = 'luasnip',    priority = 8 }, -- For snippy users.
   }, {
     { name = 'buffer', priority = 3 },
   })
