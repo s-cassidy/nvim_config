@@ -138,6 +138,7 @@ local extract_note = function()
   local text
   local start_line
   local end_line
+  local buffer = vim.api.nvim_get_current_buf()
   text, start_line, end_line = get_text()
   local title
   vim.ui.input({ prompt = "Note title: " },
@@ -145,8 +146,8 @@ local extract_note = function()
       title = input
     end)
   local filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
-  vim.api.nvim_buf_set_lines(0, start_line, end_line, true, { ("Extracted note to [[%s]]"):format(filename) })
   new_note(title, text)
+  vim.api.nvim_buf_set_lines(buffer, start_line, end_line, true, { ("Extracted note to [[%s]]"):format(filename) })
 end
 
 local daily_note = function()
