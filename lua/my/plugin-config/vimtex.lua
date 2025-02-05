@@ -1,5 +1,6 @@
 -- VimTeX configuration goes here, e.g.
 vim.g.vimtex_view_method = "zathura"
+vim.g.vimtex_mappings_enabled = false
 vim.api.nvim_create_augroup('tex', { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   pattern = "*.tex",
