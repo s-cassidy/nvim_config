@@ -10,15 +10,21 @@ return {
       require("my.plugin-config.which-key")
     end
   },
-
-  -- COLORSCHEME
   {
-    'andrew-george/telescope-themes',
-    config = function()
-      require('telescope').load_extension('themes')
-    end
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = require('my.plugin-config.snacks')
   },
 
+  -- COLORSCHEME
+  -- {
+  --   'andrew-george/telescope-themes',
+  --   config = function()
+  --     require('telescope').load_extension('themes')
+  --   end
+  -- },
+  --
   {
     "cdmill/neomodern.nvim",
     lazy = false,
@@ -30,41 +36,41 @@ return {
       require("neomodern").load()
     end,
   },
-
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "aktersnurra/no-clown-fiesta.nvim",
-    lazy = true,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("cyberdream").setup({
-        -- Recommended - see "Configuring" below for more config options
-        transparent = true,
-        italic_comments = true,
-        hide_fillchars = true,
-        borderless_telescope = true,
-      })
-    end,
-  },
-
-  {
-    "catppuccin/nvim",
-    lazy = true,
-    name = "catppuccin",
-    priority = 1000
-  },
-
+  --
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = true,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
+  -- {
+  --   "aktersnurra/no-clown-fiesta.nvim",
+  --   lazy = true,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
+  -- {
+  --   "scottmckendry/cyberdream.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("cyberdream").setup({
+  --       -- Recommended - see "Configuring" below for more config options
+  --       transparent = true,
+  --       italic_comments = true,
+  --       hide_fillchars = true,
+  --       borderless_telescope = true,
+  --     })
+  --   end,
+  -- },
+  --
+  -- {
+  --   "catppuccin/nvim",
+  --   lazy = true,
+  --   name = "catppuccin",
+  --   priority = 1000
+  -- },
+  --
   {
     'crispybaccoon/evergarden',
     opts = {
@@ -77,9 +83,9 @@ return {
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
   --"folke/tokyonight.nvim",
-  { 'sainnhe/everforest',    lazy = true, priority = 100 },
-  { 'rebelot/kanagawa.nvim', lazy = true, priority = 100 },
-  { 'Shatur/neovim-ayu',     lazy = true, priority = 100 },
+  -- { 'sainnhe/everforest',    lazy = true, priority = 100 },
+  -- { 'rebelot/kanagawa.nvim', lazy = true, priority = 100 },
+  -- { 'Shatur/neovim-ayu',     lazy = true, priority = 100 },
   --{ 'EdenEast/nightfox.nvim', priority = 100 },
 
   -- tpope
@@ -211,9 +217,6 @@ return {
       })
     end
   },
-  {
-    'jalvesaq/cmp-zotcite',
-  },
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter',
@@ -265,12 +268,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
   },
-  -- {
-  --   "danymat/neogen",
-  --   config = true,
-  --   -- Uncomment next line if you want to follow only stable versions
-  --   -- version = "*"
-  -- },
   {
     "folke/trouble.nvim",
     keys = require("my.plugin-config.trouble-keys"),
@@ -331,15 +328,6 @@ return {
     end
   },
 
-  -- SNIPPETS
-  -- { 'honza/vim-snippets',       event = 'InsertEnter' },
-  -- {
-  --   'dcampos/nvim-snippy',
-  --   config = function()
-  --     require "my.plugin-config.snippy"
-  --   end,
-  --   event = 'InsertEnter'
-  -- },
 
   -- UI
   {
@@ -357,10 +345,10 @@ return {
 
   {
     'MeanderingProgrammer/markdown.nvim',
-    name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    ft = 'markdown',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('render-markdown').setup({})
+      require('markdown').setup({})
     end,
   },
 
