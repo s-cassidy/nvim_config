@@ -2,6 +2,70 @@ local in_math = function()
   return vim.api.nvim_eval('vimtex#syntax#in_mathzone()') == 1
 end
 
+local snippets = {
+
+  s(
+    { trig = 'rcl', dscr = 'IEEEeqn array with an = sign alignment', snippetType = "autosnippet" },
+    fmta(
+      [[\begin{IEEEeqnarray*}{rcl}
+  <> &{}<>{}& <> \\
+   <> &<>& <> \\
+\end{IEEEeqnarray*}]],
+      {
+        i(1, ""),
+        i(2, "="),
+        i(3, ""),
+        i(4, ""),
+        rep(2, ""),
+        i(5, ""),
+      }
+    )
+  ),
+
+  s(
+    { trig = 'frac', dscr = 'fractions' },
+    fmta(
+      [[\frac{<>}{<>}]],
+      {
+        i(1, ""),
+        i(2, ""),
+      }
+    ),
+    { condition = in_math }
+  ),
+
+  s(
+    { trig = 'eq', dscr = 'Normal equation' },
+    fmta(
+      [[\begin{IEEEeqnarray*}{c}
+  <>
+\end{IEEEeqnarray*}]],
+      {
+        i(1, "")
+      }
+    )
+  ),
+
+  s(
+    { trig = 'Def', dscr = 'For definitions' },
+    fmta(
+      "\\begin{Def}\n\t<>\n\\end{Def}",
+      {
+        i(1, "")
+      }
+    )
+  ),
+  s(
+    { trig = 'Rem', dscr = 'For remarks' },
+    fmta(
+      "\\begin{Rem}\n\t<>\n\\end{Rem}",
+      {
+        i(1, "")
+      }
+    )
+  ),
+}
+
 local imap_leader = ";"
 
 local imaps = {
@@ -81,14 +145,15 @@ local imaps = {
   -- \ { 'lhs' : 'B',  'rhs' : 'vimtex#imaps#style_math("mathbb")', 'expr' : 1, 'leader' : '#'},
 }
 
-local snippets = {}
 
 for trig, snip in pairs(imaps) do
   table.insert(snippets,
     s(
-      { trig = imap_leader .. trig, dscr = snip, type = 'autosnippet', },
+      { trig = imap_leader .. trig, dscr = snip, snippetType = 'autosnippet', },
       { t(snip) },
-      { condition = in_math }
+      {
+        condition = in_math
+      }
     )
   )
 end
