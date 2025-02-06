@@ -197,7 +197,8 @@ return {
 
   -- WRITING
   {
-    'epwalsh/obsidian.nvim',
+    'adamtajti/obsidian.nvim',
+    branch = "blink-support",
     event = "VeryLazy",
     dependencies =
     { 'gaoDean/autolist.nvim' },
@@ -281,16 +282,10 @@ return {
   },
   { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
   {
-    'hrsh7th/nvim-cmp',
-    event = "InsertEnter",
+    'saghen/blink.cmp',
+    -- !Important! Make sure you're using the latest release of LuaSnip
+    -- `main` does not work at the moment
     dependencies = {
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      { "rafamadriz/friendly-snippets" },
       {
         "L3MON4D3/LuaSnip",
         -- follow latest release.
@@ -300,32 +295,45 @@ return {
         event = "InsertEnter",
         dependencies = {
           "rafamadriz/friendly-snippets",
-          config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-          end,
-        },
-        keys = {
-          {
-            "<C-space>",
-            function()
-              return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = "i",
-          },
-          { "<C-space>",   function() require("luasnip").jump(1) end,  mode = "s" },
-          { "<C-s-space>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
         config = function()
           require("my.plugin-config.luasnip")
-          require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/my/snippets/" })
         end
-      },
+      }
     },
-    config = function()
-      require "my.plugin-config.cmp"
-    end
+    opts = {
+      snippets = { preset = 'luasnip' },
+      -- ensure you have the `snippets` source (enabled by default)
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          snippets = {
+            name = "Snippets",
+            enabled = true,
+            max_items = 8,
+            min_keyword_length = 2,
+            module = "blink.cmp.sources.snippets",
+            score_offset = 85,
+          },
+        },
+      },
+      keymap = {
+        preset = "none",
+        ['<C-space>'] = { 'select_and_accept' },
+        ['<C-y>'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ['<C-e>'] = { 'hide' },
+
+        ['<Up>'] = { 'select_prev', 'fallback' },
+        ['<Down>'] = { 'select_next', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' },
+
+        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+        ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      },
+    }
   },
 
 
@@ -347,9 +355,6 @@ return {
     'MeanderingProgrammer/markdown.nvim',
     ft = 'markdown',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = function()
-      require('markdown').setup({})
-    end,
   },
 
 

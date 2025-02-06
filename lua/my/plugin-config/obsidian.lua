@@ -20,7 +20,8 @@ require("obsidian").setup({
   note_frontmatter_func = nil,
   daily_notes = { folder = "journal", date_format = "%Y-%m-%d-%a" },
   completion = {
-    nvim_cmp = true, -- if using nvim-cmp, otherwise set to false
+    nvim_cmp = false, -- if using nvim-cmp, otherwise set to false
+    blink = true,
     min_chars = 2,
   },
   note_id_func = function(title)

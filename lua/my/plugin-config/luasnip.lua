@@ -1,6 +1,5 @@
 local ls = require("luasnip")
 
-vim.keymap.set({ "i" }, "<C-space>", function() ls.expand() end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-s-j>", function() ls.jump(-1) end, { silent = true })
 
@@ -10,7 +9,7 @@ vim.keymap.set({ "i", "s" }, "<C-E>", function()
   end
 end, { silent = true })
 
-require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").load({ include = { "html" } })
 local ls = require("luasnip")
 local map = vim.keymap.set
 
@@ -34,14 +33,14 @@ local edit = function()
         return nil
       end
     end
-    -- ,
-    -- extend = function(ft, _)
-    --   return {
-    --     { ft,
-    --       string.format(("%s/%s.lua"), "~/.config/nvim/lua/my/snippets", ft)
-    --     }
-    --   }
-    -- end
+    ,
+    extend = function(ft, _)
+      return {
+        { ft,
+          string.format(("%s/%s.lua"), "~/.config/nvim/lua/my/snippets", ft)
+        }
+      }
+    end
   }
 end
 
