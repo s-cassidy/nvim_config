@@ -5,7 +5,7 @@ end
 local snippets = {
 
   s(
-    { trig = 'rcl', dscr = 'IEEEeqn array with an = sign alignment', snippetType = "autosnippet" },
+    { trig = 'rcl', dscr = 'IEEEeqn array with an = sign alignment' },
     fmta(
       [[\begin{IEEEeqnarray*}{rcl}
   <> &{}<>{}& <> \\
