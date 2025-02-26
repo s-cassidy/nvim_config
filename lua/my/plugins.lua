@@ -11,66 +11,30 @@ return {
     end
   },
   {
-    "folke/snacks.nvim",
+    "aktersnurra/no-clown-fiesta.nvim",
     priority = 1000,
-    lazy = false,
-    opts = require('my.plugin-config.snacks')
+    opts = {},
   },
-
-  -- COLORSCHEME
-  -- {
-  --   'andrew-george/telescope-themes',
-  --   config = function()
-  --     require('telescope').load_extension('themes')
-  --   end
-  -- },
-  --
   {
-    "cdmill/neomodern.nvim",
-    lazy = false,
+    "scottmckendry/cyberdream.nvim",
     priority = 1000,
     config = function()
-      require("neomodern").setup({
-        style = "darkforest"
+      require("cyberdream").setup({
+        -- Recommended - see "Configuring" below for more config options
+        transparent = true,
+        italic_comments = true,
+        hide_fillchars = true,
+        borderless_telescope = true,
       })
-      require("neomodern").load()
     end,
   },
-  --
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   lazy = true,
-  --   priority = 1000,
-  --   opts = {},
-  -- },
-  -- {
-  --   "aktersnurra/no-clown-fiesta.nvim",
-  --   lazy = true,
-  --   priority = 1000,
-  --   opts = {},
-  -- },
-  -- {
-  --   "scottmckendry/cyberdream.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("cyberdream").setup({
-  --       -- Recommended - see "Configuring" below for more config options
-  --       transparent = true,
-  --       italic_comments = true,
-  --       hide_fillchars = true,
-  --       borderless_telescope = true,
-  --     })
-  --   end,
-  -- },
-  --
-  -- {
-  --   "catppuccin/nvim",
-  --   lazy = true,
-  --   name = "catppuccin",
-  --   priority = 1000
-  -- },
-  --
+
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000
+  },
+
   {
     'crispybaccoon/evergarden',
     opts = {
@@ -131,6 +95,7 @@ return {
   {
     "folke/zen-mode.nvim",
     config = function()
+      vim.keymap.set("n", "<leader>Z", require("zen-mode").toggle)
       require("my.plugin-config.zenmode")
     end
   },
