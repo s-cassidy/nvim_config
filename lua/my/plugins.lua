@@ -3,7 +3,16 @@ return {
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
-
+  {
+    'xiyaowong/transparent.nvim',
+    config = function()
+      require("transparent").setup({
+        -- table: additional groups that should be cleared
+        extra_groups = { "NormalFloat" },
+        -- table: groups you don't want to clear
+      })
+    end
+  },
   {
     'folke/which-key.nvim',
     config = function()
@@ -100,6 +109,18 @@ return {
     end
   },
   {
+    'altermo/ultimate-autopair.nvim',
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    branch = 'v0.6', --recommended as each new version will have breaking changes
+    opts = {
+      close = {
+        enable = true,
+        map='<A-c>', --string or table
+        cmap='<A-c>', --string or table
+      }
+    },
+  },
+  {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
     config = function()
       require('neoclip').setup()
@@ -112,6 +133,11 @@ return {
     config = function()
       require('my.plugin-config.ufo')
     end
+  },
+  {
+    "chrisgrieser/nvim-origami",
+    event = "VeryLazy",
+    opts = {}, -- needed even when using default config
   },
   {
     "mateuszwieloch/automkdir.nvim"
@@ -245,11 +271,13 @@ return {
       require("my.plugin-config.null")
     end,
   },
-  { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
+  -- { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
   {
     'saghen/blink.cmp',
     -- !Important! Make sure you're using the latest release of LuaSnip
     -- `main` does not work at the moment
+    version = '*',
+    event = "InsertEnter",
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
@@ -270,7 +298,7 @@ return {
       snippets = { preset = 'luasnip' },
       -- ensure you have the `snippets` source (enabled by default)
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp', 'path', 'snippets' },
         providers = {
           snippets = {
             name = "Snippets",
@@ -387,7 +415,24 @@ return {
 
   -- tmux integration
   -- { 'aserowy/tmux.nvim' },
-  -- { 'christoomey/vim-tmux-navigator' },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+      "TmuxNavigatorProcessList",
+    },
+    keys = {
+      { "<A-h>",  function() vim.cmd "TmuxNavigateLeft" end },
+      { "<A-j>",  function() vim.cmd "TmuxNavigateDown" end },
+      { "<A-k>",  function() vim.cmd "TmuxNavigateUp" end },
+      { "<A-l>",  function() vim.cmd "TmuxNavigateRight" end },
+      { "<A-\\>", function() vim.cmd "TmuxNavigatePrevious" end },
+    },
+  },
 
   -- DAP
 
