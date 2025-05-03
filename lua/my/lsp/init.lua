@@ -28,7 +28,6 @@ require 'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
 
-vim.diagnostic.disable()
-require('my.lsp.signatures')
+-- require('my.lsp.signatures')
 
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, {desc = "Format buffer", silent = true})
