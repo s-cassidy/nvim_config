@@ -3,6 +3,19 @@ local in_math = function()
 end
 
 local snippets = {
+  s(
+    { trig = 'beg',  dscr = 'New environment'},
+    fmta(
+      [[\begin{<>}
+  <>
+\end{<>}]],
+      {
+        i(1, "env"),
+        i(2, ""),
+        rep(1, "env")
+      }
+    )
+  ),
 
   s(
     { trig = 'rcl', dscr = 'IEEEeqn array with an = sign alignment' },
