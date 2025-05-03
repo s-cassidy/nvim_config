@@ -9,7 +9,7 @@ vim.keymap.set({ "i", "s" }, "<C-E>", function()
   end
 end, { silent = true })
 
-require("luasnip.loaders.from_vscode").load({ include = { "html" } })
+require("luasnip.loaders.from_vscode").load({ include = { "html", "all" } })
 local ls = require("luasnip")
 local map = vim.keymap.set
 
