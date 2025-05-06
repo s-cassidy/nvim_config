@@ -20,6 +20,8 @@ local normal = {
   { "<C-Down>",   "<cmd>resize -2<cr>" },
   { "<C-Left>",   "<cmd>vertical resize -2<cr>" },
   { "<C-Right>",  "<cmd>vertical resize +2<cr>" },
+  { "<M-/>",     "<cmd>vsplit<cr>",                                  {desc = "Split current buffer vertically"} },
+  { "<M-->",     "<cmd>split<cr>",                                 {desc = "Split current buffer horizontally"} },
   { "<esc>",      "<cmd>noh<cr><esc>" }, -- esc also clears hlsearch
   { "<C-w>|",     "<cmd>vsplit<cr>" },
   { "<C-w>-",     "<cmd>split<cr>" },

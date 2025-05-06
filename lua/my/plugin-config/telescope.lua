@@ -4,13 +4,19 @@ local builtin = require('telescope.builtin')
 require('telescope').setup {
   defaults = {
     layout_strategy = "horizontal",
-    layout_config = { width = 0.5 }
-  },
-  mappings = {
-    n = {
-      ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,
-      ["<leader>Q"] = actions.smart_add_to_qflist + actions.open_qflist
-    }
+    layout_config = { width = 0.5 },
+    mappings = {
+      n = {
+        ["<leader>q"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<leader>Q"] = actions.smart_add_to_qflist + actions.open_qflist,
+        ["<M-->"] = actions.select_horizontal,
+        ["<M-/>"] = actions.select_vertical,
+      },
+      i =  {
+        ["<A-->"] = actions.select_horizontal,
+        ["<A-/>"] = actions.select_vertical,
+      }
+    },
   },
 
   fzf = {
