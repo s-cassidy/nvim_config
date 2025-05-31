@@ -3,16 +3,16 @@ return {
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
-  {
-    'xiyaowong/transparent.nvim',
-    config = function()
-      require("transparent").setup({
-        -- table: additional groups that should be cleared
-        extra_groups = { "NormalFloat" },
-        -- table: groups you don't want to clear
-      })
-    end
-  },
+  -- {
+  --   'xiyaowong/transparent.nvim',
+  --   config = function()
+  --     require("transparent").setup({
+  --       -- table: additional groups that should be cleared
+  --       extra_groups = { "NormalFloat" },
+  --       -- table: groups you don't want to clear
+  --     })
+  --   end
+  -- },
   {
     'folke/which-key.nvim',
     config = function()
@@ -50,6 +50,15 @@ return {
       transparent_background = true,
       contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
       overrides = {},           -- add custom overrides
+    }
+  },
+  {
+    'webhooked/kanso.nvim',
+    opts = {
+      theme = "zen",
+      background = {
+        dark = "zen",
+      }
     }
   },
 
@@ -188,11 +197,10 @@ return {
 
   -- WRITING
   {
-    'adamtajti/obsidian.nvim',
-    branch = "blink-support",
+    'obsidian-nvim/obsidian.nvim',
     event = "VeryLazy",
     dependencies =
-    { 'gaoDean/autolist.nvim' },
+    { 'MeanderingProgrammer/render-markdown.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
     end
@@ -276,7 +284,7 @@ return {
     'saghen/blink.cmp',
     -- !Important! Make sure you're using the latest release of LuaSnip
     -- `main` does not work at the moment
-    version = '*',
+    version = '1.*',
     event = "InsertEnter",
     dependencies = {
       {
@@ -320,6 +328,8 @@ return {
         ['<Down>'] = { 'select_next', 'fallback' },
         ['<C-p>'] = { 'select_prev', 'fallback' },
         ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<tab>'] = { 'select_next', 'fallback' },
+        ['<S-tab>'] = { 'select_prev', 'fallback' },
 
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
@@ -344,11 +354,11 @@ return {
   -- Language-specific
   { 'AndrewRadev/tagalong.vim', ft = 'html' },
 
-  {
-    'MeanderingProgrammer/markdown.nvim',
-    ft = 'markdown',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
+  -- {
+  --   'MeanderingProgrammer/markdown.nvim',
+  --   ft = 'markdown',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  -- },
 
 
   -- QMK
