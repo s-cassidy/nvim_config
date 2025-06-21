@@ -198,7 +198,8 @@ return {
   -- WRITING
   {
     'obsidian-nvim/obsidian.nvim',
-    event = "VeryLazy",
+    event = {"BufRead */home/sam/notes/*",
+    },
     dependencies =
     { 'MeanderingProgrammer/render-markdown.nvim' },
     config = function()
@@ -365,6 +366,7 @@ return {
   --
   {
     'codethread/qmk.nvim',
+    cmd = "QMKFormat",
     config = function()
       require("my.plugin-config.qmk")
     end
