@@ -77,6 +77,16 @@ local snippets = {
       }
     )
   ),
+
+  s(
+    { trig = 'itm',  dscr = 'Itemize environment'},
+    fmta(
+      "\\begin{itemize}\n\t\\item <>\n\\end{itemize}",
+      {
+        i(1, "")
+      }
+    )
+  ),
 }
 
 local imap_leader = ";"
