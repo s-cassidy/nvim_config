@@ -83,13 +83,6 @@ return {
   },
 
 
-  -- my microblog plugin
-  {
-    's-cassidy/microblog.nvim',
-    config = function()
-      require("my.plugin-config.microblog")
-    end
-  },
   -- GIT
   --
   {
@@ -121,13 +114,17 @@ return {
     'altermo/ultimate-autopair.nvim',
     event = { 'InsertEnter', 'CmdlineEnter' },
     branch = 'v0.6', --recommended as each new version will have breaking changes
-    opts = {
+    config = function()
+      require('ultimate-autopair').setup({
+      {'“','”',ft = {"markdown"}, multiline=false},
+      {'$','$',ft = {"markdown"}, multiline=false},
       close = {
         enable = true,
         map='<A-c>', --string or table
         cmap='<A-c>', --string or table
-      }
-    },
+      },
+    })
+    end
   },
   {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
@@ -323,13 +320,13 @@ return {
 
 
   -- UI
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("my.plugin-config.lualine")
-    end
-  },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("my.plugin-config.lualine")
+  --   end
+  -- },
 
 
 
@@ -368,13 +365,6 @@ return {
     event = "VeryLazy",
     config = function()
       require('mini.surround').setup()
-    end
-  },
-  {
-    'echasnovski/mini.align', -- Align columns of text
-    event = "VeryLazy",
-    config = function()
-      require('mini.align').setup()
     end
   },
   {
