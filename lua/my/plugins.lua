@@ -137,13 +137,6 @@ return {
   },
   -- Lua
   {
-    'kevinhwang91/nvim-ufo',
-    dependencies = 'kevinhwang91/promise-async',
-    config = function()
-      require('my.plugin-config.ufo')
-    end
-  },
-  {
     "chrisgrieser/nvim-origami",
     event = "VeryLazy",
     opts = {}, -- needed even when using default config
@@ -204,18 +197,6 @@ return {
     { 'MeanderingProgrammer/render-markdown.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
-    end
-  },
-  {
-    "jalvesaq/zotcite",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("zotcite").setup({
-        -- your options here (see doc/zotcite.txt)
-      })
     end
   },
   -- TREESITTER

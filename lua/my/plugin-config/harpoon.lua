@@ -23,4 +23,4 @@ vim.keymap.set("n", "<A-q>", ':lua require("harpoon.ui").nav_file(1)<CR>', { sil
 vim.keymap.set("n", "<A-w>", ':lua require("harpoon.ui").nav_file(2)<CR>', { silent = true })
 vim.keymap.set("n", "<A-e>", ':lua require("harpoon.ui").nav_file(3)<CR>', { silent = true })
 vim.keymap.set("n", "<A-r>", ':lua require("harpoon.ui").nav_file(4)<CR>', { silent = true })
-vim.keymap.set("n", '<C-s>', '<cmd>lua require("harpoon.mark").toggle_file()<cr>', { desc = 'Pin on Harpoon' })
+vim.keymap.set("n", '<C-s>', function() require("harpoon.mark").toggle_file() vim.cmd("") end, { desc = 'Pin on Harpoon' })

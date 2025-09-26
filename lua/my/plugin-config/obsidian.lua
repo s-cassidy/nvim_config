@@ -210,6 +210,8 @@ local move_to_folder = function()
   }):find()
 end
 
+require('render-markdown').enable()
+
 vim.keymap.set("v", "<leader>vx", extract_note, { desc = "Extract note" })
 
 require("which-key").add({

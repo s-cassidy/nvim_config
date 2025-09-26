@@ -26,9 +26,10 @@ return {
 s(
   { trig = 'elem',  dscr = 'Create element'},
   fmt(
-    "document.createElement({})",
+    "const {} = document.createElement({})",
     {
-      i(1, "element")
+      i(1, "name"),
+      i(2, "element")
     }
   )
 ),

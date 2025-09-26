@@ -71,4 +71,13 @@ title: {}
       }
     )
   ),
+  s(
+    { trig = 'blogimg',  dscr = 'Inline image for blog'},
+    fmt('<img class="inline-image" src="{}" alt="{}">',
+      {
+        i(1, "path"),
+        i(2, "alt-text"),
+      }
+    )
+  ),
 }
