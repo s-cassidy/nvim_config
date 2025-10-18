@@ -36,9 +36,5 @@ require 'nvim-treesitter.configs'.setup {
     disable = { "vimdoc" }
   },
 
-  autotag = {
-    enable = true,
-  },
-
 
 }

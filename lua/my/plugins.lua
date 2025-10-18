@@ -25,6 +25,12 @@ return {
     opts = {},
   },
   {
+    "slugbyte/lackluster.nvim",
+    lazy = false,
+    priority = 1000,
+    
+  },
+  {
     "scottmckendry/cyberdream.nvim",
     priority = 1000,
     config = function()
@@ -37,13 +43,6 @@ return {
       })
     end,
   },
-
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000
-  },
-
   {
     'crispybaccoon/evergarden',
     opts = {
@@ -116,15 +115,27 @@ return {
     branch = 'v0.6', --recommended as each new version will have breaking changes
     config = function()
       require('ultimate-autopair').setup({
-      {'“','”',ft = {"markdown"}, multiline=false},
-      {'$','$',ft = {"markdown"}, multiline=false},
-      close = {
-        enable = true,
-        map='<A-c>', --string or table
-        cmap='<A-c>', --string or table
-      },
-    })
+        { '“', '”', ft = { "markdown" }, multiline = false },
+        { '$', '$', ft = { "markdown" }, multiline = false },
+        close = {
+          enable = true,
+          map = '<A-c>',  --string or table
+          cmap = '<A-c>', --string or table
+        },
+      })
     end
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    ft = { "html", "markdown" },
+    opts = {
+      opts = {
+        -- Defaults
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
+        enable_close_on_slash = false -- Auto close on trailing </
+      },
+    }
   },
   {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
@@ -133,17 +144,15 @@ return {
     end
   },
   -- Lua
-  {
-    "chrisgrieser/nvim-origami",
-    event = "VeryLazy",
-    opts = {}, -- needed even when using default config
-  },
+  -- {
+  --   "chrisgrieser/nvim-origami",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     autoFold = {enabled = false}
+  --   }, -- needed even when using default config
+  -- },
   {
     "mateuszwieloch/automkdir.nvim"
-  },
-  {
-    "chrisgrieser/nvim-puppeteer", -- automatically convert to f-string
-    lazy = false,                  -- plugin lazy-loads itself. Can also load on filetypes.
   },
   {
     'shadyalfred/electric-quotes.nvim',
@@ -188,7 +197,7 @@ return {
   -- WRITING
   {
     'obsidian-nvim/obsidian.nvim',
-    event = {"BufRead */home/sam/notes/*",
+    event = { "BufRead */home/sam/notes/*",
     },
     dependencies =
     { 'MeanderingProgrammer/render-markdown.nvim' },
@@ -329,15 +338,13 @@ return {
   -- },
 
 
-
-  -- Language-specific
-  { 'AndrewRadev/tagalong.vim', ft = 'html' },
-
-  -- {
-  --   'MeanderingProgrammer/markdown.nvim',
-  --   ft = 'markdown',
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  -- },
+  {
+    "tadmccorkle/markdown.nvim",
+    ft = "markdown", -- or 'event = "VeryLazy"'
+    opts = {
+      -- configuration here or empty for defaults
+    },
+  },
 
 
   -- QMK
@@ -397,7 +404,6 @@ return {
   },
 
   -- tmux integration
-  -- { 'aserowy/tmux.nvim' },
   {
     "christoomey/vim-tmux-navigator",
     cmd = {

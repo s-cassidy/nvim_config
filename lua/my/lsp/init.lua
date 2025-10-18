@@ -2,7 +2,7 @@ require('mason').setup()
 require('mason-lspconfig').setup()
 
 
-require 'lspconfig'.lua_ls.setup {
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {
@@ -11,17 +11,17 @@ require 'lspconfig'.lua_ls.setup {
       },
     },
   },
-}
+})
 
 
 
-require 'lspconfig'.html.setup {}
+vim.lsp.enable("html")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require 'lspconfig'.cssls.setup {
+vim.lsp.config("cssls", {
   capabilities = capabilities,
-}
+})
 
 -- require('my.lsp.signatures')
 

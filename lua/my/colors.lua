@@ -1,7 +1,7 @@
 local light_colour = "kanso-pearl"
 local dark_colour = "kanso-zen"
 local colour_mode = "dark"
-vim.cmd [[colorscheme kanso]]
+vim.cmd [[colorscheme lackluster]]
 
 local function toggle_light_dark()
  if colour_mode == "dark" then
