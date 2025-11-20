@@ -60,6 +60,20 @@ return {
       }
     }
   },
+  {
+    "zenbones-theme/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
+    priority = 1000,
+    -- you can set set configuration options here
+    config = function()
+    --     vim.g.zenbones_darken_comments = 45
+        vim.cmd.colorscheme('rosebones')
+    end
+},
 
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
@@ -175,7 +189,16 @@ return {
     -- config = true,
     event = "VeryLazy",
   },
-
+  {
+    event = "VeryLazy",
+    "kshenoy/vim-signature",
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    -- dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
+  },
   -- TELESCOPE
   {
     'nvim-telescope/telescope.nvim',
@@ -226,6 +249,23 @@ return {
     end
   },
 
+  {
+    'stevearc/aerial.nvim',
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+    config = function()
+      require("aerial").setup(
+        {
+          backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" }
+        }
+      )
+      vim.keymap.set("n", "<leader>n" ,":AerialToggle<CR>", {desc = "Navigate document"})
+    end
+  },
+
   -- HARPOON
   {
     'ThePrimeagen/harpoon',
@@ -267,7 +307,7 @@ return {
       require("my.plugin-config.null")
     end,
   },
-  -- { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
+  { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
   {
     'saghen/blink.cmp',
     -- !Important! Make sure you're using the latest release of LuaSnip
