@@ -1,7 +1,7 @@
 return {
 
   s(
-    { trig = 'afn',  dscr = 'Arrow function'},
+    { trig = 'arr',  dscr = 'Arrow function'},
     fmta(
       "(<>) =>> {<>}",
       {
