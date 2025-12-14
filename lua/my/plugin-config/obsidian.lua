@@ -5,6 +5,7 @@ local action_state = require "telescope.actions.state"
 local vault_path = vim.fn.expand("~/notes/")
 
 require("obsidian").setup({
+  legacy_commands = false,
   workspaces = {
     {
       name = "notes",
@@ -16,8 +17,7 @@ require("obsidian").setup({
     date_format = "%Y-%m-%d-%a",
     time_format = "%H.%M"
   },
-  disable_frontmatter = true,
-  note_frontmatter_func = nil,
+  frontmatter = {enabled = false},
   daily_notes = { folder = "journal", date_format = "%Y-%m-%d-%a" },
   completion = {
     nvim_cmp = false, -- if using nvim-cmp, otherwise set to false
@@ -35,7 +35,7 @@ vim.keymap.set(
   "gf",
   function()
     if require('obsidian').util.cursor_on_markdown_link() then
-      return "<cmd>ObsidianFollowLink<CR>"
+      return "<cmd>Obsidian smart_action<CR>"
     else
       return "gf"
     end
@@ -91,7 +91,7 @@ end
 local clear_and_add_template = function(template)
   vim.cmd("e! %")
   vim.cmd("execute 'normal dd'")
-  vim.cmd("ObsidianTemplate " .. template)
+  vim.cmd("Obsidian template " .. template)
   vim.cmd("call feedkeys(':','nx')") -- clear message window
 end
 
@@ -100,7 +100,7 @@ local create_note = function(filename, folder, text)
   vim.api.nvim_set_current_buf(buffer)
   vim.bo.filetype = "markdown"
   vim.cmd("w " .. vault_path .. folder .. "/" .. filename .. ".md")
-  vim.cmd("ObsidianTemplate note")
+  vim.cmd("Obsidian template note")
   if text then
     vim.api.nvim_buf_set_lines(buffer, 7, 7, false, text)
   end
@@ -162,7 +162,7 @@ local daily_note = function()
     vim.api.nvim_set_current_buf(buffer)
     vim.bo.filetype = "markdown"
     vim.cmd("w " .. vault_path .. "journal/" .. filename .. ".md")
-    vim.cmd("ObsidianTemplate daily-nvim")
+    vim.cmd("Obsidian template daily-nvim")
     local title_line = "# " .. tostring(os.date("%Y-%m-%d | %A"))
     vim.api.nvim_buf_set_lines(buffer, 5, 5, true, { title_line })
     vim.cmd("w")
@@ -217,8 +217,8 @@ vim.keymap.set("v", "<leader>vx", extract_note, { desc = "Extract note" })
 require("which-key").add({
   { "<leader>v",   name = "+obsidian" },
   { "<leader>vv",  ":tabe ~/notes<cr>:tcd ~/notes<cr>:TabRename vault<cr>", desc = "Go to vault" },
-  { "<leader>vt",  ":ObsidianTemplate<cr>",                                 desc = "Insert template" },
-  { "<leader>vb",  ":ObsidianBacklinks<cr>",                                desc = "Backlinks" },
+  { "<leader>vt",  ":Obsidian template<cr>",                                 desc = "Insert template" },
+  { "<leader>vb",  ":Obsidian backlinks<cr>",                                desc = "Backlinks" },
   { "<leader>vff", find_in_folder,                                          desc = "Folder files" },
   { "<leader>vfs", search_in_folder,                                        desc = "Folder search" },
   { "<leader>vd",  daily_note,                                              desc = "Daily note" },
@@ -226,6 +226,6 @@ require("which-key").add({
   { "<leader>vs",  source_template,                                         desc = "Source template" },
   { "<leader>vz",  note_template,                                           desc = "Note template" },
   { "<leader>vj",  daily_template,                                          desc = "Daily template" },
-  { "<leader>vg",  ":ObsidianSearch<cr>",                                   desc = "Search in vault" },
+  { "<leader>vg",  ":Obsidian search<cr>",                                   desc = "Search in vault" },
   { "<leader>vm",  move_to_folder,                                          desc = "Move note" }, -- reqiures fugitive.vim
 })

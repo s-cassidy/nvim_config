@@ -25,6 +25,12 @@ return {
     opts = {},
   },
   {
+    "slugbyte/lackluster.nvim",
+    lazy = false,
+    priority = 1000,
+    
+  },
+  {
     "scottmckendry/cyberdream.nvim",
     priority = 1000,
     config = function()
@@ -37,13 +43,6 @@ return {
       })
     end,
   },
-
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000
-  },
-
   {
     'crispybaccoon/evergarden',
     opts = {
@@ -61,6 +60,20 @@ return {
       }
     }
   },
+  {
+    "zenbones-theme/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
+    priority = 1000,
+    -- you can set set configuration options here
+    config = function()
+    --     vim.g.zenbones_darken_comments = 45
+        vim.cmd.colorscheme('rosebones')
+    end
+},
 
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
@@ -116,15 +129,27 @@ return {
     branch = 'v0.6', --recommended as each new version will have breaking changes
     config = function()
       require('ultimate-autopair').setup({
-      {'“','”',ft = {"markdown"}, multiline=false},
-      {'$','$',ft = {"markdown"}, multiline=false},
-      close = {
-        enable = true,
-        map='<A-c>', --string or table
-        cmap='<A-c>', --string or table
-      },
-    })
+        { '“', '”', ft = { "markdown" }, multiline = false },
+        { '$', '$', ft = { "markdown" }, multiline = false },
+        close = {
+          enable = true,
+          map = '<A-c>',  --string or table
+          cmap = '<A-c>', --string or table
+        },
+      })
     end
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    ft = { "html", "markdown" },
+    opts = {
+      opts = {
+        -- Defaults
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
+        enable_close_on_slash = false -- Auto close on trailing </
+      },
+    }
   },
   {
     'AckslD/nvim-neoclip.lua', -- improves clipboard integration
@@ -133,17 +158,15 @@ return {
     end
   },
   -- Lua
-  {
-    "chrisgrieser/nvim-origami",
-    event = "VeryLazy",
-    opts = {}, -- needed even when using default config
-  },
+  -- {
+  --   "chrisgrieser/nvim-origami",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     autoFold = {enabled = false}
+  --   }, -- needed even when using default config
+  -- },
   {
     "mateuszwieloch/automkdir.nvim"
-  },
-  {
-    "chrisgrieser/nvim-puppeteer", -- automatically convert to f-string
-    lazy = false,                  -- plugin lazy-loads itself. Can also load on filetypes.
   },
   {
     'shadyalfred/electric-quotes.nvim',
@@ -166,7 +189,16 @@ return {
     -- config = true,
     event = "VeryLazy",
   },
-
+  {
+    event = "VeryLazy",
+    "kshenoy/vim-signature",
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    -- dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
+  },
   -- TELESCOPE
   {
     'nvim-telescope/telescope.nvim',
@@ -188,7 +220,7 @@ return {
   -- WRITING
   {
     'obsidian-nvim/obsidian.nvim',
-    event = {"BufRead */home/sam/notes/*",
+    event = { "BufRead */home/sam/notes/*",
     },
     dependencies =
     { 'MeanderingProgrammer/render-markdown.nvim' },
@@ -214,6 +246,23 @@ return {
     'nvim-treesitter/nvim-treesitter-textobjects',
     config = function()
       require "my.plugin-config.tstextobj"
+    end
+  },
+
+  {
+    'stevearc/aerial.nvim',
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+    config = function()
+      require("aerial").setup(
+        {
+          backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" }
+        }
+      )
+      vim.keymap.set("n", "<leader>n" ,":AerialToggle<CR>", {desc = "Navigate document"})
     end
   },
 
@@ -258,7 +307,7 @@ return {
       require("my.plugin-config.null")
     end,
   },
-  -- { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
+  { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
   {
     'saghen/blink.cmp',
     -- !Important! Make sure you're using the latest release of LuaSnip
@@ -329,15 +378,13 @@ return {
   -- },
 
 
-
-  -- Language-specific
-  { 'AndrewRadev/tagalong.vim', ft = 'html' },
-
-  -- {
-  --   'MeanderingProgrammer/markdown.nvim',
-  --   ft = 'markdown',
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  -- },
+  {
+    "tadmccorkle/markdown.nvim",
+    ft = "markdown", -- or 'event = "VeryLazy"'
+    opts = {
+      -- configuration here or empty for defaults
+    },
+  },
 
 
   -- QMK
@@ -397,7 +444,6 @@ return {
   },
 
   -- tmux integration
-  -- { 'aserowy/tmux.nvim' },
   {
     "christoomey/vim-tmux-navigator",
     cmd = {
