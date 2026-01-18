@@ -1,7 +1,3 @@
-require('mason').setup()
-require('mason-lspconfig').setup()
-
-
 vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
@@ -12,16 +8,25 @@ vim.lsp.config("lua_ls", {
     },
   },
 })
-
-
-
-vim.lsp.enable("html")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config("cssls", {
   capabilities = capabilities,
 })
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { "lua_ls", "ts_ls", "gopls", "pylsp", "html", "cssls"},
+  }
+)
+
+
+vim.api.nvim_create_autocmd({ "DiagnosticChanged"}, { callback = function()
+    vim.diagnostic.setloclist( {open = false })
+end })
+
+
 require "lsp_signature".setup(
   {
     handler_opts = {
@@ -38,3 +43,4 @@ require "lsp_signature".setup(
 )
 
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, {desc = "Format buffer", silent = true})
+

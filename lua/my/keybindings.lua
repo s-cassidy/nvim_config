@@ -1,9 +1,9 @@
 local map = vim.keymap.set
 
-
+ 
 -- Normal Mode Remaps
 local normal = {
-  { "<C-s-D>",    ":bd<cr>",                                          { silent = true } },              -- delete current buffer
+ { "<C-s-D>",    ":bd<cr>",                                          { silent = true } },              -- delete current buffer
   { "<C-s-t>",    ":ObsidianTemplate<cr>",                            { silent = true } },
   { "<S-l>",      "$",                                                { silent = true } },              -- end of line
   { "<S-h>",      "^",                                                { silent = true } },              -- start of line
@@ -54,7 +54,6 @@ local normal = {
   { "<leader>lr", vim.lsp.buf.references,                             { desc = "References to QF" } },
   { "<leader>lh", vim.lsp.buf.hover,                                  { desc = "hover" } },
   { "K",          vim.lsp.buf.hover,                                  { desc = "hover" } },
-  { "<leader>lL", vim.diagnostic.setloclist,                          { desc = "Diagnostics to local qf" } },
   { "<leader>r",  ":%s/<C-r><C-w>/",                                  { desc = "Search and replace me" } },
 }
 

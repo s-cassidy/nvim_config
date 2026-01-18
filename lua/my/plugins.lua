@@ -1,7 +1,7 @@
 return {
   -- Needed to load first
   { 'nvim-lua/plenary.nvim' },
-  { 'nvim-lua/popup.nvim' },
+  -- { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
   -- {
   --   'xiyaowong/transparent.nvim',
@@ -19,62 +19,43 @@ return {
       require("my.plugin-config.which-key")
     end
   },
-  {
-    "aktersnurra/no-clown-fiesta.nvim",
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "slugbyte/lackluster.nvim",
-    lazy = false,
-    priority = 1000,
-    
-  },
-  {
-    "scottmckendry/cyberdream.nvim",
-    priority = 1000,
-    config = function()
-      require("cyberdream").setup({
-        -- Recommended - see "Configuring" below for more config options
-        transparent = true,
-        italic_comments = true,
-        hide_fillchars = true,
-        borderless_telescope = true,
-      })
-    end,
-  },
-  {
-    'crispybaccoon/evergarden',
-    opts = {
-      transparent_background = true,
-      contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
-      overrides = {},           -- add custom overrides
-    }
-  },
-  {
-    'webhooked/kanso.nvim',
-    opts = {
-      theme = "zen",
-      background = {
-        dark = "zen",
-      }
-    }
-  },
+  -- {
+  --   "aktersnurra/no-clown-fiesta.nvim",
+  --   priority = 1000,
+  --   opts = {},
+  -- },
+  -- {
+  --   "slugbyte/lackluster.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --
+  -- },
+  -- {
+  --   'webhooked/kanso.nvim',
+  --   lazy = true,
+  --   opts = {
+  --     theme = "zen",
+  --     background = {
+  --       dark = "zen",
+  --     }
+  --   }
+  -- },
   {
     "zenbones-theme/zenbones.nvim",
     -- Optionally install Lush. Allows for more configuration or extending the colorscheme
     -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
     -- In Vim, compat mode is turned on as Lush only works in Neovim.
     dependencies = "rktjmp/lush.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1000,
     -- you can set set configuration options here
     config = function()
     --     vim.g.zenbones_darken_comments = 45
         vim.cmd.colorscheme('rosebones')
+        
     end
 },
-
+ {'rose-pine/neovim', name="rose-pine", lazy=true, priority = 100},
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
   --"folke/tokyonight.nvim",
@@ -116,8 +97,12 @@ return {
 
   -- quality of life
   -- Lua
+  {"ten3roberts/qf.nvim",
+    opts = {}
+  },
   {
     "folke/zen-mode.nvim",
+    keys = "<leader>Z",
     config = function()
       vim.keymap.set("n", "<leader>Z", require("zen-mode").toggle)
       require("my.plugin-config.zenmode")
@@ -166,17 +151,12 @@ return {
   --   }, -- needed even when using default config
   -- },
   {
-    "mateuszwieloch/automkdir.nvim"
-  },
-  {
-    'shadyalfred/electric-quotes.nvim',
-    dependencies = {
-      'uga-rosa/utf8.nvim',
-    },
-    cmd = 'ElectricQuotesToggle',
+    "mateuszwieloch/automkdir.nvim",
+    event = "VeryLazy"
   },
   {
     'jinh0/eyeliner.nvim',
+    keys = {"f", "F"},
     config = function()
       require 'eyeliner'.setup {
         highlight_on_key = true, -- show highlights only after keypress
@@ -190,31 +170,29 @@ return {
     event = "VeryLazy",
   },
   {
-    event = "VeryLazy",
     "kshenoy/vim-signature",
-  },
-  {
-    "m4xshen/hardtime.nvim",
-    lazy = false,
-    -- dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
+    event = "VeryLazy",
   },
   -- TELESCOPE
   {
     'nvim-telescope/telescope.nvim',
-    dependencies = "tsakirist/telescope-lazy.nvim",
+    dependencies = {
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make'
+      },
+      "tsakirist/telescope-lazy.nvim",
+
+    },
     config = function()
       require("my.plugin-config.telescope")
     end,
     event = 'VeryLazy'
   },
   {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make'
-  },
-  {
     "princejoogie/dir-telescope.nvim",
-    dependencies = 'nvim-telescope/telescope.nvim'
+    dependencies = 'nvim-telescope/telescope.nvim',
+    event = "VeryLazy"
   },
 
   -- WRITING
@@ -231,12 +209,14 @@ return {
   -- TREESITTER
   {
     'nvim-treesitter/nvim-treesitter',
+    event = "VeryLazy",
     config = function()
       require "my.plugin-config.treesitter"
     end
   },
   {
     'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
+    event = "VeryLazy",
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       require("my.plugin-config.rainbow-delimiters")
@@ -244,6 +224,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    event = "VeryLazy",
     config = function()
       require "my.plugin-config.tstextobj"
     end
@@ -251,6 +232,7 @@ return {
 
   {
     'stevearc/aerial.nvim',
+    event = "VeryLazy",
     -- Optional dependencies
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -277,11 +259,11 @@ return {
   -- language support and completion
   {
     'brenoprata10/nvim-highlight-colors',
+    ft = "css",
     config = function() require('nvim-highlight-colors').setup {} end
   },
   {
     "lervag/vimtex",
-    lazy = true, -- we don't want to lazy load VimTeX
     ft = "tex",
     init = function()
       require("my.plugin-config.vimtex")
@@ -290,10 +272,11 @@ return {
 
   -- LSP Support
   {
-    'neovim/nvim-lspconfig',
+    "williamboman/mason-lspconfig.nvim",
+    event = "VeryLazy",
     dependencies = {
       'williamboman/mason.nvim',
-      "williamboman/mason-lspconfig.nvim",
+      'neovim/nvim-lspconfig',
     },
   },
   {
@@ -303,6 +286,7 @@ return {
   },
   {
     'nvimtools/none-ls.nvim',
+    event = "VeryLazy",
     config = function()
       require("my.plugin-config.null")
     end,
@@ -323,7 +307,10 @@ return {
         build = "make install_jsregexp",
         event = "InsertEnter",
         dependencies = {
-          "rafamadriz/friendly-snippets",
+          {"rafamadriz/friendly-snippets",
+            version = false,
+            pin = true
+          },
         },
         config = function()
           require("my.plugin-config.luasnip")
@@ -369,13 +356,6 @@ return {
 
 
   -- UI
-  -- {
-  --   "nvim-lualine/lualine.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("my.plugin-config.lualine")
-  --   end
-  -- },
 
 
   {
