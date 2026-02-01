@@ -173,27 +173,15 @@ return {
     "kshenoy/vim-signature",
     event = "VeryLazy",
   },
-  -- TELESCOPE
-  {
-    'nvim-telescope/telescope.nvim',
-    dependencies = {
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make'
-      },
-      "tsakirist/telescope-lazy.nvim",
 
-    },
-    config = function()
-      require("my.plugin-config.telescope")
-    end,
-    event = 'VeryLazy'
-  },
-  {
-    "princejoogie/dir-telescope.nvim",
-    dependencies = 'nvim-telescope/telescope.nvim',
-    event = "VeryLazy"
-  },
+  -- SNACKS
+{
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  opts = require("my.plugin-config.snacks").opts,
+  keys = require("my.plugin-config.snacks").keys,
+},
 
   -- WRITING
   {
