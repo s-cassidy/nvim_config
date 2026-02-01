@@ -181,6 +181,7 @@ return {
   lazy = false,
   opts = require("my.plugin-config.snacks").opts,
   keys = require("my.plugin-config.snacks").keys,
+  init = require("my.plugin-config.snacks").init,
 },
 
   -- WRITING
@@ -406,7 +407,7 @@ return {
     config = function()
       local wk = require("which-key")
       wk.add({
-        { "<leader>u", vim.cmd.UndotreeToggle, desc = "Undotree" }
+        { "<leader>U", vim.cmd.UndotreeToggle, desc = "Undotree" }
       })
     end
   },
