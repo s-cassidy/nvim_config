@@ -1,7 +1,3 @@
-local actions = require("telescope.actions")
-local finders = require("telescope.finders")
-local telescope_conf = require("telescope.config").values
-local action_state = require "telescope.actions.state"
 local vault_path = vim.fn.expand("~/notes/")
 
 require("obsidian").setup({
@@ -9,7 +5,9 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "notes",
-      path = vault_path
+      path = vault_path,
+
+      frontmatter = {enabled = false},
     }
   },
   templates = {
@@ -52,8 +50,31 @@ vim.keymap.set(
 --an _even more annoying_ error message comes up saying the buffer has been modified
 --on disk since reading it
 ]]
---
 
+
+
+local function directory_find(dir, callback, opts)
+  callback = callback or print
+  opts = opts or {}
+  opts.finder = "proc"
+  opts.cmd = "fdfind"
+  opts.cwd = vault_path
+  opts.args = {
+  ".",
+  '--type',
+  'd',
+  '--strip-cwd-prefix',
+}
+  opts.transform = function(item)
+    item.file = item.text
+    item.dir = true
+  end
+  opts.confirm = function(picker, item)
+				picker:close()
+                callback(item.file)
+			end
+  Snacks.picker(opts)
+end
 
 local function get_text()
   local content_lines
@@ -99,7 +120,7 @@ local create_note = function(filename, folder, text)
   local buffer = vim.api.nvim_create_buf(true, false)
   vim.api.nvim_set_current_buf(buffer)
   vim.bo.filetype = "markdown"
-  vim.cmd("w " .. vault_path .. folder .. "/" .. filename .. ".md")
+  vim.cmd("w " .. vault_path .. folder .. filename .. ".md")
   vim.cmd("Obsidian template note")
   if text then
     vim.api.nvim_buf_set_lines(buffer, 7, 7, false, text)
@@ -118,21 +139,9 @@ local new_note = function(title, text)
       end)
   end
   filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
-  require("telescope.pickers").new(opts, {
-    prompt_title = "Move to...",
-    finder = finders.new_oneshot_job({ "fdfind", "-td" }, {}),
-    sorter = telescope_conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        local selection = action_state.get_selected_entry()
-        if selection ~= nil then
-          actions.close(prompt_bufnr)
-          create_note(filename, selection[1], text)
-        end
-      end)
-      return true
-    end,
-  }):find()
+  directory_find(vault_path, function(selection)
+        create_note(filename, selection, text)
+  end)
 end
 
 local extract_note = function()
@@ -185,29 +194,18 @@ local source_template = function()
 end
 
 local search_in_folder = function()
-  require("telescope").extensions.dir.live_grep()
+  Snacks.picker.grep({dirs = {vault_path}})
 end
 
 local find_in_folder = function()
-  require("telescope").extensions.dir.find_files()
+  Snacks.picker.files({dirs = {vault_path}})
 end
 
 local move_to_folder = function()
-  require("telescope.pickers").new(opts, {
-    prompt_title = "Move to...",
-    finder = finders.new_oneshot_job({ "fdfind", "-td" }, {}),
-    sorter = telescope_conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        local selection = action_state.get_selected_entry()
-        if selection ~= nil then
-          actions.close(prompt_bufnr)
-          vim.cmd("GMove " .. selection[1])
-        end
-      end)
-      return true
-    end,
-  }):find()
+  directory_find(vault_path, function(selection)
+    vim.cmd("GMove " .. selection)
+  end
+  )
 end
 
 require('render-markdown').enable()

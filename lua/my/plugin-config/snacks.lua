@@ -5,11 +5,11 @@ return {opts = {
   bigfile = { enabled = true },
   dashboard = { enabled = true },
   explorer = { enabled = true },
-  indent = { enabled = false },
-  input = { enabled = true,
+  indent = { enabled = false,
   only_scope = true, -- only show indent guides of the scope
   only_current = true, -- only show indent guides in the current window
   },
+  input = { enabled = false },
   picker = { enabled = true },
   notifier = { enabled = true },
   quickfile = { enabled = true },
