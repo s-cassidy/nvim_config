@@ -3,43 +3,6 @@ return {
   { 'nvim-lua/plenary.nvim' },
   -- { 'nvim-lua/popup.nvim' },
   { 'kyazdani42/nvim-web-devicons' },
-  -- {
-  --   'xiyaowong/transparent.nvim',
-  --   config = function()
-  --     require("transparent").setup({
-  --       -- table: additional groups that should be cleared
-  --       extra_groups = { "NormalFloat" },
-  --       -- table: groups you don't want to clear
-  --     })
-  --   end
-  -- },
-  {
-    'folke/which-key.nvim',
-    config = function()
-      require("my.plugin-config.which-key")
-    end
-  },
-  -- {
-  --   "aktersnurra/no-clown-fiesta.nvim",
-  --   priority = 1000,
-  --   opts = {},
-  -- },
-  -- {
-  --   "slugbyte/lackluster.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --
-  -- },
-  -- {
-  --   'webhooked/kanso.nvim',
-  --   lazy = true,
-  --   opts = {
-  --     theme = "zen",
-  --     background = {
-  --       dark = "zen",
-  --     }
-  --   }
-  -- },
   {
     "zenbones-theme/zenbones.nvim",
     -- Optionally install Lush. Allows for more configuration or extending the colorscheme
@@ -50,12 +13,12 @@ return {
     priority = 1000,
     -- you can set set configuration options here
     config = function()
-    --     vim.g.zenbones_darken_comments = 45
-        vim.cmd.colorscheme('rosebones')
-        
+      --     vim.g.zenbones_darken_comments = 45
+      vim.cmd.colorscheme('rosebones')
+
     end
-},
- {'rose-pine/neovim', name="rose-pine", lazy=true, priority = 100},
+  },
+  {'rose-pine/neovim', name="rose-pine", lazy=true, priority = 100},
   -- other themes I like
   --{"ellisonleao/gruvbox.nvim", priority = 100},
   --"folke/tokyonight.nvim",
@@ -63,11 +26,23 @@ return {
   -- { 'rebelot/kanagawa.nvim', lazy = true, priority = 100 },
   -- { 'Shatur/neovim-ayu',     lazy = true, priority = 100 },
   --{ 'EdenEast/nightfox.nvim', priority = 100 },
-
-  -- tpope
   {
-    'tpope/vim-repeat', -- Integrates the repeat operator with plugins
-    event = "VeryLazy"
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
   {
     'tpope/vim-fugitive',
@@ -77,15 +52,6 @@ return {
   },
 
 
-  -- GIT
-  --
-  {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-    ,
-  },
 
   -- FILE BROWSER
   {
@@ -100,30 +66,23 @@ return {
   {"ten3roberts/qf.nvim",
     opts = {}
   },
-  {
-    "folke/zen-mode.nvim",
-    keys = "<leader>Z",
-    config = function()
-      vim.keymap.set("n", "<leader>Z", require("zen-mode").toggle)
-      require("my.plugin-config.zenmode")
-    end
-  },
-  {
-    'altermo/ultimate-autopair.nvim',
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    branch = 'v0.6', --recommended as each new version will have breaking changes
-    config = function()
-      require('ultimate-autopair').setup({
-        { '“', '”', ft = { "markdown" }, multiline = false },
-        { '$', '$', ft = { "markdown" }, multiline = false },
-        close = {
-          enable = true,
-          map = '<A-c>',  --string or table
-          cmap = '<A-c>', --string or table
-        },
-      })
-    end
-  },
+  -- {
+  --   'altermo/ultimate-autopair.nvim',
+  --   event = { 'InsertEnter', 'CmdlineEnter' },
+  --   branch = 'v0.6', --recommended as each new version will have breaking changes
+  --   config = function()
+  --     require('ultimate-autopair').setup({
+  --       { '“', '”', ft = { "markdown" }, multiline = false },
+  --       { '$', '$', ft = { "markdown" }, multiline = false },
+  --       close = {
+  --         enable = true,
+  --         map = '<A-c>',  --string or table
+  --         cmap = '<A-c>', --string or table
+  --       },
+  --     })
+  --   end
+  -- },
+  {  'rstacruz/vim-closer' },
   {
     'windwp/nvim-ts-autotag',
     ft = { "html", "markdown" },
@@ -143,13 +102,6 @@ return {
     end
   },
   -- Lua
-  -- {
-  --   "chrisgrieser/nvim-origami",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     autoFold = {enabled = false}
-  --   }, -- needed even when using default config
-  -- },
   {
     "mateuszwieloch/automkdir.nvim",
     event = "VeryLazy"
@@ -165,24 +117,19 @@ return {
     end
   },
   {
-    "chrisgrieser/nvim-early-retirement",
-    -- config = true,
-    event = "VeryLazy",
-  },
-  {
     "kshenoy/vim-signature",
     event = "VeryLazy",
   },
 
   -- SNACKS
-{
-  "folke/snacks.nvim",
-  priority = 1000,
-  lazy = false,
-  opts = require("my.plugin-config.snacks").opts,
-  keys = require("my.plugin-config.snacks").keys,
-  init = require("my.plugin-config.snacks").init,
-},
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = require("my.plugin-config.snacks").opts,
+    keys = require("my.plugin-config.snacks").keys,
+    init = require("my.plugin-config.snacks").init,
+  },
 
   -- WRITING
   {
@@ -190,7 +137,7 @@ return {
     event = { "BufRead */home/sam/notes/*",
     },
     dependencies =
-    { 'MeanderingProgrammer/render-markdown.nvim' },
+      { 'MeanderingProgrammer/render-markdown.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
     end
@@ -269,11 +216,6 @@ return {
     },
   },
   {
-    "folke/trouble.nvim",
-    keys = require("my.plugin-config.trouble-keys"),
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
-  },
-  {
     'nvimtools/none-ls.nvim',
     event = "VeryLazy",
     config = function()
@@ -343,28 +285,6 @@ return {
     }
   },
 
-
-  -- UI
-
-
-  {
-    "tadmccorkle/markdown.nvim",
-    ft = "markdown", -- or 'event = "VeryLazy"'
-    opts = {
-      -- configuration here or empty for defaults
-    },
-  },
-
-
-  -- QMK
-  --
-  {
-    'codethread/qmk.nvim',
-    cmd = "QMKFormat",
-    config = function()
-      require("my.plugin-config.qmk")
-    end
-  },
 
 
 
