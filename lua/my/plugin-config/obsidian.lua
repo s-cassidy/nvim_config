@@ -136,12 +136,17 @@ local new_note = function(title, text)
     vim.ui.input({ prompt = "Note title: " },
       function(input)
         title = input
+        filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
+        directory_find(vault_path, function(selection)
+          create_note(filename, selection, text)
+      end)
+      end)
+  else
+        filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
+        directory_find(vault_path, function(selection)
+          create_note(filename, selection, text)
       end)
   end
-  filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
-  directory_find(vault_path, function(selection)
-        create_note(filename, selection, text)
-  end)
 end
 
 local extract_note = function()
@@ -154,10 +159,10 @@ local extract_note = function()
   vim.ui.input({ prompt = "Note title: " },
     function(input)
       title = input
+      local filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
+      new_note(title, text)
+      vim.api.nvim_buf_set_lines(buffer, start_line, end_line, true, { ("Extracted note to [[%s]]"):format(filename) })
     end)
-  local filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
-  new_note(title, text)
-  vim.api.nvim_buf_set_lines(buffer, start_line, end_line, true, { ("Extracted note to [[%s]]"):format(filename) })
 end
 
 local daily_note = function()

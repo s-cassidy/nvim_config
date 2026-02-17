@@ -2,6 +2,26 @@ return {opts = {
   -- your} configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
+  styles = {
+    zen2 = {
+      {
+        enter = true,
+        fixbuf = false,
+        minimal = false,
+        width = 120,
+        height = 0,
+        backdrop = { transparent = false, blend = 40 },
+        keys = { q = false },
+        zindex = 40,
+        wo = {
+          winhighlight = "NormalFloat:Normal",
+        },
+        w = {
+          snacks_main = true,
+        },
+      }
+    }
+  },
   bigfile = { enabled = true },
   dashboard = { enabled = true },
   explorer = { enabled = true },
@@ -9,7 +29,7 @@ return {opts = {
   only_scope = true, -- only show indent guides of the scope
   only_current = true, -- only show indent guides in the current window
   },
-  input = { enabled = false },
+  input = { enabled = true },
   picker = { enabled = true },
   notifier = { enabled = true },
   quickfile = { enabled = true },
@@ -30,7 +50,7 @@ return {opts = {
       statusline = false, -- can only be shown when using the global statusline
       tabline = false,
     },
-    win = { style = "zen" },
+    win = { style = "zen2" },
     --- Callback when the window is opened.
     on_open = function(win) end,
     --- Callback when the window is closed.
@@ -41,7 +61,7 @@ return {opts = {
       center = false,
       show = { statusline = true, tabline = true },
       win = {
-        backdrop = false,
+        backdrop = true,
         width = 0, -- full width
       },
     },
@@ -110,8 +130,8 @@ return {opts = {
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
-    -- { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
-    { "<leader>z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+    { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+    { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
     { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
