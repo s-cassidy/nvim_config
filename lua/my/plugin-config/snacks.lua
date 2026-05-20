@@ -31,7 +31,7 @@ return {opts = {
   },
   input = { enabled = true },
   picker = { enabled = true },
-  notifier = { enabled = true },
+  notifier = { enabled = false },
   quickfile = { enabled = true },
   scope = { enabled = true },
   scroll = { enabled = true },
