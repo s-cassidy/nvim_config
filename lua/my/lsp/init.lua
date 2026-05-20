@@ -21,11 +21,24 @@ require('mason-lspconfig').setup({
   }
 )
 
+vim.lsp.config["tinymist"] = {
+        settings = {
+                formatterMode = "typstyle",
+                exportPdf = "onSave",
+                syntaxOny = "enable",
+                semanticTokens = "disable"
+        }
+}
+
 
 vim.api.nvim_create_autocmd({ "DiagnosticChanged"}, { callback = function()
     vim.diagnostic.setloclist( {open = false })
 end })
 
+vim.api.nvim_create_autocmd({"ExitPre", "WinClosed"},{ callback = function()
+  vim.cmd("lclose")
+end
+})
 
 require "lsp_signature".setup(
   {
