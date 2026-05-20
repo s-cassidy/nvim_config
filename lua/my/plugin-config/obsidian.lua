@@ -1,6 +1,7 @@
 local vault_path = vim.fn.expand("~/notes/")
+local obs = require("obsidian")
 
-require("obsidian").setup({
+obs.setup({
   legacy_commands = false,
   workspaces = {
     {
@@ -50,8 +51,6 @@ vim.keymap.set(
 --an _even more annoying_ error message comes up saying the buffer has been modified
 --on disk since reading it
 ]]
-
-
 
 local function directory_find(dir, callback, opts)
   callback = callback or print
@@ -138,13 +137,13 @@ local new_note = function(title, text)
         title = input
         filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
         directory_find(vault_path, function(selection)
-          create_note(filename, selection, text)
+        vim.cmd ("Obsidian new_from_template " .. selection.. title .. " note")
       end)
       end)
   else
         filename = tostring(os.date("%Y%m%d%H%M")) .. " " .. title
         directory_find(vault_path, function(selection)
-          create_note(filename, selection, text)
+        vim.cmd ("Obsidian new_from_template " .. selection.. title .. " note")
       end)
   end
 end
@@ -213,7 +212,7 @@ local move_to_folder = function()
   )
 end
 
-require('render-markdown').enable()
+-- require('render-markdown').enable()
 
 vim.keymap.set("v", "<leader>vx", extract_note, { desc = "Extract note" })
 
