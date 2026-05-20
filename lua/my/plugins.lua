@@ -29,11 +29,9 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
+    config = function()
+  require("my.plugin-config.which-key")
+    end,
     keys = {
       {
         "<leader>?",
@@ -62,26 +60,9 @@ return {
   },
 
   -- quality of life
-  -- Lua
   {"ten3roberts/qf.nvim",
     opts = {}
   },
-  -- {
-  --   'altermo/ultimate-autopair.nvim',
-  --   event = { 'InsertEnter', 'CmdlineEnter' },
-  --   branch = 'v0.6', --recommended as each new version will have breaking changes
-  --   config = function()
-  --     require('ultimate-autopair').setup({
-  --       { '“', '”', ft = { "markdown" }, multiline = false },
-  --       { '$', '$', ft = { "markdown" }, multiline = false },
-  --       close = {
-  --         enable = true,
-  --         map = '<A-c>',  --string or table
-  --         cmap = '<A-c>', --string or table
-  --       },
-  --     })
-  --   end
-  -- },
   {  'rstacruz/vim-closer' },
   {
     'windwp/nvim-ts-autotag',
@@ -101,10 +82,16 @@ return {
       require('neoclip').setup()
     end
   },
-  -- Lua
   {
     "mateuszwieloch/automkdir.nvim",
     event = "VeryLazy"
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = {'kevinhwang91/promise-async'},
+    config = function()
+      require('my.plugin-config.ufo')
+      end
   },
   {
     'jinh0/eyeliner.nvim',
@@ -136,8 +123,8 @@ return {
     'obsidian-nvim/obsidian.nvim',
     event = { "BufRead */home/sam/notes/*",
     },
-    dependencies =
-      { 'MeanderingProgrammer/render-markdown.nvim' },
+    -- dependencies =
+    --   { 'MeanderingProgrammer/render-markdown.nvim' },
     config = function()
       require "my.plugin-config.obsidian"
     end
@@ -180,10 +167,28 @@ return {
           backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" }
         }
       )
-      vim.keymap.set("n", "<leader>n" ,":AerialToggle<CR>", {desc = "Navigate document"})
+      vim.keymap.set("n", "<leader>n" ,":AerialOpen<CR>", {desc = "Navigate document"})
     end
   },
-
+  {
+    "folke/trouble.nvim",
+    opts = {
+      icons = {
+        indent = {
+          top           = " ",
+          middle        = " ",
+          last          = " ",
+          -- last          = "-╴",
+          -- last       = "╰╴", -- rounded
+          fold_open     = " ",
+          fold_closed   = " ",
+          ws            = " ",
+        },
+      }, -- for default options, refer to the configuration section for custom setup.
+    },
+    cmd = "Trouble",
+    keys = require("my.plugin-config.trouble-keys")
+  },
   -- HARPOON
   {
     'ThePrimeagen/harpoon',
@@ -222,6 +227,7 @@ return {
       require("my.plugin-config.null")
     end,
   },
+
   { 'ray-x/lsp_signature.nvim', event = "InsertEnter" },
   {
     'saghen/blink.cmp',
@@ -298,7 +304,7 @@ return {
   },
   {
     'echasnovski/mini.surround', -- Surround stuff
-    event = "VeryLazy",
+    event = "CursorMoved",
     config = function()
       require('mini.surround').setup()
     end
@@ -368,5 +374,13 @@ return {
     config = function()
       require('my.dap.init').setup()
     end
+  },
+
+  {
+    'chomosuke/typst-preview.nvim',
+    ft = 'typst',
+    version = '1.*',
+    opts = {}, -- lazy.nvim will implicitly calls `setup {}`
   }
+
 }

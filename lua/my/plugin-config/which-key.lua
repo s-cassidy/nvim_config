@@ -7,8 +7,8 @@ wk.add({
   { "<leader>s",  name = "+sessions" },
   { "<leader>u",  name = "+toggles" },
   { "<leader>f",  name = "+pickers" },
-  { "<leader>c",  name = "+symbols" },
-  { "<leader>x",  name = "+diagnostics" },
+  -- { "<leader>c",  name = "+symbols" },
+  -- { "<leader>x",  name = "+diagnostics" },
   { "<leader>h",  name = "+harpoon" },
   { "<leader>ff", name = 'dir...' },
 })
